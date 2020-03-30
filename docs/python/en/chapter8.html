@@ -177,7 +177,7 @@ exampleworld2();
     </script>
 </div>
 <p>
-	Importantly, you may assume that Karel initial <i>starts</i> with zero beepers in its bag. Each beeper picked up is added to its bag. When putting beepers in the corner, karel can use the <code>beepers_in_bag()</code> test.
+	Importantly, you may assume that Karel initially <i>starts</i> with zero beepers in its bag. Each beeper picked up is added to its bag. When putting beepers in the corner, Karel can use the <code>beepers_in_bag()</code> test. We can also assume that the columns do not reach all the way up to the northmost wall.
 	</p>
 
 <p>
@@ -191,7 +191,7 @@ exampleworld2();
 	</p>
 
 	<p class="demoCode" style="margin-left:10px">
-<code>&nbsp;&nbsp;&nbsp;<span class="keyword">def</span> run():</code><br/>
+<code>&nbsp;&nbsp;&nbsp;<span class="keyword">def</span> main():</code><br/>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;collect_all_beepers()</code><br/>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;drop_all_beepers()</code><br/>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return_home()</code><br/>
@@ -208,7 +208,7 @@ exampleworld2();
 Now that you have defined the structure for the program as a whole, it is time to move on to the first subproblem, which consists of collecting all the beepers. This task is itself more complicated than the simple problems from the preceding chapters. Collecting all the beepers means that you have to pick up the beepers in every tower until you get to the final corner. The fact that you need to repeat an operation for each tower suggests that you need a while loop here. The while loop will repeat the process of <code>collect_one_tower</code> and then moving.	
 </p>
 
-<p><b>Caution:</b> It is dangerous to try to write the entire program without <b>testing</b> it as you go. If you make a mistake it will be hard to find the mistake. We know that we are going to repeat the process of collecting one tower. Let us write and <b>test</b> collecting a single tower before we put the <code>collect_one_tower</code> process in a for loop. Thus <i>temporariliy</i> we can start with the following definition of collect_all_beepers:
+<p><b>Caution:</b> It is dangerous to try to write the entire program without <b>testing</b> it as you go. If you make a mistake it will be hard to find the mistake. We know that we are going to repeat the process of collecting one tower. Let us write and <b>test</b> collecting a single tower before we put the <code>collect_one_tower</code> process in a for loop. Thus <i>temporarily</i> we can start with the following definition of collect_all_beepers:
 
 	<p class="demoCode" style="margin-left:10px">
 <code>&nbsp;&nbsp;&nbsp;<span class="keyword">def</span> collect_all_beepers() : </code><br/>
@@ -264,7 +264,7 @@ Now that you have defined the structure for the program as a whole, it is time t
 <h3>Function preconditions and postconditions</h3>
 
 <p>
-	The turnLeft commands at the beginning and end of the collect_one_tower function are both critical to the correctness of this program. When collect_one_tower is called, Karel is always somewhere on 1st row facing east. When it completes its operation, the program as a whole will work correctly only if Karel is again facing east at that same corner. Conditions that must be true before a function is called are referred to as <b>preconditions</b>; conditions that must apply after the function finishes are known as <b>postconditions</b>.
+	The turn_left commands at the beginning and end of the collect_one_tower function are both critical to the correctness of this program. When collect_one_tower is called, Karel is always somewhere on 1st row facing east. When it completes its operation, the program as a whole will work correctly only if Karel is again facing east at that same corner. Conditions that must be true before a function is called are referred to as <b>preconditions</b>; conditions that must apply after the function finishes are known as <b>postconditions</b>.
 </p>
 
 <p>
@@ -322,7 +322,7 @@ Now that you have defined the structure for the program as a whole, it is time t
 
 <h3>Finishing up</h3>
 
-<p>Although the hard work has been done, there are still several loose ends that need to be resolved. The main program calls two functions—dropAllBeepers and return_home— that are as yet unwritten. Similarly, collect_one_tower calls collect_line_of_beepers and move_to_wall. Fortunately, all four of these functionss are simple enough to code without any further decomposition, particularly if you use move_to_wall in the definition of return_home. Here is the complete implementation:</p>
+<p>Although the hard work has been done, there are still several loose ends that need to be resolved. The main program calls two functions—drop_all_beepers and return_home— that are as yet unwritten. Similarly, collect_one_tower calls collect_line_of_beepers and move_to_wall. Fortunately, all four of these functionss are simple enough to code without any further decomposition, particularly if you use move_to_wall in the definition of return_home. Here is the complete implementation:</p>
 
 
 

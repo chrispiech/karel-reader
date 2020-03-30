@@ -114,7 +114,7 @@ Chapter 2: Programming Karel
 
 function examplefirstKarel() {
 STARTER_CODE = `
-# File: FirstKarel.java
+# File: FirstKarel.py
 # -----------------------------
 # The FirstKarel program defines a "main" 
 # function with three commands. These commands cause  
@@ -212,7 +212,7 @@ Press the "Run" button to execute the program. Programs are typically written in
 <p>
 
 <p class="demoCode" style="margin-left:10px">
-<pre class="comment" translate="no"># File: FirstKarel.java
+<pre class="comment" translate="no"># File: FirstKarel.py
 # -----------------------------
 # The FirstKarel program defines a "main" 
 # function with three commands. These commands cause  
@@ -228,7 +228,7 @@ Press the "Run" button to execute the program. Programs are typically written in
   <code><span class="keyword">from</span> karel.stanford <span class="keyword">import</span> *</code>
 </p>
 <p>
-  This line requests the inclusion of all definitions from the <code> karel.stanford</code> library. This library contains the basic definitions necessary for writing Karel programs, such as the definitions of the standard operations <code>move()</code> and <code>pickBeeper()</code>. Because you always need access to these operations, every Karel program you write will include this import command before you write the actual program.
+  This line requests the inclusion of all definitions from the <code> karel.stanford</code> library. This library contains the basic definitions necessary for writing Karel programs, such as the definitions of the standard operations <code>move()</code> and <code>pick_beeper()</code>. Because you always need access to these operations, every Karel program you write will include this import command before you write the actual program.
 </p>
 <p>
  The final part of the Karel program consists of the following function definition:
@@ -240,7 +240,7 @@ Press the "Run" button to execute the program. Programs are typically written in
 <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;move()</code><br/>
 </p>
 <p>
-These lines represent the definition of a new <b>function</b>, which specifies the sequence of steps necessary to respond to a command. As in the case of the FirstKarel program itself, the function definition consists of two parts that can be considered separately: The first line constitutes the function header and the code between the curly braces is the function body. If you ignore the body for now, the function definition looks like this:
+These lines represent the definition of a new <b>function</b>, which specifies the sequence of steps necessary to respond to a command. As in the case of the FirstKarel program itself, the function definition consists of two parts that can be considered separately: The first line constitutes the function header and the indented code following is the function body. If you ignore the body for now, the function definition looks like this:
 </p>
 <p class="demoCode" style="margin-left:10px">
 <code>&nbsp;&nbsp;&nbsp;<span class="keyword">def</span> main():</code><br/>
@@ -419,7 +419,7 @@ exampleba3();
 
 function examplestepUp() {
 STARTER_CODE = `
-# File: FirstKarel.java
+# File: FirstKarel.py
 # -----------------------------
 # The FirstKarel program defines a "main" 
 # function with commands that cause Karel to pick up
