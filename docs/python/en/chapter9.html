@@ -56,7 +56,7 @@
     <a class="bookLink btn btn-link" href="../../python/en/chapter8.html">8 - Refinement</a>
   </div>
   <div class="chapterTab" onclick="location.href='../../python/en/chapter9.html'">
-    <a class="bookLink btn btn-link" href="../../python/en/chapter9.html">9 - SuperKarel</a>
+    <a class="bookLink btn btn-link" href="../../python/en/chapter9.html">9 - Extra Features</a>
   </div>
 
   <div class="chapterTab" onclick="location.href='../../python/en/reference.html'">
@@ -69,7 +69,7 @@
 
   <hr/>
 
-  <!--<a href="../../"><img style = "width:40px" src="../../images/unFlag.png"/> Learn more</a> -->
+  <a href="../../"><img style = "width:40px" src="../../images/unFlag.png"/> Learn more</a> 
 
   <!-- <center>
     <img style ="width:75px;" src="../../images/stanford.png"/>
@@ -85,10 +85,59 @@
       <div class="row">
         <div class="col-md-12 col-xs-12">
 
-<h1>Chapter 10: SuperKarel</h1>
+<h1>Chapter 9: Extra Karel Features</h1>
 <hr/>
 
-<p><i>Coming soon!</i></p>
+<h3>Painting corners</h3>
+
+<p>
+    Karel also has the ability to paint corners in its world with 
+    the following colors:
+</p>
+
+<ul>
+    <li><code>BLANK</code>, which removes any color on the square</li>
+    <li><code>BLACK</code></li>
+    <li><code>BLUE</code></li>
+    <li><code>CYAN</code></li>
+    <li><code>DARK_GRAY</code></li>
+    <li><code>GRAY</code></li>
+    <li><code>GREEN</code></li>
+    <li><code>LIGHT_GRAY</code></li>
+    <li><code>MAGENTA</code></li>
+    <li><code>ORANGE</code></li>
+    <li><code>PINK</code></li>
+    <li><code>RED</code></li>
+    <li><code>WHITE</code></li>
+    <li><code>YELLOW</code></li>
+</ul>
+
+<br />
+<p>
+    To use Karel's paint functionality, use the following commands:
+</p>
+
+<table class="table table-condensed">
+    <tr>
+        <th>Command</th>
+        <th>What it does</th>
+    </tr>
+    <tr>
+        <td><code>paint_corner(COLOR_NAME)</code></td>
+        <td>
+            Karel colors the corner he's standing on <code>COLOR_NAME</code>. 
+            For example, to color the corner blue, you would write 
+            <code>paint_corner(BLUE).</code>
+        </td>
+    </tr>
+    <tr>
+        <td><code>corner_color_is(COLOR_NAME)</code></td>
+        <td>
+            A condition checking this question: Is the color of the corner 
+            Karel is standing on <code>COLOR NAME</code>?
+        </td>
+    </tr>
+</table>
 <hr/>
 <center>
   <a class="btn btn-primary btn-lg" href="reference.html" role="button">Next Chapter</a>
