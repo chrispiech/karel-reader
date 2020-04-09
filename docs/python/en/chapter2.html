@@ -392,10 +392,10 @@ function exampleba3() {
 exampleba3();
     </script>
 </div><p>
-  From here, the next thing you need to do is get Karel to turn right so that it is again facing east. While this operation is conceptually just as easy as getting Karel to turn left, there is a slight problem: Karel’s language includes a <code>turnLeft</code> command, but no <code>turnRight</code> command. It’s as if you bought the economy model and have now discovered that it is missing some important features.
+  From here, the next thing you need to do is get Karel to turn right so that it is again facing east. While this operation is conceptually just as easy as getting Karel to turn left, there is a slight problem: Karel’s language includes a <code>turnLeft</code> command, but no <code>turn_right</code> command. It’s as if you bought the economy model and have now discovered that it is missing some important features.
 </p>
 <p>
-  At this point, you have your first opportunity to begin thinking like a programmer. You have one set of commands, but not exactly the set you need. What can you do? Can you accomplish the effect of a turnRight command using only the capabilities you have? The answer, of course, is yes. You can accomplish the effect of turning right by turning left three times. After three left turns, Karel will be facing in the desired direction. From here, all you need to do is program Karel to move over to the center of the ledge, drop the beeper and then move forward to the final position. Here is a complete implementation of a <code>StepUp</code> program that accomplishes the entire task:
+  At this point, you have your first opportunity to begin thinking like a programmer. You have one set of commands, but not exactly the set you need. What can you do? Can you accomplish the effect of a turn_right command using only the capabilities you have? The answer, of course, is yes. You can accomplish the effect of turning right by turning left three times. After three left turns, Karel will be facing in the desired direction. From here, all you need to do is program Karel to move over to the center of the ledge, drop the beeper and then move forward to the final position. Here is a complete implementation of a <code>StepUp</code> program that accomplishes the entire task:
 </p>
 
 

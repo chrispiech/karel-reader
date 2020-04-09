@@ -42,7 +42,7 @@ def collect_line_of_beepers():
 # Drops all the beepers on the current corner.
 def drop_all_beepers() :
    while beepers_in_bag():
-      putBeeper()
+      put_beeper()
 
 # Returns Karel to its initial position at the corner of 1st
 # Avenue and 1st row, facing east.  The precondition for this

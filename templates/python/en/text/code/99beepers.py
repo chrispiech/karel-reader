@@ -5,7 +5,7 @@ from karel.stanfordkarel import *
 
 def main():
    move()
-   # repeat putBeeper many times 
+   # repeat put_beeper many times 
    for i in range(42):
   	  put_beeper()
    move()
