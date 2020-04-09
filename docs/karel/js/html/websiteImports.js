@@ -210,34 +210,7 @@ function importCompiler() {
 function importLearnEngine() {
    var scripts = [
 
-		'<script src="../../karel/js/learn/makeAbsoluteDiv.js"></script>',
-		'<script src="../../karel/js/learn/unitProgress.js"></script>',
-		'<script src="../../karel/js/learn/progressModel.js"></script>',
-		'<script src="../../karel/js/learn/lessonsModel.js"></script>',
-		'<script src="../../karel/js/learn/homeScreen.js"></script>',
-		'<script src="../../karel/js/learn/textElement.js"></script>',
-		'<script src="../../karel/js/learn/textButton.js"></script>',
-		'<script src="../../karel/js/learn/unitBox.js"></script>',
-		'<script src="../../karel/js/learn/imageElement.js"></script>',
-		'<script src="../../karel/js/learn/unitTestElement.js"></script>',
-		'<script src="../../karel/js/learn/textBox.js"></script>',
-		'<script src="../../karel/js/learn/videoElement.js"></script>',
-		'<script src="../../karel/js/learn/karelCommandButton.js"></script>',
-		'<script src="../../karel/js/learn/karelEditorElement.js"></script>',
-		'<script src="../../karel/js/learn/karelStaticCanvasElement.js"></script>',
-		'<script src="../../karel/js/learn/karelCanvasElement.js"></script>',
-		'<script src="../../karel/js/learn/karelIdeMessage.js"></script>',
-		'<script src="../../karel/js/learn/karelIdeButtons.js"></script>',
-		'<script src="../../karel/js/learn/karelIdeElement.js"></script>',
-		'<script src="../../karel/js/learn/programElement.js"></script>',
-		'<script src="../../karel/js/learn/imageButton.js"></script>',
-		'<script src="../../karel/js/learn/content.js"></script>',
-		'<script src="../../karel/js/learn/centerArea.js"></script>',
-		'<script src="../../karel/js/learn/titleElement.js"></script>',
-		'<script src="../../karel/js/learn/header.js"></script>',
-		'<script src="../../karel/js/learn/progressBox.js"></script>',
-		'<script src="../../karel/js/learn/progressBar.js"></script>',
-		'<script src="../../karel/js/learn/karelLearnEngine.js"></script>',
+	
 	]
 	importScripts(scripts);	
 }
