@@ -262,7 +262,7 @@ examplemoveToWall();
 
 	<h3>Basic While Loop</h3>
 
-<p>In Karel, a <code class="keyword">while</code> loop is used to repeat a body of code <i>as-long-as</i> a given condition holds. The while loop has the following general form:</p>
+<p>In Karel, a <code class="keyword">while</code> loop is used to repeat a body of code <i>as-long-as</i> a given condition holds. The <code>while</code> loop has the following general form:</p>
 <p class="demoCode">
 <code><span class="keyword">while</span> </code><i class="demoText">test</i><code>:</code><br/>
    <i class="demoText" style="margin-left:2em">statements to be repeated</i><br/>
@@ -271,16 +271,16 @@ examplemoveToWall();
 
 
 <p>
-	The control-flow of a while loop is as follows. When the program hits a while loop it starts repeating a process where it first <i>checks</i> if the test passes, and if so <i>runs</i> the code in the body. 
+	The control-flow of a <code>while</code> loop is as follows. When the program hits a <code>while</code> loop it starts repeating a process where it first <i>checks</i> if the test passes, and if so <i>runs</i> the code in the body. 
 </p>
 	When the program <i>checks</i> if the test passes, it decides if the <i class="demoText">test</i> is true for the current state of the world. If so, the loop will run the code in the body. If the test fails, the loop is over and the program moves on.
 </p>
 <p>
-	When the program <i>runs</i> the body of the loop, the program executes the lines in the body one at a time. When the program arrives at the end of the while loop, it jumps back to the top of the loop. It then rechecks the test, continuing to loop if it passes. The program does not exit the loop until it gets to a check, and the test fails. 
+	When the program <i>runs</i> the body of the loop, the program executes the lines in the body one at a time. When the program arrives at the end of the <code>while</code> loop, it jumps back to the top of the loop. It then rechecks the test, continuing to loop if it passes. The program does not exit the loop until it gets to a check, and the test fails. 
 	</p>
 
 	<p>
-		Karel has many <i class="demoText">test</i> statements, and we will go over all of them in the next chapter. For now we are going to use a single test statement: <code>front_is_clear()</code> which is true if there is no wall directly infront of Karel.
+		Karel has many <i class="demoText">test</i> statements, and we will go over all of them in the next chapter. For now we are going to use a single test statement: <code>front_is_clear()</code> which is true if there is no wall directly in front of Karel.
 	</p>
 
 <h3>Fencepost Bug</h3>
@@ -448,15 +448,15 @@ STARTER_CODE = STARTER_CODE.trim();
 examplebeeperLineBug1();
     </script>
 </div>
-<p>That looks great. Except for one problem. On every world Karel doesn't place a beeper on the last square of the line (look closely). When Karel is on the last square, the program does not execute the body of the loop because the test no longer passes -- Karel is facing a wall. You might be tempted to try switching the order of the body so that Karel moves before placing a beeer. The code is editable so go try it! 
+<p>That looks great. Except for one problem. On every world Karel doesn't place a beeper on the last square of the line (look closely). When Karel is on the last square, the program does not execute the body of the loop because the test no longer passes -- Karel is facing a wall. You might be tempted to try switching the order of the body so that Karel moves before placing a beeper. The code is editable so go try it! 
 	</p>
 
 <p>
-	There is a deeper problem that no rearrangement of the body can solve. For the world with 7 columns, Karel needs to put 7 beepers, but should only move 6 times. Since the while loop executes both lines when a test passes, how can you get the program to execute one command one more time than the other?
+	There is a deeper problem that no rearrangement of the body can solve. For the world with 7 columns, Karel needs to put 7 beepers, but should only move 6 times. Since the <code>while</code> loop executes both lines when a test passes, how can you get the program to execute one command one more time than the other?
 </p>
 
 <p>
-	The bug in this program is an example of a programming problem called a <b>fencepost error</b>. The name comes from the fact that if you want to build a fence made of panels which have one fence post on either size, the number of fence posts is always one greater than the number of panesl. How many fence posts, for example, do you need to build a fence with 10 panels? The answer is 11, as illustrated by the following diagram:
+	The bug in this program is an example of a programming problem called a <b>fencepost error</b>. The name comes from the fact that if you want to build a fence made of panels which have one fence post on either size, the number of fence posts is always one greater than the number of panels. How many fence posts, for example, do you need to build a fence with 10 panels? The answer is 11, as illustrated by the following diagram:
 	</p>
 
 <center>
