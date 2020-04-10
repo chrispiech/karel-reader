@@ -15,7 +15,7 @@ p {
 
 .comment {
   color:#729683;
-  font-family: monaco;
+  font-family: monospace;
   font-weight:400;
   font-size:13px;
 }
@@ -157,7 +157,7 @@ pre {
 
 code {
   padding: 0px;
-	font-family: monaco;
+	font-family: monospace;
   font-weight:400;
 	color:black;
 	background-color: inherit !important;

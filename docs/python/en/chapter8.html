@@ -187,7 +187,7 @@ exampleworld2();
 	<h3>The principle of top-down design</h3>
 
 	<p>
-		The key idea in stepwise refinement is that you should start the design of your program from the top, which refers to the level of the program that is conceptually highest and most abstract. At this level, the beeper tower problem is clearly divided into three independent phases. First, Karel has to collect all the beepers. Second, Karel has to deposit them on the last intersection. Third, Karel has to return to its home position. This conceptual decomposition of the problem suggests that the main function for this program will have the following structure:
+		The key idea in stepwise refinement is that you should start the design of your program from the top, which refers to the level of the program that is conceptually highest and most abstract. At this level, the beeper tower problem is clearly divided into three independent phases. First, Karel has to collect all the beepers. Second, Karel has to deposit them on the last intersection. Third, Karel has to return to its home position. This conceptual decomposition of the problem suggests that the <code>main()</code> function for this program will have the following structure:
 	</p>
 
 	<p class="demoCode" style="margin-left:10px">
@@ -205,10 +205,12 @@ exampleworld2();
 
 <p>
 
-Now that you have defined the structure for the program as a whole, it is time to move on to the first subproblem, which consists of collecting all the beepers. This task is itself more complicated than the simple problems from the preceding chapters. Collecting all the beepers means that you have to pick up the beepers in every tower until you get to the final corner. The fact that you need to repeat an operation for each tower suggests that you need a while loop here. The while loop will repeat the process of <code>collect_one_tower</code> and then moving.
+
+Now that you have defined the structure for the program as a whole, it is time to move on to the first subproblem, which consists of collecting all the beepers. This task is itself more complicated than the simple problems from the preceding chapters. Collecting all the beepers means that you have to pick up the beepers in every tower until you get to the final corner. The fact that you need to repeat an operation for each tower suggests that you need a <code>while</code> loop here. The <code>while</code> loop will repeat the process of <code>collect_one_tower()</code> and then moving.
+
 </p>
 
-<p><b>Caution:</b> It is dangerous to try to write the entire program without <b>testing</b> it as you go. If you make a mistake it will be hard to find the mistake. We know that we are going to repeat the process of collecting one tower. Let us write and <b>test</b> collecting a single tower before we put the <code>collect_one_tower</code> process in a for loop. Thus <i>temporarily</i> we can start with the following definition of collect_all_beepers:
+<p><b>Caution:</b> It is dangerous to try to write the entire program without <b>testing</b> it as you go. If you make a mistake it will be hard to find the mistake. We know that we are going to repeat the process of collecting one tower. Let us write and <b>test</b> collecting a single tower before we put the <code>collect_one_tower()</code> process in a for loop. Thus <i>temporarily</i> we can start with the following definition of <code>collect_all_beepers()</code>:
 
 	<p class="demoCode" style="margin-left:10px">
 <code>&nbsp;&nbsp;&nbsp;<span class="keyword">def</span> collect_all_beepers() : </code><br/>
@@ -224,7 +226,7 @@ Now that you have defined the structure for the program as a whole, it is time t
 <h3>Refining collect tower</h3>
 
 <p>
-	When collect_one_tower is called, Karel is either standing at the base of a tower of beepers or standing on an empty corner. In the former case, you need to collect the beepers in the tower. In the latter, you can simply move on. This situation sounds like an application for the if statement, in which you would write something like this:
+	When <code>collect_one_tower()</code> is called, Karel is either standing at the base of a tower of beepers or standing on an empty corner. In the former case, you need to collect the beepers in the tower. In the latter, you can simply move on. This situation sounds like an application for the <code>if</code> statement, in which you would write something like this:
 </p>
 
 <p class="demoCode" style="margin-left:10px">
@@ -237,7 +239,7 @@ Now that you have defined the structure for the program as a whole, it is time t
 </p>
 
 <p>
-	The collect_one_tower function is still complex enough that an additional level of decomposition is in order. To collect all the beepers in a tower, Karel needs to undertake the following steps:
+	The <code>collect_one_tower()</code> function is still complex enough that an additional level of decomposition is in order. To collect all the beepers in a tower, Karel needs to undertake the following steps:
 </p>
 
 <ol>
@@ -249,7 +251,7 @@ Now that you have defined the structure for the program as a whole, it is time t
 	</ol>
 
 <p>
-	Once again, this outline provides a model for the collect_one_tower function, which looks like this:
+	Once again, this outline provides a model for the <code>collect_one_tower()</code> function, which looks like this:
 </p>
 
 <p class="demoCode" style="margin-left:10px">
@@ -264,24 +266,24 @@ Now that you have defined the structure for the program as a whole, it is time t
 <h3>Function preconditions and postconditions</h3>
 
 <p>
-	The turn_left commands at the beginning and end of the collect_one_tower function are both critical to the correctness of this program. When collect_one_tower is called, Karel is always somewhere on 1st row facing east. When it completes its operation, the program as a whole will work correctly only if Karel is again facing east at that same corner. Conditions that must be true before a function is called are referred to as <b>preconditions</b>; conditions that must apply after the function finishes are known as <b>postconditions</b>.
+	The <code>turn_left()</code> commands at the beginning and end of the <code>collect_one_tower()</code> function are both critical to the correctness of this program. When <code>collect_one_tower()</code> is called, Karel is always somewhere on 1st row facing east. When it completes its operation, the program as a whole will work correctly only if Karel is again facing east at that same corner. Conditions that must be true before a function is called are referred to as <b>preconditions</b>; conditions that must apply after the function finishes are known as <b>postconditions</b>.
 </p>
 
 <p>
-	When you define a function, you will get into far less trouble if you write down exactly what the pre- and postconditions are. Once you have done so, you then need to make sure that the code you write always leaves the postconditions satisfied, assuming that the preconditions were satisfied to begin with. For example, think about what happens if you call collect_one_tower when Karel is on 1st row facing east. The first turn_left command leaves Karel facing north, which means that Karel is properly aligned with the column of beepers representing the tower. The collect_line_of_beepers function-which has yet to be written but nonetheless performs a task that you understand conceptually— simply moves without turning. Thus, at the end of the call to collect_line_of_beepers, Karel will still be facing north. The turn_around call therefore leaves Karel facing south. Like collect_line_of_beepers, the move_to_wall function does not involve any turns but instead simply moves until it hits the boundary wall. Because Karel is facing south, this boundary wall will be the one at the bottom of the screen, just below 1st row. The final turn_left command therefore leaves Karel on 1st row facing east, which satisfies the postcondition.
+	When you define a function, you will get into far less trouble if you write down exactly what the pre- and postconditions are. Once you have done so, you then need to make sure that the code you write always leaves the postconditions satisfied, assuming that the preconditions were satisfied to begin with. For example, think about what happens if you call <code>collect_one_tower()</code> when Karel is on 1st row facing east. The first <code>turn_left()</code> command leaves Karel facing north, which means that Karel is properly aligned with the column of beepers representing the tower. The <code>collect_line_of_beepers()</code> function-which has yet to be written but nonetheless performs a task that you understand conceptually— simply moves without turning. Thus, at the end of the call to <code>collect_line_of_beepers()</code>, Karel will still be facing north. The <code>turn_around()</code> call therefore leaves Karel facing south. Like <code>collect_line_of_beepers()</code>, the <code>move_to_wall()</code> function does not involve any turns but instead simply moves until it hits the boundary wall. Because Karel is facing south, this boundary wall will be the one at the bottom of the screen, just below 1st row. The final <code>turn_left()</code> command therefore leaves Karel on 1st row facing east, which satisfies the postcondition.
 </p>
 
 <h3>Repeating the process</h3>
 
-<p>You run your program and it successfully clears one tower and leaves Karel in the promised postcondition. Wahoo! You have just hit a milestone in solving this hard task! We now have to repeat the process of clearing one tower using a while loop.
+<p>You run your program and it successfully clears one tower and leaves Karel in the promised postcondition. Wahoo! You have just hit a milestone in solving this hard task! We now have to repeat the process of clearing one tower using a <code>while</code> loop.
 </p>
 
 <p>
-	But what does this while loop look like? First of all, you should think about the conditional test. You want Karel to stop when it hits the wall at the end of the row. Thus, you want Karel to keep going as long as the space in front is clear. Thus, you know that the collect_all_beepers function will include a while loop that uses the front_is_clear test. At each position, you want Karel to collect all the beepers in the tower beginning on that corner. If you give that operation a name, which might be something like collect_one_tower, you can go ahead and write a definition for the collect_all_beepers function even though you haven’t yet filled in the details.
+	But what does this <code>while</code> loop look like? First of all, you should think about the conditional test. You want Karel to stop when it hits the wall at the end of the row. Thus, you want Karel to keep going as long as the space in front is clear. Thus, you know that the <code>collect_all_beepers()</code> function will include a <code>while</code> loop that uses the <code>front_is_clear()</code> test. At each position, you want Karel to collect all the beepers in the tower beginning on that corner. If you give that operation a name, which might be something like <code>collect_one_tower()</code>, you can go ahead and write a definition for the <code>collect_all_beepers()</code> function even though you haven’t yet filled in the details.
 </p>
 
 <p>
-	You do, however, have to be careful. The code for collect_all_beepers does not look like this:
+	You do, however, have to be careful. The code for <code>collect_all_beepers()</code> does not look like this:
 </p>
 
 <p class="demoCode" style="margin-left:10px">
@@ -293,7 +295,7 @@ Now that you have defined the structure for the program as a whole, it is time t
 </p>
 
 <p>
-	This implementation is buggy for exactly the same reason that the first version of the general PlaceBeeperLine from chapter 6 failed to do its job. There is a fencepost error in this version of the code, because Karel needs to test for the presence of a beeper tower on the last avenue. The correct implementation is:
+	This implementation is buggy for exactly the same reason that the first version of the general <code>BeeperLine</code> program from chapter 6 failed to do its job. There is a fencepost error in this version of the code, because Karel needs to test for the presence of a beeper tower on the last avenue. The correct implementation is:
 </p>
 
 <p class="demoCode" style="margin-left:10px">
@@ -305,7 +307,7 @@ Now that you have defined the structure for the program as a whole, it is time t
 </p>
 
 <p>
-	Note that this function has precisely the same structure as the main program from the PlaceBeeperLine program presented in chapter 6. The only difference is that this program calls collect_one_tower where the other called put_beeper. These two programs are each examples of a general strategy that looks like this:
+	Note that this function has precisely the same structure as the main program from the PlaceBeeperLine program presented in chapter 6. The only difference is that this program calls <code>collect_one_tower()</code> where the other called <code>put_beeper()</code>. These two programs are each examples of a general strategy that looks like this:
 </p>
 
 <p class="demoCode" style="margin-left:10px">
@@ -322,7 +324,7 @@ Now that you have defined the structure for the program as a whole, it is time t
 
 <h3>Finishing up</h3>
 
-<p>Although the hard work has been done, there are still several loose ends that need to be resolved. The main program calls two functions—drop_all_beepers and return_home— that are as yet unwritten. Similarly, collect_one_tower calls collect_line_of_beepers and move_to_wall. Fortunately, all four of these functionss are simple enough to code without any further decomposition, particularly if you use move_to_wall in the definition of return_home. Here is the complete implementation:</p>
+<p>Although the hard work has been done, there are still several loose ends that need to be resolved. The main program calls two functions—<code>drop_all_beepers()</code> and <code>return_home()</code>— that are as yet unwritten. Similarly, <code>collect_one_tower()</code> calls <code>collect_line_of_beepers()</code> and <code>move_to_wall()</code>. Fortunately, all four of these functionss are simple enough to code without any further decomposition, particularly if you use <code>move_to_wall()</code> in the definition of <code>return_home()</code>. Here is the complete implementation:</p>
 
 
 
