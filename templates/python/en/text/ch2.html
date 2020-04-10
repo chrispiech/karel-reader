@@ -45,14 +45,14 @@ Press the "Run" button to execute the program. Programs are typically written in
 <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;move()</code><br/>
 </p>
 <p>
-These lines represent the definition of a new <b>function</b>, which specifies the sequence of steps necessary to respond to a command. As in the case of the FirstKarel program itself, the function definition consists of two parts that can be considered separately: The first line constitutes the function header and the indented code following is the function body. If you ignore the body for now, the function definition looks like this:
+These lines represent the definition of a new <b>function</b>, which specifies the sequence of steps necessary to respond to a command. As in the case of the <code>FirstKarel</code> program itself, the function definition consists of two parts that can be considered separately: The first line constitutes the function header and the indented code following is the function body. If you ignore the body for now, the function definition looks like this:
 </p>
 <p class="demoCode" style="margin-left:10px">
 <code>&nbsp;&nbsp;&nbsp;<span class="keyword">def</span> main():</code><br/>
 <i class="demoText" style="margin-left:3.5em">body of the function definition</i><br/>
 </p>
 <p>
-The first word in the function header, <code class="keyword">def</code>, is part of Python's syntactic structure. It says that you are creating a new function. The next word on the header line specifies the name of the new function, which in this case is <b>main</b>. Defining a function means that Karel can now respond to a new command with that name. The <code>main</code> command plays a special role in a Karel program. When you start a Karel program it creates a new Karel instance, adds that Karel to a world that you specify, and then issues the main command. The effect of running the program is defined by the body of the main function, which is a sequence of commands that the robot will execute in order. For example, the body of the main function for the FirstKarel program is:
+The first word in the function header, <code class="keyword">def</code>, is part of Python's syntactic structure. It says that you are creating a new function. The next word on the header line specifies the name of the new function, which in this case is <b>main</b>. Defining a function means that Karel can now respond to a new command with that name. The <code>main()</code> command plays a special role in a Karel program. When you start a Karel program it creates a new Karel instance, adds that Karel to a world that you specify, and then issues the <code>main()</code> command. The effect of running the program is defined by the body of the <code>main()</code> function, which is a sequence of commands that the robot will execute in order. For example, the body of the <code>main()</code> function for the <code>FirstKarel</code> program is:
 </p>
 <p class="demoCode" style="margin-left:10px">
 <code>&nbsp;&nbsp;&nbsp;move()</code><br/>
@@ -60,14 +60,14 @@ The first word in the function header, <code class="keyword">def</code>, is part
 <code>&nbsp;&nbsp;&nbsp;move()</code><br/>
 </p>
 <p>
-  Thus, if the initial state of the world matches the example given in Chapter 1, Karel first moves forward into the corner containing the beeper, picks up that beeper, and finally moves forward to the corner just before the wall, as shown in the following before-and-after diagram:
+Thus, if the initial state of the world matches the example given in Chapter 1, Karel first moves forward into the corner containing the beeper, picks up that beeper, and finally moves forward to the corner just before the wall, as shown in the following before-and-after diagram:
   </p>
 <%
   include('templates/java/'+lang+'/programs/beforeAfter.html', name="ba2", before="stepUp", after="stepUpM1", ratio="0.7", canvasWidth="300")
 %>
 <h2>Solving a more interesting problem</h2>
 <p>
-  The FirstKarel program defined above doesn’t do very much as yet. Let’s try to make it a little more interesting. Suppose that the goal is not simply to get Karel to pick up the beeper but to move the beeper from its initial position on 2nd column and 1st row to the center of a ledge. Thus, your next assignment is to define a new Karel program that accomplishes the task illustrated in this diagram:
+  The <code>FirstKarel</code> program defined above doesn’t do very much as yet. Let’s try to make it a little more interesting. Suppose that the goal is not simply to get Karel to pick up the beeper but to move the beeper from its initial position on 2nd column and 1st row to the center of a ledge. Thus, your next assignment is to define a new Karel program that accomplishes the task illustrated in this diagram:
   </p>
 <%
   include('templates/java/'+lang+'/programs/beforeAfter.html', name="ba3", before="stepUp", after="stepUpGoal", ratio="0.7", canvasWidth="300")
@@ -82,16 +82,16 @@ The first word in the function header, <code class="keyword">def</code>, is part
 <code>&nbsp;&nbsp;&nbsp;move()</code><br/>
 </p>
 <p>
-  From here, the next step is to turn left to begin climbing the ledge. That operation is easy, because Karel has a turnLeft command in its standard repertoire. Executing a turnLeft command at the end of the preceding sequence of commands leaves Karel facing north on the corner of 1st row and 3rd column. If Karel then executes a move command, it will move north to reach the following position:
+From here, the next step is to turn left to begin climbing the ledge. That operation is easy, because Karel has a <code>turn_left()</code> command in its standard repertoire. Executing a <code>turn_left()</code> command at the end of the preceding sequence of commands leaves Karel facing north on the corner of 1st row and 3rd column. If Karel then executes a <code>move()</code> command, it will move north to reach the following position:
 </p>
 <%
   include('templates/java/'+lang+'/programs/world.html', name="ba3", world="stepUpM2")
 %>
 <p>
-  From here, the next thing you need to do is get Karel to turn right so that it is again facing east. While this operation is conceptually just as easy as getting Karel to turn left, there is a slight problem: Karel’s language includes a <code>turnLeft</code> command, but no <code>turn_right</code> command. It’s as if you bought the economy model and have now discovered that it is missing some important features.
+From here, the next thing you need to do is get Karel to turn right so that it is again facing east. While this operation is conceptually just as easy as getting Karel to turn left, there is a slight problem: Karel’s language includes a <code>turn_left()</code> command, but no <code>turn_right()</code> command. It’s as if you bought the economy model and have now discovered that it is missing some important features.
 </p>
 <p>
-  At this point, you have your first opportunity to begin thinking like a programmer. You have one set of commands, but not exactly the set you need. What can you do? Can you accomplish the effect of a turn_right command using only the capabilities you have? The answer, of course, is yes. You can accomplish the effect of turning right by turning left three times. After three left turns, Karel will be facing in the desired direction. From here, all you need to do is program Karel to move over to the center of the ledge, drop the beeper and then move forward to the final position. Here is a complete implementation of a <code>StepUp</code> program that accomplishes the entire task:
+At this point, you have your first opportunity to begin thinking like a programmer. You have one set of commands, but not exactly the set you need. What can you do? Can you accomplish the effect of a <code>turn_right()</code> command using only the capabilities you have? The answer, of course, is yes. You can accomplish the effect of turning right by turning left three times. After three left turns, Karel will be facing in the desired direction. From here, all you need to do is program Karel to move over to the center of the ledge, drop the beeper and then move forward to the final position. Here is a complete implementation of a program that accomplishes the entire task:
 </p>
 
 <%
