@@ -1,8 +1,8 @@
 
 
 
-<html> 
-<head> 
+<html>
+<head>
 <title>Karel Reader</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -16,7 +16,7 @@
 <script src="../..//karel/js/html/websiteImports.js"></script>
 <script>importCss();</script>
 <script>importJs();</script>
-</head> 
+</head>
 <body>
   <!-- container -->
   <div class="bookContainer">
@@ -29,7 +29,7 @@
     </a>
   </div>
   <hr/>
-  
+
   <div class="chapterTab" onclick="location.href='../../python/en/chapter1.html'">
     <a class="bookLink btn btn-link" href="../../python/en/chapter1.html">
       1 - Meet Karel
@@ -95,7 +95,7 @@
 <h3>Basic Conditionals</h3>
 
 <p>
-	An <code>if/else</code> statement executes an "if" code-block if and only if the provided <i class="demoText">test</i> is true for the state of the world at the time the program reaches the statement. Otherwise the program executes the "else" code-block. 
+	An <code>if/else</code> statement executes an "if" code-block if and only if the provided <i class="demoText">test</i> is true for the state of the world at the time the program reaches the statement. Otherwise the program executes the "else" code-block.
 </p>
 
 <p class="demoCode">
@@ -105,7 +105,7 @@
 	<i class="demoText" style="margin-left:2em">else code-block</i><br/>
 </p>
 <p>
-	To get a sense of where conditional statements might come in handy, let's write a program that has Karel invert a line of beepers. If a square previously had a beeper, Karel should pick it up. If a square has no beeper, Karel should put one down. 
+	To get a sense of where conditional statements might come in handy, let's write a program that has Karel invert a line of beepers. If a square previously had a beeper, Karel should pick it up. If a square has no beeper, Karel should put one down.
 </p>
 
 
@@ -137,11 +137,11 @@
     <div style="width:100%;">
         <div class="buttonBar">
            <button class="btn btn-default" id="invertLineRunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
-        </div> 
+        </div>
     </div>
 <script>
 
-        
+
 
 function exampleinvertLine() {
 STARTER_CODE = `
@@ -149,16 +149,16 @@ from karel.stanfordkarel import *
 
 # the start of the program
 def main():
-   while front_is_clear(): 
+   while front_is_clear():
       invert_beeper()
       move()
-   # to prevent a fencepost bug 
+   # to prevent a fencepost bug
    invert_beeper()
 
-# picks up a beeper if one is present 
-# puts down a beeper otherwise 
+# picks up a beeper if one is present
+# puts down a beeper otherwise
 def invert_beeper():
-   # an if/else statement 
+   # an if/else statement
    if beepers_present():
       pick_beeper()
    else:
@@ -173,19 +173,19 @@ STARTER_CODE = STARTER_CODE.trim();
  function main() {
    karelEditor = importPythonEditor('invertLineEditor','invertLineEditorDiv', STARTER_CODE, true);
     setupWorldDropdown();
-    
-    
+
+
     var canvas = document.getElementById('invertLineCanvas');
     karelIde = KarelIde('python',karelEditor, canvas, 'invert', 0.0, 'en');
     $('#invertLineRunButton').click(function(){playClicked()});
     onresize();
-    
+
  }
 
  function setupWorldDropdown() {
     console.log('setup world dropdown')
     let ul = document.getElementById('invertLineWorlds')
-    
+
     if (!ul.childNodes || ul.childNodes.length == 0) return;
 
     // Iterate LIs
@@ -226,10 +226,10 @@ STARTER_CODE = STARTER_CODE.trim();
   function changeToResetButton() {
     var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
     $('#invertLineRunButton').html(resetText);
-    buttonState = 'reset';  
+    buttonState = 'reset';
   }
 
- function onresize() { 
+ function onresize() {
     var parentHeight = 316.8;
     var canvasWidth = 300
     var parentWidth = $("#invertLine").width();
@@ -238,14 +238,14 @@ STARTER_CODE = STARTER_CODE.trim();
     var ide = document.getElementById('invertLineIde');
     var editorDiv = document.getElementById('invertLineEditorDiv');
     var canvas = document.getElementById('invertLineCanvasDiv');
-    
+
     var ideHeight = parentHeight
     var centerHeight = ideHeight;
 
     var availibleWidth = parentWidth;
     var elementSpacing = 12;
 
-    var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
+    var editorWidth = availibleWidth - canvasWidth - elementSpacing;
 
     canvas.style.width = canvasWidth + 'px';
     canvas.style.height = canvasWidth + 'px';
@@ -263,7 +263,7 @@ STARTER_CODE = STARTER_CODE.trim();
     }
  }
  main()
- 
+
 }
 exampleinvertLine();
     </script>
@@ -309,7 +309,7 @@ That last example used a new condition. Here is a list of all of the conditions 
   <tr>
     <td><code>beepers_in_bag()</code></td>
     <td><code>no_beepers_in_bag()</code></td>
-    <td>Does Karel have any beepers in her bag?</td>
+    <td>Does Karel have any beepers in its bag?</td>
   </tr>
   <!-- dirs -->
   <tr>
@@ -360,6 +360,5 @@ That last example used a new condition. Here is a list of all of the conditions 
       <div style="flex-grow:4"></div>
     </div>
   </div>
-</body> 
+</body>
 </html>
-

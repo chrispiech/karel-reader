@@ -1,7 +1,7 @@
 
 
-<html> 
-<head> 
+<html>
+<head>
 <title>Karel Reader</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -15,7 +15,7 @@
 <script src="../..//karel/js/html/websiteImports.js"></script>
 <script>importCss();</script>
 <script>importJs();</script>
-</head> 
+</head>
 <body>
   <!-- container -->
   <div class="bookContainer">
@@ -28,7 +28,7 @@
     </a>
   </div>
   <hr/>
-  
+
   <div class="chapterTab" onclick="location.href='../../java/en/chapter1.html'">
     <a class="bookLink btn btn-link" href="../../java/en/chapter1.html">
       1 - Meet Karel
@@ -69,7 +69,7 @@
 
   <hr/>
 
-  <a href="../../"><img style = "width:40px" src="../../images/unFlag.png"/> Learn more</a> 
+  <a href="../../"><img style = "width:40px" src="../../images/unFlag.png"/> Learn more</a>
 
   <!-- <center>
     <img style ="width:75px;" src="../../images/stanford.png"/>
@@ -109,12 +109,12 @@ One of the things that computers are especially good at is repetition. How can w
               <canvas id='baCanvasAfter' style="width:200px;"></canvas>
             </div>
           </div>
-         </div> 
+         </div>
     </div>
-    
+
 <script>
 
-        
+
 
 function exampleba() {
  var karelIde = null;
@@ -129,9 +129,9 @@ function exampleba() {
     let goalIde = KarelIde('java',null, canvasGoal, '99beepersGoal',0.0, 'en',  1000, 1.0 * 1000)
  }
 
- 
+
  main()
- 
+
 }
 exampleba();
     </script>
@@ -167,11 +167,11 @@ exampleba();
     <div style="width:100%;">
         <div class="buttonBar">
            <button class="btn btn-default" id="99beepersRunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
-        </div> 
+        </div>
     </div>
 <script>
 
-        
+
 
 function example99beepers() {
 STARTER_CODE = `
@@ -189,7 +189,7 @@ public class PlaceManyBeepers extends Karel {
       	putBeeper();
       }
       move();
-   } 
+   }
 }`
 // because of that extra endline at the start of the string
 STARTER_CODE = STARTER_CODE.trim();
@@ -201,21 +201,21 @@ STARTER_CODE = STARTER_CODE.trim();
  function main() {
    karelEditor = importEditorCode('99beepersEditor','99beepersEditorDiv', STARTER_CODE, true);
      //importRunButtonBar('example1ButtonBar');
-    
+
     $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
-    
+
     initTabs();
     var canvas = document.getElementById('99beepersCanvas');
     karelIde = KarelIde('java',karelEditor, canvas, '99beepersStart', 0.8, 'en');
     $('#99beepersRunButton').click(function(){playClicked()});
     onresize();
-    
+
  }
 
  function playClicked() {
   if(buttonState == 'play') {
     karelIde.playButton();
-      
+
       var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
       $('#99beepersRunButton').html(resetText);
       buttonState = 'reset';
@@ -225,10 +225,10 @@ STARTER_CODE = STARTER_CODE.trim();
       $('#99beepersRunButton').html(playText);
       buttonState = 'play';
      }
-  
+
   }
 
- function onresize() { 
+ function onresize() {
     var parentHeight = 281.6;
     var canvasWidth = 200
     var parentWidth = $("#99beepers").width();
@@ -237,14 +237,14 @@ STARTER_CODE = STARTER_CODE.trim();
     var ide = document.getElementById('99beepersIde');
     var editorDiv = document.getElementById('99beepersEditorDiv');
     var canvas = document.getElementById('99beepersCanvasDiv');
-    
+
     var ideHeight = parentHeight
     var centerHeight = ideHeight;
 
     var availibleWidth = parentWidth;
     var elementSpacing = 12;
 
-    var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
+    var editorWidth = availibleWidth - canvasWidth - elementSpacing;
 
     canvas.style.width = canvasWidth + 'px';
     canvas.style.height = canvasWidth + 'px';
@@ -262,7 +262,7 @@ STARTER_CODE = STARTER_CODE.trim();
     }
  }
  main()
- 
+
 }
 example99beepers();
     </script>
@@ -289,11 +289,11 @@ The previous example gives the impression that a for loop repeats a single line 
     <div style="width:100%;">
         <div class="buttonBar">
            <button class="btn btn-default" id="cornerBeepersRunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
-        </div> 
+        </div>
     </div>
 <script>
 
-        
+
 
 function examplecornerBeepers() {
 STARTER_CODE = `
@@ -313,7 +313,7 @@ public class CornerBeepers extends Karel {
       	move();
       	turnLeft();
       }
-   } 
+   }
 }`
 // because of that extra endline at the start of the string
 STARTER_CODE = STARTER_CODE.trim();
@@ -325,21 +325,21 @@ STARTER_CODE = STARTER_CODE.trim();
  function main() {
    karelEditor = importEditorCode('cornerBeepersEditor','cornerBeepersEditorDiv', STARTER_CODE, true);
      //importRunButtonBar('example1ButtonBar');
-    
+
     $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
-    
+
     initTabs();
     var canvas = document.getElementById('cornerBeepersCanvas');
     karelIde = KarelIde('java',karelEditor, canvas, 'cornerBeepersStart', 0.0, 'en');
     $('#cornerBeepersRunButton').click(function(){playClicked()});
     onresize();
-    
+
  }
 
  function playClicked() {
   if(buttonState == 'play') {
     karelIde.playButton();
-      
+
       var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
       $('#cornerBeepersRunButton').html(resetText);
       buttonState = 'reset';
@@ -349,10 +349,10 @@ STARTER_CODE = STARTER_CODE.trim();
       $('#cornerBeepersRunButton').html(playText);
       buttonState = 'play';
      }
-  
+
   }
 
- function onresize() { 
+ function onresize() {
     var parentHeight = 316.8;
     var canvasWidth = 200
     var parentWidth = $("#cornerBeepers").width();
@@ -361,14 +361,14 @@ STARTER_CODE = STARTER_CODE.trim();
     var ide = document.getElementById('cornerBeepersIde');
     var editorDiv = document.getElementById('cornerBeepersEditorDiv');
     var canvas = document.getElementById('cornerBeepersCanvasDiv');
-    
+
     var ideHeight = parentHeight
     var centerHeight = ideHeight;
 
     var availibleWidth = parentWidth;
     var elementSpacing = 12;
 
-    var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
+    var editorWidth = availibleWidth - canvasWidth - elementSpacing;
 
     canvas.style.width = canvasWidth + 'px';
     canvas.style.height = canvasWidth + 'px';
@@ -386,7 +386,7 @@ STARTER_CODE = STARTER_CODE.trim();
     }
  }
  main()
- 
+
 }
 examplecornerBeepers();
     </script>
@@ -402,7 +402,7 @@ examplecornerBeepers();
 <h3>Nested Loops</h3>
 
 <p>
-Techniacally the body of a for loop can contain any control flow code, even other loops. Here is an example of a for loop that repeats a call to a method which also has a for loop. We call this a "nested" loop. Try to read through the program, and understand what it does, before running it:
+Technically the body of a for loop can contain any control flow code, even other loops. Here is an example of a for loop that repeats a call to a method which also has a for loop. We call this a "nested" loop. Try to read through the program, and understand what it does, before running it:
 
 
 <div class="section embeddedIde" id="cornerBeepers10">
@@ -417,11 +417,11 @@ Techniacally the body of a for loop can contain any control flow code, even othe
     <div style="width:100%;">
         <div class="buttonBar">
            <button class="btn btn-default" id="cornerBeepers10RunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
-        </div> 
+        </div>
     </div>
 <script>
 
-        
+
 
 function examplecornerBeepers10() {
 STARTER_CODE = `
@@ -439,7 +439,7 @@ public class CornerFiveBeepers extends Karel {
          putFiveBeepers();
          moveToTheNextCorner();
       }
-   } 
+   }
 
    /* reposition karel to the next corner */
    public void moveToTheNextCorner() {
@@ -466,21 +466,21 @@ STARTER_CODE = STARTER_CODE.trim();
  function main() {
    karelEditor = importEditorCode('cornerBeepers10Editor','cornerBeepers10EditorDiv', STARTER_CODE, false);
      //importRunButtonBar('example1ButtonBar');
-    
+
     $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
-    
+
     initTabs();
     var canvas = document.getElementById('cornerBeepers10Canvas');
     karelIde = KarelIde('java',karelEditor, canvas, 'cornerBeepersStart', 0.7, 'en');
     $('#cornerBeepers10RunButton').click(function(){playClicked()});
     onresize();
-    
+
  }
 
  function playClicked() {
   if(buttonState == 'play') {
     karelIde.playButton();
-      
+
       var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
       $('#cornerBeepers10RunButton').html(resetText);
       buttonState = 'reset';
@@ -490,10 +490,10 @@ STARTER_CODE = STARTER_CODE.trim();
       $('#cornerBeepers10RunButton').html(playText);
       buttonState = 'play';
      }
-  
+
   }
 
- function onresize() { 
+ function onresize() {
     var parentHeight = 545.6;
     var canvasWidth = 200
     var parentWidth = $("#cornerBeepers10").width();
@@ -502,14 +502,14 @@ STARTER_CODE = STARTER_CODE.trim();
     var ide = document.getElementById('cornerBeepers10Ide');
     var editorDiv = document.getElementById('cornerBeepers10EditorDiv');
     var canvas = document.getElementById('cornerBeepers10CanvasDiv');
-    
+
     var ideHeight = parentHeight
     var centerHeight = ideHeight;
 
     var availibleWidth = parentWidth;
     var elementSpacing = 12;
 
-    var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
+    var editorWidth = availibleWidth - canvasWidth - elementSpacing;
 
     canvas.style.width = canvasWidth + 'px';
     canvas.style.height = canvasWidth + 'px';
@@ -527,7 +527,7 @@ STARTER_CODE = STARTER_CODE.trim();
     }
  }
  main()
- 
+
 }
 examplecornerBeepers10();
     </script>
@@ -546,5 +546,5 @@ examplecornerBeepers10();
       <div style="flex-grow:4"></div>
     </div>
   </div>
-</body> 
+</body>
 </html>

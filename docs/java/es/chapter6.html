@@ -3,11 +3,11 @@
 <head>
 
 <title>Lector Karel</title>
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/> 
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
 <script src="../../plugins/jquery.min.js"></script>
-<link href="../../plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet"/> 
+<link href="../../plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
 <script src="../../plugins/bootstrap/js/bootstrap.min.js"></script>
-<link href="../../style.css" rel="stylesheet"/> 
+<link href="../../style.css" rel="stylesheet"/>
 <script src="../..//karel/js/html/websiteImports.js"></script>
 <script>importCss();</script>
 <script>importJs();</script>
@@ -20,46 +20,46 @@
 <div class="bookSideBar">
 <div class="homeLink">
  <a href="../../java/es/intro.html">
-<span aria-hidden="true" class="glyphicon glyphicon-home"></span> Karel</a> 
+<span aria-hidden="true" class="glyphicon glyphicon-home"></span> Karel</a>
 </div>
 <hr/>
 <div class="chapterTab" onclick="location.href='../../java/es/chapter1.html'">
-<a class="bookLink btn btn-link" href="../../java/es/chapter1.html">1 - Cumplir Karel</a> 
+<a class="bookLink btn btn-link" href="../../java/es/chapter1.html">1 - Cumplir Karel</a>
 </div>
 <div class="chapterTab" onclick="location.href='../../java/es/chapter2.html'">
-<a class="bookLink btn btn-link" href="../../java/es/chapter2.html">2 - Programación</a> 
+<a class="bookLink btn btn-link" href="../../java/es/chapter2.html">2 - Programación</a>
 </div>
 <div class="chapterTab" onclick="location.href='../../java/es/chapter3.html'">
-<a class="bookLink btn btn-link" href="../../java/es/chapter3.html">3 - Nuevos métodos</a> 
+<a class="bookLink btn btn-link" href="../../java/es/chapter3.html">3 - Nuevos métodos</a>
 </div>
 <div class="chapterTab" onclick="location.href='../../java/es/chapter4.html'">
-<a class="bookLink btn btn-link" href="../../java/es/chapter4.html">4 - Descomposición</a> 
+<a class="bookLink btn btn-link" href="../../java/es/chapter4.html">4 - Descomposición</a>
 </div>
 <div class="chapterTab" onclick="location.href='../../java/es/chapter5.html'">
-<a class="bookLink btn btn-link" href="../../java/es/chapter5.html">5 - Ciclos For</a> 
+<a class="bookLink btn btn-link" href="../../java/es/chapter5.html">5 - Ciclos For</a>
 </div>
 <div class="chapterTab" onclick="location.href='../../java/es/chapter6.html'">
-<a class="bookLink btn btn-link" href="../../java/es/chapter6.html">6 - Ciclos While</a> 
+<a class="bookLink btn btn-link" href="../../java/es/chapter6.html">6 - Ciclos While</a>
 </div>
 <div class="chapterTab" onclick="location.href='../../java/es/chapter7.html'">
-<a class="bookLink btn btn-link" href="../../java/es/chapter7.html">7 - Condicionales</a> 
+<a class="bookLink btn btn-link" href="../../java/es/chapter7.html">7 - Condicionales</a>
 </div>
 <div class="chapterTab" onclick="location.href='../../java/es/chapter8.html'">
-<a class="bookLink btn btn-link" href="../../java/es/chapter8.html">8 - Refinamiento</a> 
+<a class="bookLink btn btn-link" href="../../java/es/chapter8.html">8 - Refinamiento</a>
 </div>
 <div class="chapterTab" onclick="location.href='../../java/es/chapter9.html'">
-<a class="bookLink btn btn-link" href="../../java/es/chapter9.html">9 - Super Karel</a> 
+<a class="bookLink btn btn-link" href="../../java/es/chapter9.html">9 - Super Karel</a>
 </div>
 <div class="chapterTab" onclick="location.href='../../java/es/reference.html'">
-<a class="bookLink btn btn-link" href="../../java/es/reference.html">10 - Referencia</a> 
+<a class="bookLink btn btn-link" href="../../java/es/reference.html">10 - Referencia</a>
 </div>
 <div class="chapterTab" onclick="location.href='../../java/es/ide.html'">
-<a class="bookLink btn btn-link" href="../../java/es/ide.html">11 - Código</a> 
+<a class="bookLink btn btn-link" href="../../java/es/ide.html">11 - Código</a>
 </div>
 <hr/>
- <a href="../../"><img src="../../images/unFlag.png" style="width:40px"/> Aprende más</a> 
+ <a href="../../"><img src="../../images/unFlag.png" style="width:40px"/> Aprende más</a>
 <!-- <center>
-    <img style ="width:75px;" src="../../images/stanford.png"/> 
+    <img style ="width:75px;" src="../../images/stanford.png"/>
     </center> -->
 </div>
 <!-- content -->
@@ -110,7 +110,7 @@
 </div>
 <script>
 
-        
+
 
 function examplemoveToWall() {
 STARTER_CODE = `
@@ -133,7 +133,7 @@ public class MoverseAPared extends Karel {
       while(frenteDespejado()) {
          moverse();
       }
-   } 
+   }
 }
 `
 // because of that extra endline at the start of the string
@@ -146,19 +146,19 @@ STARTER_CODE = STARTER_CODE.trim();
  function main() {
    karelEditor = importEditorCode('moveToWallEditor','moveToWallEditorDiv', STARTER_CODE, false);
     setupWorldDropdown();
-    
-    
+
+
     var canvas = document.getElementById('moveToWallCanvas');
     karelIde = KarelIde('java',karelEditor, canvas, '7x7', 0.0, 'es');
     $('#moveToWallRunButton').click(function(){playClicked()});
     onresize();
-    
+
  }
 
  function setupWorldDropdown() {
     console.log('setup world dropdown')
     let ul = document.getElementById('moveToWallWorlds')
-    
+
     if (!ul.childNodes || ul.childNodes.length == 0) return;
 
     // Iterate LIs
@@ -199,10 +199,10 @@ STARTER_CODE = STARTER_CODE.trim();
   function changeToResetButton() {
     var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
     $('#moveToWallRunButton').html(resetText);
-    buttonState = 'reset';  
+    buttonState = 'reset';
   }
 
- function onresize() { 
+ function onresize() {
     var parentHeight = 352.0;
     var canvasWidth = 300
     var parentWidth = $("#moveToWall").width();
@@ -211,14 +211,14 @@ STARTER_CODE = STARTER_CODE.trim();
     var ide = document.getElementById('moveToWallIde');
     var editorDiv = document.getElementById('moveToWallEditorDiv');
     var canvas = document.getElementById('moveToWallCanvasDiv');
-    
+
     var ideHeight = parentHeight
     var centerHeight = ideHeight;
 
     var availibleWidth = parentWidth;
     var elementSpacing = 12;
 
-    var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
+    var editorWidth = availibleWidth - canvasWidth - elementSpacing;
 
     canvas.style.width = canvasWidth + 'px';
     canvas.style.height = canvasWidth + 'px';
@@ -236,7 +236,7 @@ STARTER_CODE = STARTER_CODE.trim();
     }
  }
  main()
- 
+
 }
 examplemoveToWall();
     </script>
@@ -248,7 +248,7 @@ examplemoveToWall();
 <p class="demoCode">
  <code><span class="keyword">while</span>(</code> <i class="demoText">prueba</i> <code>){</code> <br/>
 <i class="demoText" style="margin-left:2em">declaraciones a repetir</i><br/>
- <code>}</code> 
+ <code>}</code>
 </p>
 <p>El flujo de control de un ciclo while es el siguiente. Cuando el programa llega a ciclo while comienza a repetir un proceso en el que primero<i>cheques</i>Si la prueba pasa, y si es así.<i>run s</i>El código en el cuerpo.</p>Cuando el programa<i>cheques</i>Si la prueba pasa, decide si el<i class="demoText">prueba</i>Es cierto para el estado actual del mundo. Si es así, el ciclo tendrá el código run en el cuerpo. Si la prueba falla, el ciclo ha terminado y el programa moverse s está moverse .
 <p>Cuando el programa<i>run s</i>El cuerpo del ciclo , el programa ejecuta las líneas en el cuerpo de una en una. Cuando el programa llega al final de la ciclo while , salta de nuevo a la parte superior de la ciclo . A continuación, vuelve a comprobar la prueba, continuando a ciclo si pasa. El programa no sale del ciclo hasta que llega a una verificación y la prueba falla.</p>
@@ -289,7 +289,7 @@ examplemoveToWall();
 </div>
 <script>
 
-        
+
 
 function examplebeeperLineBug1() {
 STARTER_CODE = `
@@ -308,7 +308,7 @@ public class ConoErrorDeLínea extends Karel {
    public void run() {
    	  /* Se repite hasta karel frente a una pared. */
       while(frenteDespejado()) {
-      	 /* coloca un cono en la plaza actual */ 
+      	 /* coloca un cono en la plaza actual */
          ponerCono();
       	 /* moverse al siguiente cuadrado */
          moverse();
@@ -326,19 +326,19 @@ STARTER_CODE = STARTER_CODE.trim();
  function main() {
    karelEditor = importEditorCode('beeperLineBug1Editor','beeperLineBug1EditorDiv', STARTER_CODE, true);
     setupWorldDropdown();
-    
-    
+
+
     var canvas = document.getElementById('beeperLineBug1Canvas');
     karelIde = KarelIde('java',karelEditor, canvas, '7x7', 0.0, 'es');
     $('#beeperLineBug1RunButton').click(function(){playClicked()});
     onresize();
-    
+
  }
 
  function setupWorldDropdown() {
     console.log('setup world dropdown')
     let ul = document.getElementById('beeperLineBug1Worlds')
-    
+
     if (!ul.childNodes || ul.childNodes.length == 0) return;
 
     // Iterate LIs
@@ -379,10 +379,10 @@ STARTER_CODE = STARTER_CODE.trim();
   function changeToResetButton() {
     var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
     $('#beeperLineBug1RunButton').html(resetText);
-    buttonState = 'reset';  
+    buttonState = 'reset';
   }
 
- function onresize() { 
+ function onresize() {
     var parentHeight = 369.6;
     var canvasWidth = 300
     var parentWidth = $("#beeperLineBug1").width();
@@ -391,14 +391,14 @@ STARTER_CODE = STARTER_CODE.trim();
     var ide = document.getElementById('beeperLineBug1Ide');
     var editorDiv = document.getElementById('beeperLineBug1EditorDiv');
     var canvas = document.getElementById('beeperLineBug1CanvasDiv');
-    
+
     var ideHeight = parentHeight
     var centerHeight = ideHeight;
 
     var availibleWidth = parentWidth;
     var elementSpacing = 12;
 
-    var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
+    var editorWidth = availibleWidth - canvasWidth - elementSpacing;
 
     canvas.style.width = canvasWidth + 'px';
     canvas.style.height = canvasWidth + 'px';
@@ -416,17 +416,17 @@ STARTER_CODE = STARTER_CODE.trim();
     }
  }
  main()
- 
+
 }
 examplebeeperLineBug1();
     </script>
 </div>
 
-<p>Eso se ve genial. Excepto por un problema. En todos los mundos, Karel no coloca un cono en el último cuadrado de la línea (observe detenidamente). Cuando Karel está en el último cuadrado, el programa no ejecuta el cuerpo del ciclo porque la prueba ya no pasa, Karel se enfrenta a una pared. Puede tener la tentación de intentar cambiar el orden del cuerpo de modo que Karel moverse s antes de colocar un beeer. El código es editable así que ¡pruébalo!</p>
+<p>Eso se ve genial. Excepto por un problema. En todos los mundos, Karel no coloca un cono en el último cuadrado de la línea (observe detenidamente). Cuando Karel está en el último cuadrado, el programa no ejecuta el cuerpo del ciclo porque la prueba ya no pasa, Karel se enfrenta a una pared. Puede tener la tentación de intentar cambiar el orden del cuerpo de modo que Karel moverse s antes de colocar un cono. El código es editable así que ¡pruébalo!</p>
 <p>Hay un problema más profundo que ninguna reorganización del cuerpo puede resolver. Para el mundo con 7 columnas, Karel necesita colocar 7 conos , pero solo debería moverse 6 veces. Dado que el ciclo while ejecuta ambas líneas cuando pasa una prueba, ¿cómo puede hacer que el programa ejecute un comando una vez más que el otro?</p>
 <p>El error en este programa es un ejemplo de un problema de programación llamado <b>error del poste</b> . El nombre proviene del hecho de que si desea construir una cerca hecha de paneles que tengan un poste de cerca en cualquiera de los tamaños, el número de mensajes de cerca siempre es uno mayor que el número de paneles. ¿Cuántos postes de la cerca, por ejemplo, necesitas construir una cerca con 10 paneles? La respuesta es 11, como se ilustra en el siguiente diagrama:</p>
 <center>
-<img src="../../images/ch6/fencepost.png" style="width:500px;margin-bottom:10px"/> 
+<img src="../../images/ch6/fencepost.png" style="width:500px;margin-bottom:10px"/>
 </center>
 <p>Una vez que lo descubres, arreglar este error es bastante fácil. Antes de que Karel detenga en el fin del mundo, todo lo que el programa tiene que hacer es colocar un final cono :</p>
 
@@ -463,7 +463,7 @@ examplebeeperLineBug1();
 </div>
 <script>
 
-        
+
 
 function examplebeeperLine() {
 STARTER_CODE = `
@@ -480,7 +480,7 @@ public class ConoLinea extends Karel {
    public void run() {
       /* Se repite hasta karel frente a una pared. */
       while(frenteDespejado()) {
-         /* coloca un cono en la plaza actual */ 
+         /* coloca un cono en la plaza actual */
          ponerCono();
          /* moverse al siguiente cuadrado */
          moverse();
@@ -500,19 +500,19 @@ STARTER_CODE = STARTER_CODE.trim();
  function main() {
    karelEditor = importEditorCode('beeperLineEditor','beeperLineEditorDiv', STARTER_CODE, true);
     setupWorldDropdown();
-    
-    
+
+
     var canvas = document.getElementById('beeperLineCanvas');
     karelIde = KarelIde('java',karelEditor, canvas, '7x7', 0.8, 'es');
     $('#beeperLineRunButton').click(function(){playClicked()});
     onresize();
-    
+
  }
 
  function setupWorldDropdown() {
     console.log('setup world dropdown')
     let ul = document.getElementById('beeperLineWorlds')
-    
+
     if (!ul.childNodes || ul.childNodes.length == 0) return;
 
     // Iterate LIs
@@ -553,10 +553,10 @@ STARTER_CODE = STARTER_CODE.trim();
   function changeToResetButton() {
     var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
     $('#beeperLineRunButton').html(resetText);
-    buttonState = 'reset';  
+    buttonState = 'reset';
   }
 
- function onresize() { 
+ function onresize() {
     var parentHeight = 369.6;
     var canvasWidth = 300
     var parentWidth = $("#beeperLine").width();
@@ -565,14 +565,14 @@ STARTER_CODE = STARTER_CODE.trim();
     var ide = document.getElementById('beeperLineIde');
     var editorDiv = document.getElementById('beeperLineEditorDiv');
     var canvas = document.getElementById('beeperLineCanvasDiv');
-    
+
     var ideHeight = parentHeight
     var centerHeight = ideHeight;
 
     var availibleWidth = parentWidth;
     var elementSpacing = 12;
 
-    var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
+    var editorWidth = availibleWidth - canvasWidth - elementSpacing;
 
     canvas.style.width = canvasWidth + 'px';
     canvas.style.height = canvasWidth + 'px';
@@ -590,13 +590,13 @@ STARTER_CODE = STARTER_CODE.trim();
     }
  }
  main()
- 
+
 }
 examplebeeperLine();
     </script>
 </div><hr/>
 <center>
-<a class="btn btn-primary btn-lg" href="chapter7.html" role="button">Siguiente capítulo</a> 
+<a class="btn btn-primary btn-lg" href="chapter7.html" role="button">Siguiente capítulo</a>
 </center>
 
 

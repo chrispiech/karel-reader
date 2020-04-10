@@ -1,7 +1,7 @@
 
 
-<html> 
-<head> 
+<html>
+<head>
 <title>Karel Reader</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -15,7 +15,7 @@
 <script src="../..//karel/js/html/websiteImports.js"></script>
 <script>importCss();</script>
 <script>importJs();</script>
-</head> 
+</head>
 <body>
   <!-- container -->
   <div class="bookContainer">
@@ -28,7 +28,7 @@
     </a>
   </div>
   <hr/>
-  
+
   <div class="chapterTab" onclick="location.href='../../python/en/chapter1.html'">
     <a class="bookLink btn btn-link" href="../../python/en/chapter1.html">
       1 - Meet Karel
@@ -115,12 +115,12 @@
               <canvas id='world1Canvas' style="width:400px;"></canvas>
             </div>
           </div>
-         </div> 
+         </div>
     </div>
-    
+
 <script>
 
-        
+
 
 function exampleworld1() {
  var karelIde = null;
@@ -132,9 +132,9 @@ function exampleworld1() {
     karelIde = KarelIde('python',null, canvas, 'beeperTowers', 0, 'en',1000, 0.8 * 1000);
  }
 
- 
+
  main()
- 
+
 }
 exampleworld1();
     </script>
@@ -152,12 +152,12 @@ exampleworld1();
               <canvas id='world2Canvas' style="width:400px;"></canvas>
             </div>
           </div>
-         </div> 
+         </div>
     </div>
-    
+
 <script>
 
-        
+
 
 function exampleworld2() {
  var karelIde = null;
@@ -169,9 +169,9 @@ function exampleworld2() {
     karelIde = KarelIde('python',null, canvas, 'beeperTowersGoal', 0, 'en',1000, 0.8 * 1000);
  }
 
- 
+
  main()
- 
+
 }
 exampleworld2();
     </script>
@@ -205,7 +205,9 @@ exampleworld2();
 
 <p>
 
+
 Now that you have defined the structure for the program as a whole, it is time to move on to the first subproblem, which consists of collecting all the beepers. This task is itself more complicated than the simple problems from the preceding chapters. Collecting all the beepers means that you have to pick up the beepers in every tower until you get to the final corner. The fact that you need to repeat an operation for each tower suggests that you need a <code>while</code> loop here. The <code>while</code> loop will repeat the process of <code>collect_one_tower()</code> and then moving.
+
 </p>
 
 <p><b>Caution:</b> It is dangerous to try to write the entire program without <b>testing</b> it as you go. If you make a mistake it will be hard to find the mistake. We know that we are going to repeat the process of collecting one tower. Let us write and <b>test</b> collecting a single tower before we put the <code>collect_one_tower()</code> process in a for loop. Thus <i>temporarily</i> we can start with the following definition of <code>collect_all_beepers()</code>:
@@ -330,7 +332,7 @@ Now that you have defined the structure for the program as a whole, it is time t
     <div id ='beeperTowersIde' class = "ide getStarted" style="height:1123.2px">
       <div id = 'beeperTowersIdeCenter' class = "ideCenter" style="height:inherit;">
          <div id = 'beeperTowersEditorDiv' style="width:600px;height:inherit;"></div>
-         
+
       </div>
     </div>
     <div id='beeperTowersCanvasDiv' style="width:500px;height:360px">
@@ -339,11 +341,11 @@ Now that you have defined the structure for the program as a whole, it is time t
     <div style="width:100%;">
         <div class="buttonBar">
            <button class="btn btn-default" id="beeperTowersRunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
-        </div> 
+        </div>
     </div>
 <script>
 
-        
+
 
 function examplebeeperTowers() {
 STARTER_CODE = `
@@ -421,12 +423,12 @@ STARTER_CODE = STARTER_CODE.trim();
  function main() {
    karelEditor = importPythonEditor('beeperTowersEditor','beeperTowersEditorDiv', STARTER_CODE, false);
      //importRunButtonBar('example1ButtonBar');
-    
+
     $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
-    
+
     initTabs();
     var canvas = document.getElementById('beeperTowersCanvas');
-    karelIde = KarelIde('python',karelEditor, canvas, 'beeperTowers', 0.9, 'en', 1000, 
+    karelIde = KarelIde('python',karelEditor, canvas, 'beeperTowers', 0.9, 'en', 1000,
       0.8 * 1000);
     $('#beeperTowersRunButton').click(function(){playClicked()});
     onresize();
@@ -435,7 +437,7 @@ STARTER_CODE = STARTER_CODE.trim();
  function playClicked() {
   if(buttonState == 'play') {
     karelIde.playButton();
-      
+
       var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
       $('#beeperTowersRunButton').html(resetText);
       buttonState = 'reset';
@@ -445,10 +447,10 @@ STARTER_CODE = STARTER_CODE.trim();
       $('#beeperTowersRunButton').html(playText);
       buttonState = 'play';
      }
-    
+
   }
 
-  function onresize() { 
+  function onresize() {
 
     // var parentHeight = 1123.2;
     // var canvasWidth = 300
@@ -457,22 +459,22 @@ STARTER_CODE = STARTER_CODE.trim();
 
     // var editorDiv = document.getElementById('beeperTowersCanvasDiv');
     // var canvas = document.getElementById('beeperTowersCanvas');
-    
+
 
 
     // var availibleWidth = parentWidth;
     // var elementSpacing = 12;
 
-    // var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
+    // var editorWidth = availibleWidth - canvasWidth - elementSpacing;
 
     // canvas.style.width = canvasWidth + 'px';
     // canvas.style.height = canvasWidth + 'px';
     // canvas.style.left = (editorWidth + elementSpacing) + 'px';
  }
 
- 
+
  main()
- 
+
 }
 examplebeeperTowers();
     </script>
@@ -491,5 +493,5 @@ examplebeeperTowers();
       <div style="flex-grow:4"></div>
     </div>
   </div>
-</body> 
+</body>
 </html>
