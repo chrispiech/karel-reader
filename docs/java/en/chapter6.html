@@ -1,7 +1,7 @@
 
 
-<html> 
-<head> 
+<html>
+<head>
 <title>Karel Reader</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -15,7 +15,7 @@
 <script src="../..//karel/js/html/websiteImports.js"></script>
 <script>importCss();</script>
 <script>importJs();</script>
-</head> 
+</head>
 <body>
   <!-- container -->
   <div class="bookContainer">
@@ -28,7 +28,7 @@
     </a>
   </div>
   <hr/>
-  
+
   <div class="chapterTab" onclick="location.href='../../java/en/chapter1.html'">
     <a class="bookLink btn btn-link" href="../../java/en/chapter1.html">
       1 - Meet Karel
@@ -69,7 +69,7 @@
 
   <hr/>
 
-  <a href="../../"><img style = "width:40px" src="../../images/unFlag.png"/> Learn more</a> 
+  <a href="../../"><img style = "width:40px" src="../../images/unFlag.png"/> Learn more</a>
 
   <!-- <center>
     <img style ="width:75px;" src="../../images/stanford.png"/>
@@ -124,11 +124,11 @@
     <div style="width:100%;">
         <div class="buttonBar">
            <button class="btn btn-default" id="moveToWallRunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
-        </div> 
+        </div>
     </div>
 <script>
 
-        
+
 
 function examplemoveToWall() {
 STARTER_CODE = `
@@ -149,7 +149,7 @@ public class MoveToWall extends Karel {
       while(frontIsClear()) {
          move();
       }
-   } 
+   }
 }`
 // because of that extra endline at the start of the string
 STARTER_CODE = STARTER_CODE.trim();
@@ -161,19 +161,19 @@ STARTER_CODE = STARTER_CODE.trim();
  function main() {
    karelEditor = importEditorCode('moveToWallEditor','moveToWallEditorDiv', STARTER_CODE, false);
     setupWorldDropdown();
-    
-    
+
+
     var canvas = document.getElementById('moveToWallCanvas');
     karelIde = KarelIde('java',karelEditor, canvas, '7x7', 0.0, 'en');
     $('#moveToWallRunButton').click(function(){playClicked()});
     onresize();
-    
+
  }
 
  function setupWorldDropdown() {
     console.log('setup world dropdown')
     let ul = document.getElementById('moveToWallWorlds')
-    
+
     if (!ul.childNodes || ul.childNodes.length == 0) return;
 
     // Iterate LIs
@@ -214,10 +214,10 @@ STARTER_CODE = STARTER_CODE.trim();
   function changeToResetButton() {
     var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
     $('#moveToWallRunButton').html(resetText);
-    buttonState = 'reset';  
+    buttonState = 'reset';
   }
 
- function onresize() { 
+ function onresize() {
     var parentHeight = 334.40000000000003;
     var canvasWidth = 300
     var parentWidth = $("#moveToWall").width();
@@ -226,14 +226,14 @@ STARTER_CODE = STARTER_CODE.trim();
     var ide = document.getElementById('moveToWallIde');
     var editorDiv = document.getElementById('moveToWallEditorDiv');
     var canvas = document.getElementById('moveToWallCanvasDiv');
-    
+
     var ideHeight = parentHeight
     var centerHeight = ideHeight;
 
     var availibleWidth = parentWidth;
     var elementSpacing = 12;
 
-    var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
+    var editorWidth = availibleWidth - canvasWidth - elementSpacing;
 
     canvas.style.width = canvasWidth + 'px';
     canvas.style.height = canvasWidth + 'px';
@@ -251,7 +251,7 @@ STARTER_CODE = STARTER_CODE.trim();
     }
  }
  main()
- 
+
 }
 examplemoveToWall();
     </script>
@@ -272,12 +272,12 @@ examplemoveToWall();
 
 
 <p>
-	The control-flow of a while loop is as follows. When the program hits a while loop it starts repeating a process where it first <i>checks</i> if the test passes, and if so <i>runs</i> the code in the body. 
+	The control-flow of a while loop is as follows. When the program hits a while loop it starts repeating a process where it first <i>checks</i> if the test passes, and if so <i>runs</i> the code in the body.
 </p>
 	When the program <i>checks</i> if the test passes, it decides if the <i class="demoText">test</i> is true for the current state of the world. If so, the loop will run the code in the body. If the test fails, the loop is over and the program moves on.
 </p>
 <p>
-	When the program <i>runs</i> the body of the loop, the program executes the lines in the body one at a time. When the program arrives at the end of the while loop, it jumps back to the top of the loop. It then rechecks the test, continuing to loop if it passes. The program does not exit the loop until it gets to a check, and the test fails. 
+	When the program <i>runs</i> the body of the loop, the program executes the lines in the body one at a time. When the program arrives at the end of the while loop, it jumps back to the top of the loop. It then rechecks the test, continuing to loop if it passes. The program does not exit the loop until it gets to a check, and the test fails.
 	</p>
 
 	<p>
@@ -318,11 +318,11 @@ examplemoveToWall();
     <div style="width:100%;">
         <div class="buttonBar">
            <button class="btn btn-default" id="beeperLineBug1RunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
-        </div> 
+        </div>
     </div>
 <script>
 
-        
+
 
 function examplebeeperLineBug1() {
 STARTER_CODE = `
@@ -339,7 +339,7 @@ public class BeeperLineBug extends Karel {
    public void run() {
    	  /* repeats until karel faces a wall */
       while(frontIsClear()) {
-      	 /* place a beeper on current square */ 
+      	 /* place a beeper on current square */
          putBeeper();
       	 /* move to the next square */
          move();
@@ -356,19 +356,19 @@ STARTER_CODE = STARTER_CODE.trim();
  function main() {
    karelEditor = importEditorCode('beeperLineBug1Editor','beeperLineBug1EditorDiv', STARTER_CODE, true);
     setupWorldDropdown();
-    
-    
+
+
     var canvas = document.getElementById('beeperLineBug1Canvas');
     karelIde = KarelIde('java',karelEditor, canvas, '7x7', 0.0, 'en');
     $('#beeperLineBug1RunButton').click(function(){playClicked()});
     onresize();
-    
+
  }
 
  function setupWorldDropdown() {
     console.log('setup world dropdown')
     let ul = document.getElementById('beeperLineBug1Worlds')
-    
+
     if (!ul.childNodes || ul.childNodes.length == 0) return;
 
     // Iterate LIs
@@ -409,10 +409,10 @@ STARTER_CODE = STARTER_CODE.trim();
   function changeToResetButton() {
     var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
     $('#beeperLineBug1RunButton').html(resetText);
-    buttonState = 'reset';  
+    buttonState = 'reset';
   }
 
- function onresize() { 
+ function onresize() {
     var parentHeight = 352.0;
     var canvasWidth = 300
     var parentWidth = $("#beeperLineBug1").width();
@@ -421,14 +421,14 @@ STARTER_CODE = STARTER_CODE.trim();
     var ide = document.getElementById('beeperLineBug1Ide');
     var editorDiv = document.getElementById('beeperLineBug1EditorDiv');
     var canvas = document.getElementById('beeperLineBug1CanvasDiv');
-    
+
     var ideHeight = parentHeight
     var centerHeight = ideHeight;
 
     var availibleWidth = parentWidth;
     var elementSpacing = 12;
 
-    var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
+    var editorWidth = availibleWidth - canvasWidth - elementSpacing;
 
     canvas.style.width = canvasWidth + 'px';
     canvas.style.height = canvasWidth + 'px';
@@ -446,12 +446,12 @@ STARTER_CODE = STARTER_CODE.trim();
     }
  }
  main()
- 
+
 }
 examplebeeperLineBug1();
     </script>
 </div>
-<p>That looks great. Except for one problem. On every world Karel doesn't place a beeper on the last square of the line (look closely). When Karel is on the last square, the program does not execute the body of the loop because the test no longer passes -- Karel is facing a wall. You might be tempted to try switching the order of the body so that Karel moves before placing a beeer. The code is editable so go try it! 
+<p>That looks great. Except for one problem. On every world Karel doesn't place a beeper on the last square of the line (look closely). When Karel is on the last square, the program does not execute the body of the loop because the test no longer passes -- Karel is facing a wall. You might be tempted to try switching the order of the body so that Karel moves before placing a beeper. The code is editable so go try it!
 	</p>
 
 <p>
@@ -459,7 +459,7 @@ examplebeeperLineBug1();
 </p>
 
 <p>
-	The bug in this program is an example of a programming problem called a <b>fencepost error</b>. The name comes from the fact that if you want to build a fence made of panels which have one fence post on either size, the number of fence posts is always one greater than the number of panesl. How many fence posts, for example, do you need to build a fence with 10 panels? The answer is 11, as illustrated by the following diagram:
+	The bug in this program is an example of a programming problem called a <b>fencepost error</b>. The name comes from the fact that if you want to build a fence made of panels which have one fence post on either side, the number of fence posts is always one greater than the number of panels. How many fence posts, for example, do you need to build a fence with 10 panels? The answer is 11, as illustrated by the following diagram:
 	</p>
 
 <center>
@@ -499,11 +499,11 @@ examplebeeperLineBug1();
     <div style="width:100%;">
         <div class="buttonBar">
            <button class="btn btn-default" id="beeperLineRunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
-        </div> 
+        </div>
     </div>
 <script>
 
-        
+
 
 function examplebeeperLine() {
 STARTER_CODE = `
@@ -518,7 +518,7 @@ public class BeeperLine extends Karel {
    public void run() {
       /* repeats until karel faces a wall */
       while(frontIsClear()) {
-         /* place a beeper on current square */ 
+         /* place a beeper on current square */
          putBeeper();
          /* move to the next square */
          move();
@@ -537,19 +537,19 @@ STARTER_CODE = STARTER_CODE.trim();
  function main() {
    karelEditor = importEditorCode('beeperLineEditor','beeperLineEditorDiv', STARTER_CODE, true);
     setupWorldDropdown();
-    
-    
+
+
     var canvas = document.getElementById('beeperLineCanvas');
     karelIde = KarelIde('java',karelEditor, canvas, '7x7', 0.8, 'en');
     $('#beeperLineRunButton').click(function(){playClicked()});
     onresize();
-    
+
  }
 
  function setupWorldDropdown() {
     console.log('setup world dropdown')
     let ul = document.getElementById('beeperLineWorlds')
-    
+
     if (!ul.childNodes || ul.childNodes.length == 0) return;
 
     // Iterate LIs
@@ -590,10 +590,10 @@ STARTER_CODE = STARTER_CODE.trim();
   function changeToResetButton() {
     var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
     $('#beeperLineRunButton').html(resetText);
-    buttonState = 'reset';  
+    buttonState = 'reset';
   }
 
- function onresize() { 
+ function onresize() {
     var parentHeight = 352.0;
     var canvasWidth = 300
     var parentWidth = $("#beeperLine").width();
@@ -602,14 +602,14 @@ STARTER_CODE = STARTER_CODE.trim();
     var ide = document.getElementById('beeperLineIde');
     var editorDiv = document.getElementById('beeperLineEditorDiv');
     var canvas = document.getElementById('beeperLineCanvasDiv');
-    
+
     var ideHeight = parentHeight
     var centerHeight = ideHeight;
 
     var availibleWidth = parentWidth;
     var elementSpacing = 12;
 
-    var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
+    var editorWidth = availibleWidth - canvasWidth - elementSpacing;
 
     canvas.style.width = canvasWidth + 'px';
     canvas.style.height = canvasWidth + 'px';
@@ -627,7 +627,7 @@ STARTER_CODE = STARTER_CODE.trim();
     }
  }
  main()
- 
+
 }
 examplebeeperLine();
     </script>
@@ -645,5 +645,5 @@ examplebeeperLine();
       <div style="flex-grow:4"></div>
     </div>
   </div>
-</body> 
+</body>
 </html>
