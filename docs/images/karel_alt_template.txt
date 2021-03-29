@@ -1,0 +1,1 @@
+The world has {NUM_ROWS} rows and {NUM_COLS} columns. Karel is at {POSITION (ideally description and coordinate, e.g. "the bottom left corner, position (1,1)")} facing {CARDINAL_DIRECTION}. There are walls {DESCRIPTION, e.g. "between positions (1,1) and (2,1)"}. There are beepers {DESCRIPTION, e.g. "along the bottom edge", "in position (2,2)"}.
