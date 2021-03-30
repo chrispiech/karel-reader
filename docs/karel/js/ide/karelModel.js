@@ -2,7 +2,7 @@
  * Class: KarelModel
  * -----------------
  * The KarelModel class is in charge of storing and updating
- * the underlying representation of Karel and her world. 
+ * the underlying representation of Karel and her world.
  * Supports deep copy.
  */
 function KarelModel() {
@@ -49,7 +49,7 @@ function KarelModel() {
 			case Const.KAREL_WEST: newCol = newCol - 1; break;
 			case Const.KAREL_NORTH: newRow = newRow - 1; break;
 			case Const.KAREL_SOUTH: newRow = newRow + 1; break;
-			default: alert("invalid that.dir: " + that.dir); break;		
+			default: alert("invalid that.dir: " + that.dir); break;
 		}
 		if(that.walls.isMoveValid(that.karelRow, that.karelCol, newRow, newCol)) {
 			that.karelRow = newRow;
@@ -65,8 +65,8 @@ function KarelModel() {
 			case Const.KAREL_EAST:  newD = Const.KAREL_NORTH; break;
 			case Const.KAREL_WEST:  newD = Const.KAREL_SOUTH; break;
 			case Const.KAREL_NORTH: newD = Const.KAREL_WEST; break;
-			case Const.KAREL_SOUTH: newD = Const.KAREL_EAST; break;	
-			default: alert("invalid that.dir: " + that.dir); break;	
+			case Const.KAREL_SOUTH: newD = Const.KAREL_EAST; break;
+			default: alert("invalid that.dir: " + that.dir); break;
 		}
 		that.dir = newD;
    }
@@ -77,8 +77,8 @@ function KarelModel() {
 			case Const.KAREL_EAST:  newD = Const.KAREL_SOUTH; break;
 			case Const.KAREL_WEST:  newD = Const.KAREL_NORTH; break;
 			case Const.KAREL_NORTH: newD = Const.KAREL_EAST; break;
-			case Const.KAREL_SOUTH: newD = Const.KAREL_WEST; break;	
-			default: alert("invalid that.dir: " + that.dir); break;	
+			case Const.KAREL_SOUTH: newD = Const.KAREL_WEST; break;
+			default: alert("invalid that.dir: " + that.dir); break;
 		}
 		that.dir = newD;
    }
@@ -103,8 +103,8 @@ function KarelModel() {
 			case Const.KAREL_EAST:  newD = Const.KAREL_WEST; break;
 			case Const.KAREL_WEST:  newD = Const.KAREL_EAST; break;
 			case Const.KAREL_NORTH: newD = Const.KAREL_SOUTH; break;
-			case Const.KAREL_SOUTH: newD = Const.KAREL_NORTH; break;	
-			default: alert("invalid that.dir: " + that.dir); break;	
+			case Const.KAREL_SOUTH: newD = Const.KAREL_NORTH; break;
+			default: alert("invalid that.dir: " + that.dir); break;
 		}
 		that.dir = newD;
    }
@@ -165,7 +165,7 @@ function KarelModel() {
 			case Const.KAREL_WEST: newCol = newCol - 1; break;
 			case Const.KAREL_NORTH: newRow = newRow - 1; break;
 			case Const.KAREL_SOUTH: newRow = newRow + 1; break;
-			default: alert("invalid that.dir: " + that.dir); break;		
+			default: alert("invalid that.dir: " + that.dir); break;
 		}
 		return that.walls.isMoveValid(that.karelRow, that.karelCol, newRow, newCol);
 	}
@@ -178,7 +178,7 @@ function KarelModel() {
 			case Const.KAREL_WEST: newRow = newRow - 1; break;
 			case Const.KAREL_NORTH: newCol = newCol + 1; break;
 			case Const.KAREL_SOUTH: newCol = newCol - 1; break;
-			default: alert("invalid that.dir: " + that.dir); break;		
+			default: alert("invalid that.dir: " + that.dir); break;
 		}
 		return that.walls.isMoveValid(that.karelRow, that.karelCol, newRow, newCol);
 	}
@@ -191,25 +191,25 @@ function KarelModel() {
 			case Const.KAREL_WEST: newRow = newRow + 1; break;
 			case Const.KAREL_NORTH: newCol = newCol - 1; break;
 			case Const.KAREL_SOUTH: newCol = newCol + 1; break;
-			default: alert("invalid that.dir: " + that.dir); break;		
+			default: alert("invalid that.dir: " + that.dir); break;
 		}
 		return that.walls.isMoveValid(that.karelRow, that.karelCol, newRow, newCol);
 	}
 
 	that.facingNorth = function() {
-		return virtualDirection == KAREL_NORTH;	
+		return virtualDirection == KAREL_NORTH;
 	}
 
 	that.facingSouth = function() {
-		return virtualDirection == KAREL_SOUTH;	
+		return virtualDirection == KAREL_SOUTH;
 	}
 
 	that.facingEast = function() {
-		return virtualDirection == KAREL_EAST;	
+		return virtualDirection == KAREL_EAST;
 	}
 
 	that.facingWest = function() {
-		return virtualDirection == KAREL_WEST;	
+		return virtualDirection == KAREL_WEST;
 	}
 
    that.loadWorld = function(worldText, canvasModel) {
@@ -217,7 +217,7 @@ function KarelModel() {
 
 		// get world dimension
 		loadDimensionLine(lines[0]);
-		
+
 		that.beepers = Beepers(that.rows, that.cols);
 		that.walls = Walls(that.rows, that.cols);
       that.squareColors = SquareColors(that.rows, that.cols);
@@ -233,6 +233,24 @@ function KarelModel() {
 		}
 
 		canvasModel.setKarelDimensions(that.rows, that.cols);
+   }
+
+   // print state of initial world
+   that.printInitialWorld = function(custom_description='') {
+     console.log(`Karel is in a world that has ${that.rows} rows and ${that.cols} columns.`);
+     if (custom_description){
+       // e.g. Karel is in a square house with walls on all sides except to the East of (2, 3). The house’s top left corner is (1, 1) and its bottom right corner is (3, 3).
+       console.log(custom_description)
+     }
+    that.beepers.printBeepers()
+
+    console.log(`Karel is standing on row ${that.karelRow} and column ${that.karelCol}, facing ${that.dir}. Karel’s front is ${that.frontIsClear() ? 'clear' : 'blocked'}.`)
+   }
+
+   that.printMove = function() {
+     // assumes that Karel has just moved 1 step forward
+     // TODO: only prints if front is clear (not other sides), doesn't number the moves
+     console.log(`Karel moved one step forward and is now at row ${that.karelRow} and column ${that.karelCol}, facing ${that.dir}. There are ${that.beepers.getNumBeepers()} beepers here. Karel’s front is ${that.frontIsClear() ? 'clear' : 'blocked'}.`)
    }
 
    function extractCoord(coordString) {
@@ -267,7 +285,7 @@ function KarelModel() {
    function loadBagLine(line) {
       that.nBeepersInBag = eval(line)
    }
-   
+
    function loadWallLine(line) {
       var coord = extractCoord(line);
       if (line.indexOf('west') != -1) {
@@ -286,7 +304,7 @@ function KarelModel() {
       var row = that.rows - coord[0];
       var col = coord[1] - 1;
 
-      // load the optional number of beepers 
+      // load the optional number of beepers
       // default to 1
       let afterParenIndex = line.indexOf(')') + 1;
       let remaining = line.substring(afterParenIndex).trim()
@@ -296,7 +314,7 @@ function KarelModel() {
       for (var i = 0; i < nBeepers; i++) {
          that.beepers.putBeeper(row, col)
       }
-      
+
    }
 
    function loadKarelLine(line) {
@@ -328,7 +346,7 @@ function KarelModel() {
 			loadBeeperLine(elements[1]);
 		} else if (key == "Bag") {
          loadBagLine(elements[1]);
-      } 
+    }
 	}
 
    return that;
