@@ -46,24 +46,27 @@ function Beepers(rows, cols) {
     return that.beepers.flat().reduce(reducer);
   }
 
-  that.printBeepers = function(){
-    var beepersLeft = that.totalBeepers()
+  that.beeperText = function(){
+    var beepersLeft = that.totalBeepers();
     if (beepersLeft == 0){
-      console.log('No beepers are present.')
+      console.log('No beepers are present.');
       return;
+      // return 'No beepers are present.';
     }
 
-    console.log('The beepers are placed as follows:')
+    var toPrint = 'The beepers are placed as follows:';
     for (var i = 0; i < rows; i++) {
       for (var j = 0; j < cols; j++) {
         var numBeepers = that.beepers[i][j];
         if(numBeepers > 0) {
-           console.log(`${numBeepers} beeper at row ${i}, column ${j}`);
-           beepersLeft = beepersLeft - numBeepers;
+          toPrint = toPrint.concat(`\n${numBeepers} beeper at row ${i}, column ${j}`);
+          beepersLeft = beepersLeft - numBeepers;
          }
          if(beepersLeft == 0){
            // all beepers have been accounted for
+           console.log(toPrint);
            return;
+           // return toPrint;
          }
       }
     }

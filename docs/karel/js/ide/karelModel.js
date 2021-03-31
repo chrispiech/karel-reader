@@ -18,6 +18,7 @@ function KarelModel() {
    that.rows = 0;
    that.cols = 0;
    that.nBeepersInBag = Infinity;
+   that.karelHistory = []; // moves are appended to karelHistory TODO: clear when canvas is reset
 
    that.deepCopy = function() {
       var newModel = KarelModel();
@@ -236,21 +237,24 @@ function KarelModel() {
    }
 
    // print state of initial world
-   that.printInitialWorld = function(custom_description='') {
-     console.log(`Karel is in a world that has ${that.rows} rows and ${that.cols} columns.`);
+   that.initialWorldText = function(custom_description='') {
+     var toPrint = `Karel is in a world that has ${that.rows} rows and ${that.cols} columns.`; // world dims
      if (custom_description){
        // e.g. Karel is in a square house with walls on all sides except to the East of (2, 3). The house’s top left corner is (1, 1) and its bottom right corner is (3, 3).
-       console.log(custom_description)
+       toPrint = toPrint.concat(`\n${custom_description}`);
      }
-    that.beepers.printBeepers()
-
-    console.log(`Karel is standing on row ${that.karelRow} and column ${that.karelCol}, facing ${that.dir}. Karel’s front is ${that.frontIsClear() ? 'clear' : 'blocked'}.`)
+     toPrint = toPrint.concat(`\n${that.beepers.beeperText()}`); // beeper info (number of beepers, positions)
+     toPrint = toPrint.concat(`\nKarel is standing on row ${that.karelRow} and column ${that.karelCol}, facing ${that.dir}. Karel’s front is ${that.frontIsClear() ? 'clear' : 'blocked'}.`); // karel position info
+     console.log(toPrint);
+    // return toPrint;
    }
 
-   that.printMove = function() {
+   that.moveText = function() {
      // assumes that Karel has just moved 1 step forward
-     // TODO: only prints if front is clear (not other sides), doesn't number the moves
-     console.log(`Karel moved one step forward and is now at row ${that.karelRow} and column ${that.karelCol}, facing ${that.dir}. There are ${that.beepers.getNumBeepers()} beepers here. Karel’s front is ${that.frontIsClear() ? 'clear' : 'blocked'}.`)
+     // TODO: only prints if front is clear (not other sides), doesn't number the moves -- LEFT AND RIGHT
+     // BUILD STRING, console.log at the end
+     console.log(`Karel moved one step forward and is now at row ${that.karelRow} and column ${that.karelCol}, facing ${that.dir}. There are ${that.beepers.getNumBeepers()} beepers here. Karel’s front is ${that.frontIsClear() ? 'clear' : 'blocked'}.`);
+     // return `Karel moved one step forward and is now at row ${that.karelRow} and column ${that.karelCol}, facing ${that.dir}. There are ${that.beepers.getNumBeepers()} beepers here. Karel’s front is ${that.frontIsClear() ? 'clear' : 'blocked'}.`;
    }
 
    function extractCoord(coordString) {
