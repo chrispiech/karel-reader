@@ -244,7 +244,7 @@ function KarelModel() {
        worldText = worldText.concat(` ${customDescription}`);
      }
      worldText = worldText.concat(` ${that.beepers.beeperText()}.`); // beeper info (number of beepers, positions)
-     worldText = worldText.concat(` Karel is standing on row ${that.karelRow} and column ${that.karelCol}, facing ${directionString(that.dir)}. Karel’s front is ${clearOrBlockedString(that.frontIsClear())}, left is ${clearOrBlockedString(that.leftIsClear())}, and right is ${clearOrBlockedString(that.rightIsClear())}.`); // karel position info
+     worldText = worldText.concat(` Karel is standing on row ${perceptualRow(that.karelRow)} and column ${perceptualCol(that.karelCol)}, facing ${directionString(that.dir)}. Karel’s front is ${clearOrBlockedString(that.frontIsClear())}, left is ${clearOrBlockedString(that.leftIsClear())}, and right is ${clearOrBlockedString(that.rightIsClear())}.`); // karel position info
     return worldText;
    }
 
@@ -256,13 +256,21 @@ function KarelModel() {
      } else if (action.includes('move')) {
        // e.g. 'moved one step forward'
        var numBeepers = that.beepers.getNumBeepers(that.karelRow, that.karelCol);
-       return `Karel ${action} and is now at row ${that.karelRow} and column ${that.karelCol}, facing ${directionString(that.dir)}. There ${singularOrPlural(numBeepers)} ${numBeepers} ${that.beepers.conjugateBeepers(numBeepers)} here. Karel’s front is ${clearOrBlockedString(that.frontIsClear())}, left is ${clearOrBlockedString(that.leftIsClear())}, and right is ${clearOrBlockedString(that.rightIsClear())}.`;
+       return `Karel ${action} and is now at row ${perceptualRow(that.karelRow)} and column ${perceptualCol(that.karelCol)}, facing ${directionString(that.dir)}. There ${singularOrPlural(numBeepers)} ${numBeepers} ${that.beepers.conjugateBeepers(numBeepers)} here. Karel’s front is ${clearOrBlockedString(that.frontIsClear())}, left is ${clearOrBlockedString(that.leftIsClear())}, and right is ${clearOrBlockedString(that.rightIsClear())}.`;
      } else if (action.includes('beeper')) {
        // e.g. 'picked up a beeper', 'placed a beeper'
        var numBeepers = that.beepers.getNumBeepers(that.karelRow, that.karelCol);
        return `Karel ${action}. There ${singularOrPlural(numBeepers)} now ${numBeepers} ${that.beepers.conjugateBeepers(numBeepers)} here.`
      }
      return `Karel ${action}.`;
+  }
+
+  function perceptualRow(rowIdx){
+    return that.rows - rowIdx;
+  }
+
+  function perceptualCol(colIdx){
+    return colIdx + 1
   }
 
   function singularOrPlural(num){

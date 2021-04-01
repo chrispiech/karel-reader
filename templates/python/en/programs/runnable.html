@@ -53,7 +53,6 @@
 
       initTabs();
       var canvas = document.getElementById('{{name}}Canvas');
-      console.log("MAIN RUNNABLE!");
       karelIde = KarelIde('{{progLang}}',karelEditor, canvas, '{{world}}', {{ideSpeed}}, '{{lang}}', 1000, 1000, initializeWorldTextDescription, appendMoveDescription, "{{customDescription}}");
 
       $('#{{name}}RunButton').click(function(){playClicked()});

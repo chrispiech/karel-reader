@@ -57,15 +57,23 @@ function Beepers(rows, cols) {
       for (var j = 0; j < cols; j++) {
         var numBeepers = that.beepers[i][j];
         if(numBeepers > 0) {
-          toPrint = toPrint.concat(`\n${numBeepers} ${that.conjugateBeepers(numBeepers)} at row ${i}, column ${j}`);
+          toPrint = toPrint.concat(`\n${numBeepers} ${that.conjugateBeepers(numBeepers)} at row ${perceptualRow(i)}, column ${perceptualCol(j)};`);
           beepersLeft = beepersLeft - numBeepers;
          }
          if(beepersLeft == 0){
            // all beepers have been accounted for
-           return toPrint;
+           return toPrint.slice(0, toPrint.length - 1); // remove last semicolon
          }
       }
     }
+  }
+
+  function perceptualRow(rowIdx){
+    return rows - rowIdx;
+  }
+
+  function perceptualCol(colIdx){
+    return colIdx + 1
   }
 
   that.conjugateBeepers = function(numBeepers) {
