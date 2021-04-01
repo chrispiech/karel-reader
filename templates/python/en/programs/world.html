@@ -1,6 +1,7 @@
 <%
   setdefault('canvasWidth', 300)
   setdefault('canvasRatio', 0.7)
+  setdefault('customDescription', "")
 %>
 
 <div class="section" id="{{name}}">
@@ -8,15 +9,15 @@
          <div id = '{{name}}CanvasDiv' class = 'commandCanvasDiv'>
           <div>
             <div class="commandCanvasOuter">
-              <canvas id='{{name}}Canvas' style="width:{{canvasWidth}}px;"></canvas>
+              <canvas id='{{name}}Canvas' style="width:{{canvasWidth}}px;" aria-label=" " role="img"></canvas>
             </div>
           </div>
-         </div> 
+         </div>
     </div>
-    
+
 <script>
 
-        
+
 
 function example{{name}}() {
  var karelIde = null;
@@ -25,12 +26,16 @@ function example{{name}}() {
 
  function main() {
     canvas = document.getElementById('{{name}}Canvas');
-    karelIde = KarelIde('{{progLang}}',null, canvas, '{{world}}', 0, '{{lang}}',1000, {{canvasRatio}} * 1000);
+    karelIde = KarelIde('{{progLang}}',null, canvas, '{{world}}', 0, '{{lang}}',1000, {{canvasRatio}} * 1000, console.log, console.log, '', setAriaLabel);
  }
 
- 
+ function setAriaLabel(altText) {
+   $('#{{name}}Canvas').attr('aria-label', altText); // set alt text for canvas element
+ }
+
+
  main()
- 
+
 }
 example{{name}}();
     </script>

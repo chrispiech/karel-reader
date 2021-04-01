@@ -9,7 +9,7 @@
  * that Karel doesn't try to render before images have been
  * loaded.
  */
-function KarelIde(programLang="java", editor, canvas, initialWorld, speed = 0.5, lang="es", canvasWidth = 1000, canvasHeight=1000, setInitialWorldText=console.log, addMoveText=console.log, customInitialWorldDescription='') {
+function KarelIde(programLang="java", editor, canvas, initialWorld, speed = 0.5, lang="es", canvasWidth = 1000, canvasHeight=1000, setInitialWorldText=console.log, addMoveText=console.log, customInitialWorldDescription='', setAriaLabel=console.log) {
   let PATH_TO_ROOT = '../../'
 
    function calcHeartbeatsForSpeed(speed) {
@@ -47,6 +47,8 @@ function KarelIde(programLang="java", editor, canvas, initialWorld, speed = 0.5,
    var imagesReady = false;
    var numActions = 0;
    var silent = false;
+
+   that.ariaLabel = '';
 
 
    /**
@@ -299,8 +301,12 @@ function KarelIde(programLang="java", editor, canvas, initialWorld, speed = 0.5,
       karel.loadWorld(text, canvasModel);
       draw();
       worldLoaded = true;
-      setInitialWorldText(karel.getInitialWorldText(customInitialWorldDescription));
+      var worldDescription = karel.getInitialWorldText(customInitialWorldDescription);
+      // that.ariaLabel = worldDescription; // aria label text for, e.g., `world.html`
+      setAriaLabel(worldDescription); // aria label text for, e.g., `world.html`
+      setInitialWorldText(worldDescription); // set initial text of text description box in interactive IDEs for e.g. `bigCode.html` and `runnable.html`
       karel.addMoveText = addMoveText; // give karel obj access to function to modify DOM upon move
+
    }
 
    /**
