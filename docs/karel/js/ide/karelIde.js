@@ -298,7 +298,6 @@ function KarelIde(programLang="java", editor, canvas, initialWorld, speed = 0.5,
    function worldFileLoaded(text) {
       karel.loadWorld(text, canvasModel);
       draw();
-
       worldLoaded = true;
       setInitialWorldText(karel.getInitialWorldText(customInitialWorldDescription));
       karel.addMoveText = addMoveText; // give karel obj access to function to modify DOM upon move

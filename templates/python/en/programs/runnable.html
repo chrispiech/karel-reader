@@ -5,6 +5,7 @@
   setdefault('canvasWidth', 300)
   setdefault('ideSpeed', 0.0)
   setdefault('isEditable', 'false')
+  setdefault('customDescription', "")
 %>
 
 <div class="section embeddedIde" id="{{name}}">
@@ -14,9 +15,7 @@
          <div id = '{{name}}CanvasDiv' class = 'ideCanvasDiv'>
             <canvas id='{{name}}Canvas' class = 'ideCanvas'></canvas>
             <div id='{{name}}TextDescriptionBox' class='ideTextDescriptionBox' style="display: none;">
-              <p id='{{name}}InitialWorldDescription'>
-                initial world description will go here
-              </p>
+              <p id='{{name}}InitialWorldDescription'></p>
               <ul id='{{name}}MovesList'></ul>
             </div>
          </div>
@@ -54,7 +53,9 @@
 
       initTabs();
       var canvas = document.getElementById('{{name}}Canvas');
-      karelIde = KarelIde('{{progLang}}',karelEditor, canvas, '{{world}}', {{ideSpeed}}, '{{lang}}', 1000, 1000, initializeWorldTextDescription, appendMoveDescription);
+      console.log("MAIN RUNNABLE!");
+      karelIde = KarelIde('{{progLang}}',karelEditor, canvas, '{{world}}', {{ideSpeed}}, '{{lang}}', 1000, 1000, initializeWorldTextDescription, appendMoveDescription, "{{customDescription}}");
+
       $('#{{name}}RunButton').click(function(){playClicked()});
       $('#{{name}}TextDescriptionButton').click(function(){toggleTextDescription()});
       onresize();

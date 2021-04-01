@@ -237,14 +237,14 @@ function KarelModel() {
    }
 
    // print state of initial world
-   that.initialWorldText = function(custom_description) {
+   that.initialWorldText = function(customDescription) {
      var worldText = `Karel is in a world that has ${that.rows} rows and ${that.cols} columns.`; // world dims
-     if (custom_description){
+     if (customDescription){
        // e.g. Karel is in a square house with walls on all sides except to the East of (2, 3). The house’s top left corner is (1, 1) and its bottom right corner is (3, 3).
-       worldText = worldText.concat(`\n${custom_description}`);
+       worldText = worldText.concat(` ${customDescription}`);
      }
-     worldText = worldText.concat(`\n${that.beepers.beeperText()}.`); // beeper info (number of beepers, positions)
-     worldText = worldText.concat(`\nKarel is standing on row ${that.karelRow} and column ${that.karelCol}, facing ${directionString(that.dir)}. Karel’s front is ${clearOrBlockedString(that.frontIsClear())}, left is ${clearOrBlockedString(that.leftIsClear())}, and right is ${clearOrBlockedString(that.rightIsClear())}.`); // karel position info
+     worldText = worldText.concat(` ${that.beepers.beeperText()}.`); // beeper info (number of beepers, positions)
+     worldText = worldText.concat(` Karel is standing on row ${that.karelRow} and column ${that.karelCol}, facing ${directionString(that.dir)}. Karel’s front is ${clearOrBlockedString(that.frontIsClear())}, left is ${clearOrBlockedString(that.leftIsClear())}, and right is ${clearOrBlockedString(that.rightIsClear())}.`); // karel position info
     return worldText;
    }
 
