@@ -49,7 +49,7 @@ function Beepers(rows, cols) {
   that.beeperText = function(){
     var beepersLeft = that.totalBeepers();
     if (beepersLeft == 0){
-      return 'No beepers are present.';
+      return 'No beepers are present';
     }
 
     var toPrint = 'The beepers are placed as follows:';
