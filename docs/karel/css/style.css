@@ -65,7 +65,7 @@ A:visited {
 }
 
 A:hover {
-	text-decoration: none; 
+	text-decoration: none;
 	color: steelblue;
 }
 
@@ -85,7 +85,7 @@ A:hover {
 }
 
 .rightBar {
-	
+
 	font-size: 75%;
 	float:right;
 	height:700px;
@@ -95,7 +95,7 @@ A:hover {
 .programLink {
 	width:130px;
 	overflow:hidden;
-	
+
 }
 
 .author {
@@ -150,10 +150,16 @@ A:hover {
    background-color:white;
 }
 
+.ideTextDescriptionBox {
+  width:100%;
+  height:100%;
+  overflow-y: auto;
+}
+
 .ideEditor {
    width:100%;
    height:100%;
-   
+
 }
 
 /***************** Learn ************************/
@@ -215,7 +221,7 @@ margin-right:5px;
   box-shadow: 3px 3px 3px dimgray;
 }
 
-.roundedNoShadow {  
+.roundedNoShadow {
    position:absolute;
    display:none;
    -moz-border-radius: 7px;
@@ -243,7 +249,7 @@ margin-right:5px;
 }
 
 .imageButton:hover {
-   
+
    margin:-3px;
    border-style:solid;
    border-width:3px;
@@ -263,11 +269,11 @@ margin-right:5px;
 }
 
 .coverDiv:hover {
-   
+
    margin:-3px;
    border-style:solid;
    border-width:3px;
-   
+
 }
 
 .disabledRoundedButton {
@@ -275,7 +281,7 @@ margin-right:5px;
    display:none;
    -moz-border-radius: 7px;
    border-radius: 7px;
-   
+
    -moz-box-shadow: 3px 3px 3px dimgray;
   -webkit-box-shadow: 3px 3px 3px dimgray;
   box-shadow: 3px 3px 3px dimgray;
@@ -353,7 +359,7 @@ margin-right:5px;
 	line-height:70px;
 	width:160px;
 	padding:25px;
-	color:#fff;	
+	color:#fff;
 	z-index:9999999999999999999;
 }
 
@@ -367,7 +373,7 @@ margin-right:5px;
 	line-height:70px;
 	width:160px;
 	padding:25px;
-	color:#fff;	
+	color:#fff;
 	z-index:9999999999999999999;
 }
 
@@ -388,7 +394,7 @@ font-size: 16px;
 height: 100%;
 line-height: 40px;
 padding: 0px 10px;
-	color: #000;	
+	color: #000;
 	margin: 0;
 }
 
@@ -416,7 +422,7 @@ float: left;
 font-size: 16px;
 height: 100%;
 line-height: 40px;
-padding: 0px 10px;	
+padding: 0px 10px;
 	border-bottom: 2px solid #fff;
 	color: #000;
 	margin: 0;

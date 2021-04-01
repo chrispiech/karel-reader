@@ -1,4 +1,4 @@
-/** 
+/**
  * Class: Karel
  * ------------
  * The Karel class is the controller (as in MVC) of Karel and
@@ -16,7 +16,7 @@ function Karel(canvasModel, codeLanguage, language) {
   };
 
   var karelModel = KarelModel();
-   
+
   that.draw = function(c) {
      KarelView.draw(canvasModel, karelModel, c);
   }
@@ -48,7 +48,7 @@ function Karel(canvasModel, codeLanguage, language) {
   that.pickBeeper = function() {
       karelModel.pickBeeper();
   }
-  
+
    that.turnAround = function() {
       karelModel.turnAround();
    }
@@ -104,37 +104,37 @@ function Karel(canvasModel, codeLanguage, language) {
    that.leftIsBlocked = function() {
     return !karelModel.leftIsClear();
   }
-  
+
   that.facingNorth = function() {
-    return karelModel.facingNorth();  
+    return karelModel.facingNorth();
   }
 
   that.notFacingNorth = function() {
-    return !karelModel.facingNorth(); 
+    return !karelModel.facingNorth();
   }
 
   that.facingSouth = function() {
-    return karelModel.facingSouth();  
+    return karelModel.facingSouth();
   }
 
   that.notFacingSouth = function() {
-    return !karelModel.facingSouth(); 
+    return !karelModel.facingSouth();
   }
 
   that.facingEast = function() {
-    return karelModel.facingEast(); 
+    return karelModel.facingEast();
   }
 
   that.notFacingEast = function() {
-    return !karelModel.facingEast();  
+    return !karelModel.facingEast();
   }
 
   that.facingWest = function() {
-    return karelModel.facingWest(); 
+    return karelModel.facingWest();
   }
 
   that.notFacingWest = function() {
-    return !karelModel.facingWest();  
+    return !karelModel.facingWest();
   }
 
   that.loadWorld = function(text, canvasModel) {
@@ -145,13 +145,21 @@ function Karel(canvasModel, codeLanguage, language) {
     return karelModel;
   }
 
+  that.getInitialWorldText = function(customDescription) {
+    return karelModel.initialWorldText(customDescription);
+  }
+
+  that.getMoveText = function(action) {
+    return karelModel.moveText(action);
+  }
+
   // load language API
   let path = PATH_TO_ROOT + "/karel/js/api/" + codeLanguage + '/' + language + ".json"
   loadDoc(path, function(jsonTxt) {
     var json = JSON.parse(jsonTxt)
     initLanguageAPI(json)
   })
-  
+
   function initLanguageAPI(transDict) {
     console.log(transDict)
     // add translation to instructions set
@@ -250,8 +258,3 @@ Karel.predicates = {
 //   'cornerColorIs':'colorEsquinaEs'
 
 // }
-
-
-
-
-

@@ -237,25 +237,36 @@ function KarelModel() {
    }
 
    // print state of initial world
-   that.initialWorldText = function(custom_description='') {
-     var toPrint = `Karel is in a world that has ${that.rows} rows and ${that.cols} columns.`; // world dims
-     if (custom_description){
-       // e.g. Karel is in a square house with walls on all sides except to the East of (2, 3). The house’s top left corner is (1, 1) and its bottom right corner is (3, 3).
-       toPrint = toPrint.concat(`\n${custom_description}`);
-     }
-     toPrint = toPrint.concat(`\n${that.beepers.beeperText()}`); // beeper info (number of beepers, positions)
-     toPrint = toPrint.concat(`\nKarel is standing on row ${that.karelRow} and column ${that.karelCol}, facing ${that.dir}. Karel’s front is ${that.frontIsClear() ? 'clear' : 'blocked'}.`); // karel position info
-     console.log(toPrint);
-    // return toPrint;
+   that.initialWorldText = function(custom_description) {
+    return 'INITIAL WORLD TEXT IN KAREL MODEL';
+    //  var worldText = `Karel is in a world that has ${that.rows} rows and ${that.cols} columns.`; // world dims
+    //  if (custom_description){
+    //    // e.g. Karel is in a square house with walls on all sides except to the East of (2, 3). The house’s top left corner is (1, 1) and its bottom right corner is (3, 3).
+    //    worldText = worldText.concat(`\n${custom_description}`);
+    //  }
+    //  worldText = worldText.concat(`\n${that.beepers.beeperText()}`); // beeper info (number of beepers, positions)
+    //  worldText = worldText.concat(`\nKarel is standing on row ${that.karelRow} and column ${that.karelCol}, facing ${that.dir}. Karel’s front is ${that.frontIsClear() ? 'clear' : 'blocked'}.`); // karel position info
+    // return worldText;
    }
 
-   that.moveText = function() {
-     // assumes that Karel has just moved 1 step forward
-     // TODO: only prints if front is clear (not other sides), doesn't number the moves -- LEFT AND RIGHT
-     // BUILD STRING, console.log at the end
-     console.log(`Karel moved one step forward and is now at row ${that.karelRow} and column ${that.karelCol}, facing ${that.dir}. There are ${that.beepers.getNumBeepers()} beepers here. Karel’s front is ${that.frontIsClear() ? 'clear' : 'blocked'}.`);
-     // return `Karel moved one step forward and is now at row ${that.karelRow} and column ${that.karelCol}, facing ${that.dir}. There are ${that.beepers.getNumBeepers()} beepers here. Karel’s front is ${that.frontIsClear() ? 'clear' : 'blocked'}.`;
-   }
+   that.moveText = function(action) {
+     // returns text describing move. NOTE: assumes move has already occurred
+     if(action.includes('turn')) {
+       // e.g. 'turned left', 'turned right'
+       return `Karel ${action} and is now facing ${that.dir}.`;
+     } else if (action.includes('move')) {
+       // e.g. 'moved one step forward'
+       return `Karel ${action} and is now at row ${that.karelRow} and column ${that.karelCol}, facing ${that.dir}. There are ${that.beepers.getNumBeepers(that.karelRow, that.karelCol)} beepers here. Karel’s front is ${clearOrBlockedString(that.frontIsClear())}, left is ${clearOrBlockedString(that.leftIsClear())}, and right is ${clearOrBlockedString(that.rightIsClear())}.`;
+     } else if (action.includes('beeper')) {
+       // e.g. 'picked up a beeper', 'placed a beeper'
+       return `Karel {action}. There are now ${that.beepers.getNumBeepers(that.karelRow, that.karelCol)} beepers here.`
+     }
+     return `Karel ${action}.`;
+  }
+
+  function clearOrBlockedString(directionIsClear){
+    return directionIsClear ? 'clear' : 'blocked';
+  }
 
    function extractCoord(coordString) {
       var rParenIndex = coordString.indexOf('(');
