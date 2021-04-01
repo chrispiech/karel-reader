@@ -17,45 +17,46 @@ function Karel(canvasModel, codeLanguage, language) {
 
   var karelModel = KarelModel();
 
+  that.addMoveText = console.log; // will be overwritten with function that modifies DOM to add move text
+
   that.draw = function(c) {
      KarelView.draw(canvasModel, karelModel, c);
   }
 
   that.move = function() {
-      karelModel.move();
+    karelModel.move();
+    that.addMoveText(karelModel.moveText('moved one step forward'));
   }
 
   that.turnLeft = function() {
-      karelModel.turnLeft();
+    karelModel.turnLeft();
+    that.addMoveText(karelModel.moveText('turned left'));
   }
 
   that.turnRight = function() {
-      karelModel.turnRight();
+    karelModel.turnRight();
+    that.addMoveText(karelModel.moveText('turned right'));
   }
 
   that.turnAround = function() {
-      karelModel.turnAround();
+    karelModel.turnAround();
+    that.addMoveText(karelModel.moveText('turned around'));
   }
 
   that.paintCorner = function(color) {
-      karelModel.paintCorner(color);
+    karelModel.paintCorner(color);
+    that.addMoveText(karelModel.moveText(`painted the corner ${color}`));
   }
 
   that.putBeeper = function() {
-      karelModel.putBeeper();
+    karelModel.putBeeper();
+    that.addMoveText(karelModel.moveText('put a beeper down'));
   }
 
   that.pickBeeper = function() {
-      karelModel.pickBeeper();
+    karelModel.pickBeeper();
+    that.addMoveText(karelModel.moveText('picked a beeper up'));
   }
-
-   that.turnAround = function() {
-      karelModel.turnAround();
-   }
-
-   that.paintCorner = function(color) {
-      karelModel.paintCorner(color);
-   }
 
    that.beepersInBag = function () {
       return karelModel.getNBeepersInBag() > 0

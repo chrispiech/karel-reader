@@ -17,9 +17,7 @@
               <p id='{{name}}InitialWorldDescription'>
                 initial world description will go here
               </p>
-              <ul id='{{name}}MovesList'>
-                <li> move text will go here </li>
-              </ul>
+              <ul id='{{name}}MovesList'></ul>
             </div>
          </div>
       </div>
@@ -96,7 +94,6 @@
   }
 
   function initializeWorldTextDescription(worldText) {
-    console.log("INITIALIZE WORLD TEXT DESCRIPTION CALLED");
     $('#{{name}}InitialWorldDescription').html(worldText);
   }
 

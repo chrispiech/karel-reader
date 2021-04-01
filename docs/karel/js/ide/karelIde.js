@@ -67,9 +67,6 @@ function KarelIde(programLang="java", editor, canvas, initialWorld, speed = 0.5,
       } else {
          imagesLoaded();
       }
-      // setInitialWorldText('KAREL IDE SETTING WORLD TEXT'); // sets text description of initial world state
-      if (!worldLoaded) throw new Error('TRIED TO SET INITIAL WORLD TEXT BEFORE WORLD LOADED');
-      setInitialWorldText(karel.getInitialWorldText(customInitialWorldDescription)); // sets text description of initial world state
       setInterval(heartbeat, HEART_BEAT);
      }
 
@@ -303,6 +300,8 @@ function KarelIde(programLang="java", editor, canvas, initialWorld, speed = 0.5,
       draw();
 
       worldLoaded = true;
+      setInitialWorldText(karel.getInitialWorldText(customInitialWorldDescription));
+      karel.addMoveText = addMoveText; // give karel obj access to function to modify DOM upon move
    }
 
    /**

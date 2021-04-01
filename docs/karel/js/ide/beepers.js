@@ -49,9 +49,7 @@ function Beepers(rows, cols) {
   that.beeperText = function(){
     var beepersLeft = that.totalBeepers();
     if (beepersLeft == 0){
-      console.log('No beepers are present.');
-      return;
-      // return 'No beepers are present.';
+      return 'No beepers are present.';
     }
 
     var toPrint = 'The beepers are placed as follows:';
@@ -59,17 +57,22 @@ function Beepers(rows, cols) {
       for (var j = 0; j < cols; j++) {
         var numBeepers = that.beepers[i][j];
         if(numBeepers > 0) {
-          toPrint = toPrint.concat(`\n${numBeepers} beeper at row ${i}, column ${j}`);
+          toPrint = toPrint.concat(`\n${numBeepers} ${that.conjugateBeepers(numBeepers)} at row ${i}, column ${j}`);
           beepersLeft = beepersLeft - numBeepers;
          }
          if(beepersLeft == 0){
            // all beepers have been accounted for
-           console.log(toPrint);
-           return;
-           // return toPrint;
+           return toPrint;
          }
       }
     }
+  }
+
+  that.conjugateBeepers = function(numBeepers) {
+    if (numBeepers == 1) {
+      return 'beeper'
+    }
+    return 'beepers'
   }
 
 	that.deepCopy = function() {
