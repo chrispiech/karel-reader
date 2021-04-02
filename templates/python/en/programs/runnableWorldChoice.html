@@ -29,17 +29,22 @@
               </div>
             </div>
             <canvas id='{{name}}Canvas' class = 'ideCanvas'></canvas>
+            <div id='{{name}}TextDescriptionBox' class='ideTextDescriptionBox' style="display: none;">
+              <p id='{{name}}InitialWorldDescription'></p>
+              <ul id='{{name}}MovesList'></ul>
+            </div>
          </div>
       </div>
     </div>
     <div style="width:100%;">
         <div class="buttonBar">
            <button class="btn btn-default" id="{{name}}RunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
-        </div> 
+           <button class="btn btn-default" id="{{name}}TextDescriptionButton">Show Text Descriptions</button>
+        </div>
     </div>
 <script>
 
-        
+
 
 function example{{name}}() {
 STARTER_CODE = `
@@ -53,23 +58,25 @@ STARTER_CODE = STARTER_CODE.trim();
  var karelIde = null;
  var karelEditor = null;
  var buttonState = 'play';
+ var showTextDescription = false;
 
  function main() {
    karelEditor = importPythonEditor('{{name}}Editor','{{name}}EditorDiv', STARTER_CODE, {{isEditable}});
     setupWorldDropdown();
-    
-    
+
+
     var canvas = document.getElementById('{{name}}Canvas');
-    karelIde = KarelIde('{{progLang}}',karelEditor, canvas, '{{world}}', {{ideSpeed}}, '{{lang}}');
+    karelIde = KarelIde('{{progLang}}',karelEditor, canvas, '{{world}}', {{ideSpeed}}, '{{lang}}', 1000, 1000, initializeWorldTextDescription, appendMoveDescription);
     $('#{{name}}RunButton').click(function(){playClicked()});
+    $('#{{name}}TextDescriptionButton').click(function(){toggleTextDescription()});
     onresize();
-    
+
  }
 
  function setupWorldDropdown() {
     console.log('setup world dropdown')
     let ul = document.getElementById('{{name}}Worlds')
-    
+
     if (!ul.childNodes || ul.childNodes.length == 0) return;
 
     // Iterate LIs
@@ -89,6 +96,7 @@ STARTER_CODE = STARTER_CODE.trim();
     console.log('here we go', worldName)
     karelIde.changeWorld(worldName)
     changeToPlayButton()
+    clearMovesList();
  }
 
  function playClicked() {
@@ -97,6 +105,7 @@ STARTER_CODE = STARTER_CODE.trim();
     changeToResetButton();
    } else if (buttonState == 'reset') {
     karelIde.stopButton();
+    clearMovesList(); // resets text description to description of initial state only
     changeToPlayButton();
    }
   }
@@ -110,10 +119,37 @@ STARTER_CODE = STARTER_CODE.trim();
   function changeToResetButton() {
     var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
     $('#{{name}}RunButton').html(resetText);
-    buttonState = 'reset';  
+    buttonState = 'reset';
   }
 
- function onresize() { 
+  function toggleTextDescription() {
+    $('#{{name}}Canvas').toggle();
+    $('#{{name}}TextDescriptionBox').toggle();
+
+    if(!showTextDescription) {
+      // text description is currently hidden; toggle button should hide canvas and show text description div
+      $('#{{name}}TextDescriptionButton').text('Show Canvas');
+      showTextDescription = true;
+    } else {
+      // text description is currently showing; toggle button should hide text and show canvas
+      $('#{{name}}TextDescriptionButton').text('Show Text Descriptions');
+      showTextDescription = false;
+    }
+  }
+
+  function initializeWorldTextDescription(worldText) {
+    $('#{{name}}InitialWorldDescription').html(worldText);
+  }
+
+  function appendMoveDescription(moveText) {
+    $('#{{name}}MovesList').append(`<li>${moveText}</li>`);
+  }
+
+  function clearMovesList() {
+    $('#{{name}}MovesList').empty();
+  }
+
+ function onresize() {
     var parentHeight = {{editorHeight}};
     var canvasWidth = {{canvasWidth}}
     var parentWidth = $("#{{name}}").width();
@@ -122,14 +158,14 @@ STARTER_CODE = STARTER_CODE.trim();
     var ide = document.getElementById('{{name}}Ide');
     var editorDiv = document.getElementById('{{name}}EditorDiv');
     var canvas = document.getElementById('{{name}}CanvasDiv');
-    
+
     var ideHeight = parentHeight
     var centerHeight = ideHeight;
 
     var availibleWidth = parentWidth;
     var elementSpacing = 12;
 
-    var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
+    var editorWidth = availibleWidth - canvasWidth - elementSpacing;
 
     canvas.style.width = canvasWidth + 'px';
     canvas.style.height = canvasWidth + 'px';
@@ -147,7 +183,7 @@ STARTER_CODE = STARTER_CODE.trim();
     }
  }
  main()
- 
+
 }
 example{{name}}();
     </script>
