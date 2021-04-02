@@ -1,7 +1,7 @@
 
 
-<html>
-<head>
+<html> 
+<head> 
 <title>Karel Reader</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -15,7 +15,7 @@
 <script src="../..//karel/js/html/websiteImports.js"></script>
 <script>importCss();</script>
 <script>importJs();</script>
-</head>
+</head> 
 <body>
   <!-- container -->
   <div class="bookContainer">
@@ -28,7 +28,7 @@
     </a>
   </div>
   <hr/>
-
+  
   <div class="chapterTab" onclick="location.href='../../python/en/chapter1.html'">
     <a class="bookLink btn btn-link" href="../../python/en/chapter1.html">
       1 - Meet Karel
@@ -92,7 +92,7 @@
 </p>
 
 <center>
-<img style ="width:200px;margin-bottom:10px" src="../../images/ch1/karelLarge.png" alt="Karel, a friendly rectangular white robot with two black feet."/>
+<img style ="width:200px;margin-bottom:10px" src="../../images/ch1/karelLarge.png"  alt="Karel, a friendly rectangular white robot with two black feet."/>
 </center>
 <p>
   Karel the Robot was quite a success. Karel has been used in introductory computer science courses all across the world and has been taught to millions of students. Many generations of Stanford students learned how programming works with Karel, and it is still the gentle introduction to coding used at Stanford.
@@ -117,7 +117,7 @@ Karel’s world is defined by rows running horizontally (east-west) and columns 
 </p>
 
 <center>
-<img style ="width:350px; padding:10px" src="../../images/ch1/world.png" alt="The world has 4 rows and 6 columns. Karel is at the bottom left corner, position (1,1), facing east. There are walls in a rectangle near the bottom right corner between positions (3,1) and (4,1) and between rows 1 and 2 for columns 4 through 6. There is a beeper in position (2,1)."/>
+<img style ="width:350px; padding:10px" src="../../images/ch1/world.png"  alt="The world has 4 rows and 6 columns. Karel is at the bottom left corner, row 1 column 1, facing east. There are walls in a rectangle near the bottom right corner around the positions in row 1 columns 4, 5, and 6. There is a beeper in row 1 column 2."/>
 </center>
 
 <p>
@@ -136,6 +136,10 @@ Several other components of Karel’s world can be seen in this example. The obj
             <div class="commandCanvasTitle">World:</div>
             <div class="commandCanvasOuter">
               <canvas id='cmdCanvas' style="width:175px;height:175px"></canvas>
+              <div id='cmdTextDescriptionBox' class='ideTextDescriptionBox' style="width:175px;height:175px;display: none;">
+                <p id='cmdInitialWorldDescription'></p>
+                <ul id='cmdMovesList'></ul>
+              </div>
             </div>
           </div>
           <div style="width:50px"></div>
@@ -143,10 +147,15 @@ Several other components of Karel’s world can be seen in this example. The obj
             <div class="commandCanvasTitle">Goal:</div>
             <div class="commandCanvasOuter">
               <canvas id='cmdCanvasGoal' style="width:175px;height:175px"></canvas>
+              <div id='cmdTextDescriptionBoxGoal' class='ideTextDescriptionBox' style="width:175px;height:175px;display: none;">
+                <p id='cmdInitialWorldDescriptionGoal'></p>
+                <!-- <ul id='cmdMovesList'></ul> -->
+              </div>
             </div>
           </div>
          </div>
          <div class="commandButtons">
+          <button class="btn btn-default mr-10" id="cmdTextDescriptionButton">Show Text Descriptions</button>
           <button id="cmdMove" class="btn btn-default btn-lg mr-10 commandButton"><code>move()</code></button>
           <button id="cmdTurnLeft" class="btn btn-default btn-lg mr-10 commandButton"><code>turn_left()</code></button>
           <button id="cmdPickBeeper" class="btn btn-default btn-lg mr-10 commandButton"><code>pick_beeper()</code></button>
@@ -163,42 +172,56 @@ function examplecmd() {
  var karelIde = null;
  var buttonState = 'play';
  var canvas = null;
+ var showTextDescription = false;
 
  function main() {
     canvas = document.getElementById('cmdCanvas');
-    karelIde = KarelIde('java',null, canvas, 'commands', 0.9, 'en', 500, 500);
+    karelIde = KarelIde('java',null, canvas, 'commands', 0.9, 'en', 500, 500, initializeWorldTextDescription, appendMoveDescription, 'There is a wall between row 1 column 1 and row 2 column 1.');
+    $('#cmdTextDescriptionButton').click(function(){toggleTextDescription()});
     $('#cmdMove').click(function(){karelIde.stepMove()});
     $('#cmdTurnLeft').click(function(){karelIde.stepTurnLeft()});
     $('#cmdPickBeeper').click(function(){karelIde.stepPickBeeper()});
     $('#cmdPutBeeper').click(function(){karelIde.stepPutBeeper()});
 
     let canvasGoal = document.getElementById('cmdCanvasGoal');
-    let goalIde = KarelIde('java',null, canvasGoal, 'commandsGoal', 0.9, 'en', 500, 500)
+    let goalIde = KarelIde('java',null, canvasGoal, 'commandsGoal', 0.9, 'en', 500, 500, initializeWorldTextDescriptionGoal, console.log, 'There is a wall between row 1 column 1 and row 2 column 1.')
  }
 
+ function toggleTextDescription() {
+   $('#cmdCanvas').toggle();
+   $('#cmdCanvasGoal').toggle();
+   $('#cmdTextDescriptionBox').toggle();
+   $('#cmdTextDescriptionBoxGoal').toggle();
 
- function playClicked() {
-  if(buttonState == 'play') {
-    karelIde.playButton();
+   if(!showTextDescription) {
+     // text description is currently hidden; toggle button should hide canvas and show text description div
+     $('#cmdTextDescriptionButton').text('Show Canvas');
+     showTextDescription = true;
+   } else {
+     // text description is currently showing; toggle button should hide text and show canvas
+     $('#cmdTextDescriptionButton').text('Show Text Descriptions');
+     showTextDescription = false;
+   }
+ }
 
-      var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
-      $('#cmdRunButton').html(resetText);
-      buttonState = 'reset';
-     } else if (buttonState == 'reset') {
-      karelIde.stopButton();
-      var playText = '<span class="glyphicon glyphicon-play"></span> Run Program';
-      $('#cmdRunButton').html(playText);
-      buttonState = 'play';
-     }
+ function initializeWorldTextDescription(worldText) {
+   $('#cmdInitialWorldDescription').html(worldText);
+ }
 
-  }
+ function appendMoveDescription(moveText) {
+   $('#cmdMovesList').append(`<li>${moveText}</li>`);
+ }
 
+ function initializeWorldTextDescriptionGoal(goalWorldText) {
+   $('#cmdInitialWorldDescriptionGoal').html(goalWorldText);
+ }
 
  main()
 
 }
 examplecmd();
-    </script><p>
+    </script>
+<p>
   Here is what each command does:
 <table class="table mt-10">
   <tr><th>Command</th><th>Description</th></tr>
@@ -222,7 +245,8 @@ examplecmd();
 You will have a chance to see a few simple Karel programs in Chapter 2!
 </p>
 
-<p><hr/>
+<p>
+<hr/>
 <center>
   <a class="btn btn-primary btn-lg" href="chapter2.html" role="button">Next Chapter</a>
 </center>
@@ -236,5 +260,5 @@ You will have a chance to see a few simple Karel programs in Chapter 2!
       <div style="flex-grow:4"></div>
     </div>
   </div>
-</body>
+</body> 
 </html>

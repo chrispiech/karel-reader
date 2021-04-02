@@ -6,7 +6,7 @@
 <h3>Example: FirstKarel</h3>
 
 <%
-  include('templates/python/'+lang+'/programs/runnable.html', name="beeperPickingRedux", world="stepUp", ideSpeed=0.8)
+  include('templates/python/'+lang+'/programs/runnable.html', name="beeperPickingRedux", world="stepUp", ideSpeed=0.8, customDescription="There are walls in a rectangle near the bottom right corner around the positions in row 1 columns 4, 5, and 6.")
 %>
 
 <p>
@@ -49,7 +49,7 @@ You can use the name of a new function just like any of Karel’s built-in comma
 </p>
 
 <%
-  include('templates/python/'+lang+'/programs/runnable.html', name="stepUp2", world="stepUp")
+  include('templates/python/'+lang+'/programs/runnable.html', name="stepUp2", world="stepUp", customDescription="There are walls in a rectangle near the bottom right corner around the positions in row 1 columns 4, 5, and 6.")
 %>
 
 <h3>Function Code Blocks</h3>
@@ -58,4 +58,3 @@ You can use the name of a new function just like any of Karel’s built-in comma
 </p>
 
 <p>You can define as many functions as you want. They should all be written one after another. You can't define a function inside another function. </p>
-

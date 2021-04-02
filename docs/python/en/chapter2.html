@@ -91,7 +91,7 @@ Chapter 2: Programming Karel
 <hr/>
 <p>
   The simplest style of Karel program uses text to specify a sequence of built-in commands that should be executed when the program is <b>run</b>. Consider the simple Karel program below. The text on the left is the program. The state of Karel's world is shown on the right:
-</p> 
+</p>
 
 
 <div class="section embeddedIde" id="firstKarel">
@@ -100,20 +100,25 @@ Chapter 2: Programming Karel
          <div id = 'firstKarelEditorDiv' class = 'ideEditorDiv' style="width:200px"></div>
          <div id = 'firstKarelCanvasDiv' class = 'ideCanvasDiv'>
             <canvas id='firstKarelCanvas' class = 'ideCanvas'></canvas>
+            <div id='firstKarelTextDescriptionBox' class='ideTextDescriptionBox' style="display: none;">
+              <p id='firstKarelInitialWorldDescription'></p>
+              <ul id='firstKarelMovesList'></ul>
+            </div>
          </div>
       </div>
     </div>
     <div style="width:100%;">
         <div class="buttonBar">
            <button class="btn btn-default" id="firstKarelRunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
-        </div> 
+           <button class="btn btn-default" id="firstKarelTextDescriptionButton">Show Text Descriptions</button>
+        </div>
     </div>
 <script>
 
-        
 
-function examplefirstKarel() {
-STARTER_CODE = `
+
+  function examplefirstKarel() {
+    STARTER_CODE = `
 # File: FirstKarel.py
 # -----------------------------
 # The FirstKarel program defines a "main" 
@@ -128,45 +133,76 @@ def main():
    move()
    
 
-`
-// because of that extra endline at the start of the string
-STARTER_CODE = STARTER_CODE.trim();
+    `
+    // because of that extra endline at the start of the string
+    STARTER_CODE = STARTER_CODE.trim();
 
- var karelIde = null;
- var karelEditor = null;
- var buttonState = 'play';
+    var karelIde = null;
+    var karelEditor = null;
+    var buttonState = 'play';
+    var showTextDescription = false;
 
- function main() {
-   karelEditor = importPythonEditor('firstKarelEditor','firstKarelEditorDiv', STARTER_CODE, false);
-     //importRunButtonBar('example1ButtonBar');
-    
-    $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
-    
-    initTabs();
-    var canvas = document.getElementById('firstKarelCanvas');
-    karelIde = KarelIde('python',karelEditor, canvas, 'stepUp', 0.0, 'en');
-    $('#firstKarelRunButton').click(function(){playClicked()});
-    onresize();
-    
- }
+    function main() {
+      karelEditor = importPythonEditor('firstKarelEditor','firstKarelEditorDiv', STARTER_CODE, false);
+      //importRunButtonBar('example1ButtonBar');
 
- function playClicked() {
-  if(buttonState == 'play') {
-    karelIde.playButton();
-      
+      $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
+
+      initTabs();
+      var canvas = document.getElementById('firstKarelCanvas');
+      karelIde = KarelIde('python',karelEditor, canvas, 'stepUp', 0.0, 'en', 1000, 1000, initializeWorldTextDescription, appendMoveDescription, "There are walls in a rectangle near the bottom right corner around the positions in row 1 columns 4, 5, and 6.");
+
+      $('#firstKarelRunButton').click(function(){playClicked()});
+      $('#firstKarelTextDescriptionButton').click(function(){toggleTextDescription()});
+      onresize();
+
+    }
+
+  function playClicked() {
+    if(buttonState == 'play') {
+      karelIde.playButton();
+
       var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
       $('#firstKarelRunButton').html(resetText);
       buttonState = 'reset';
-     } else if (buttonState == 'reset') {
+    } else if (buttonState == 'reset') {
       karelIde.stopButton();
+      clearMovesList(); // resets text description to description of initial state only
       var playText = '<span class="glyphicon glyphicon-play"></span> Run Program';
       $('#firstKarelRunButton').html(playText);
       buttonState = 'play';
-     }
-  
+    }
+
   }
 
- function onresize() { 
+  function toggleTextDescription() {
+    $('#firstKarelCanvas').toggle();
+    $('#firstKarelTextDescriptionBox').toggle();
+
+    if(!showTextDescription) {
+      // text description is currently hidden; toggle button should hide canvas and show text description div
+      $('#firstKarelTextDescriptionButton').text('Show Canvas');
+      showTextDescription = true;
+    } else {
+      // text description is currently showing; toggle button should hide text and show canvas
+      $('#firstKarelTextDescriptionButton').text('Show Text Descriptions');
+      showTextDescription = false;
+    }
+  }
+
+  function initializeWorldTextDescription(worldText) {
+    $('#firstKarelInitialWorldDescription').html(worldText);
+  }
+
+  function appendMoveDescription(moveText) {
+    $('#firstKarelMovesList').append(`<li>${moveText}</li>`);
+  }
+
+  function clearMovesList() {
+    $('#firstKarelMovesList').empty();
+  }
+
+  function onresize() {
     var parentHeight = 249.20000000000002;
     var canvasWidth = 300
     var parentWidth = $("#firstKarel").width();
@@ -175,14 +211,14 @@ STARTER_CODE = STARTER_CODE.trim();
     var ide = document.getElementById('firstKarelIde');
     var editorDiv = document.getElementById('firstKarelEditorDiv');
     var canvas = document.getElementById('firstKarelCanvasDiv');
-    
+
     var ideHeight = parentHeight
     var centerHeight = ideHeight;
 
     var availibleWidth = parentWidth;
     var elementSpacing = 12;
 
-    var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
+    var editorWidth = availibleWidth - canvasWidth - elementSpacing;
 
     canvas.style.width = canvasWidth + 'px';
     canvas.style.height = canvasWidth + 'px';
@@ -196,15 +232,16 @@ STARTER_CODE = STARTER_CODE.trim();
     console.log('editor width: ' + editorWidth)
 
     if (karelEditor) {
-       karelEditor.renderer.onResize();
+      karelEditor.renderer.onResize();
     }
- }
- main()
- 
-}
-examplefirstKarel();
-    </script>
+  }
+  main()
+
+  }
+  examplefirstKarel();
+</script>
 </div>
+
 <p>
 Press the "Run" button to execute the program. Programs are typically written in a special application called an <b>Integrated Development Enviroment</b> (IDE) and most Karel programs are written in an IDE called PyCharm. Like an IDE, this reader has the ability to execute programs in order to help you <i>see</i> how things work as you learn.</p>
 <p>The program is composed of several parts. The first part consists of the following lines:
@@ -214,8 +251,8 @@ Press the "Run" button to execute the program. Programs are typically written in
 <p class="demoCode" style="margin-left:10px">
 <pre class="comment" translate="no"># File: FirstKarel.py
 # -----------------------------
-# The FirstKarel program defines a "main" 
-# function with three commands. These commands cause  
+# The FirstKarel program defines a "main"
+# function with three commands. These commands cause
 # Karel to move forward one block, pick up a beeper
 # and then move ahead to the next corner.</pre>
 </p>
@@ -240,7 +277,7 @@ Press the "Run" button to execute the program. Programs are typically written in
 <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;move()</code><br/>
 </p>
 <p>
-These lines represent the definition of a new <b>function</b>, which specifies the sequence of steps necessary to respond to a command. As in the case of the FirstKarel program itself, the function definition consists of two parts that can be considered separately: The first line constitutes the function header and the indented code following is the function body. If you ignore the body for now, the function definition looks like this:
+These lines represent the definition of a new <b>function</b>, which specifies the sequence of steps necessary to respond to a command. As in the case of the <code>FirstKarel</code> program itself, the function definition consists of two parts that can be considered separately: The first line constitutes the function header and the indented code following is the function body. If you ignore the body for now, the function definition looks like this:
 </p>
 <p class="demoCode" style="margin-left:10px">
 <code>&nbsp;&nbsp;&nbsp;<span class="keyword">def</span> main():</code><br/>
@@ -255,7 +292,7 @@ The first word in the function header, <code class="keyword">def</code>, is part
 <code>&nbsp;&nbsp;&nbsp;move()</code><br/>
 </p>
 <p>
-  Thus, if the initial state of the world matches the example given in Chapter 1, Karel first moves forward into the corner containing the beeper, picks up that beeper, and finally moves forward to the corner just before the wall, as shown in the following before-and-after diagram:
+Thus, if the initial state of the world matches the example given in Chapter 1, Karel first moves forward into the corner containing the beeper, picks up that beeper, and finally moves forward to the corner just before the wall, as shown in the following before-and-after diagram:
   </p>
 
 <div class="section" id="ba2">
@@ -264,22 +301,22 @@ The first word in the function header, <code class="keyword">def</code>, is part
           <div>
             <div class="commandCanvasTitle">Before:</div>
             <div class="commandCanvasOuter">
-              <canvas id='ba2CanvasBefore' style="width:300px;"></canvas>
+              <canvas id='ba2CanvasBefore' style="width:300px;" aria-label=" " role="img"></canvas>
             </div>
           </div>
           <div style="width:50px"></div>
           <div>
             <div class="commandCanvasTitle">After:</div>
             <div class="commandCanvasOuter">
-              <canvas id='ba2CanvasAfter' style="width:300px;"></canvas>
+              <canvas id='ba2CanvasAfter' style="width:300px;" aria-label=" " role="img"></canvas>
             </div>
           </div>
-         </div> 
+         </div>
     </div>
-    
+
 <script>
 
-        
+
 
 function exampleba2() {
  var karelIde = null;
@@ -288,21 +325,30 @@ function exampleba2() {
 
  function main() {
     canvas = document.getElementById('ba2CanvasBefore');
-    karelIde = KarelIde('python',null, canvas, 'stepUp', 0.0, 'en',1000, 0.7 * 1000);
+    karelIde = KarelIde('python',null, canvas, 'stepUp', 0.0, 'en',1000, 0.7 * 1000, console.log, console.log, 'There are walls in a rectangle near the bottom right corner around the positions in row 1 columns 4, 5, and 6.', setBeforeAriaLabel);
 
     let canvasGoal = document.getElementById('ba2CanvasAfter');
-    let goalIde = KarelIde('python',null, canvasGoal, 'stepUpM1',0.0, 'en',  1000, 0.7 * 1000)
+    let goalIde = KarelIde('python',null, canvasGoal, 'stepUpM1',0.0, 'en',  1000, 0.7 * 1000, console.log, console.log, 'There are walls in a rectangle near the bottom right corner around the positions in row 1 columns 4, 5, and 6.', setAfterAriaLabel);
  }
 
- 
+ function setBeforeAriaLabel(altText) {
+   $('#ba2CanvasBefore').attr('aria-label', altText); // set alt text for canvas element
+ }
+
+ function setAfterAriaLabel(altText) {
+   $('#ba2CanvasAfter').attr('aria-label', altText); // set alt text for canvas element
+ }
+
+
  main()
- 
+
 }
 exampleba2();
     </script>
-</div><h2>Solving a more interesting problem</h2>
+</div>
+<h2>Solving a more interesting problem</h2>
 <p>
-  The FirstKarel program defined above doesn’t do very much as yet. Let’s try to make it a little more interesting. Suppose that the goal is not simply to get Karel to pick up the beeper but to move the beeper from its initial position on 2nd column and 1st row to the center of a ledge. Thus, your next assignment is to define a new Karel program that accomplishes the task illustrated in this diagram:
+  The <code>FirstKarel</code> program defined above doesn’t do very much as yet. Let’s try to make it a little more interesting. Suppose that the goal is not simply to get Karel to pick up the beeper but to move the beeper from its initial position on 2nd column and 1st row to the center of a ledge. Thus, your next assignment is to define a new Karel program that accomplishes the task illustrated in this diagram:
   </p>
 
 <div class="section" id="ba3">
@@ -311,22 +357,22 @@ exampleba2();
           <div>
             <div class="commandCanvasTitle">Before:</div>
             <div class="commandCanvasOuter">
-              <canvas id='ba3CanvasBefore' style="width:300px;"></canvas>
+              <canvas id='ba3CanvasBefore' style="width:300px;" aria-label=" " role="img"></canvas>
             </div>
           </div>
           <div style="width:50px"></div>
           <div>
             <div class="commandCanvasTitle">After:</div>
             <div class="commandCanvasOuter">
-              <canvas id='ba3CanvasAfter' style="width:300px;"></canvas>
+              <canvas id='ba3CanvasAfter' style="width:300px;" aria-label=" " role="img"></canvas>
             </div>
           </div>
-         </div> 
+         </div>
     </div>
-    
+
 <script>
 
-        
+
 
 function exampleba3() {
  var karelIde = null;
@@ -335,21 +381,29 @@ function exampleba3() {
 
  function main() {
     canvas = document.getElementById('ba3CanvasBefore');
-    karelIde = KarelIde('python',null, canvas, 'stepUp', 0.0, 'en',1000, 0.7 * 1000);
+    karelIde = KarelIde('python',null, canvas, 'stepUp', 0.0, 'en',1000, 0.7 * 1000, console.log, console.log, 'There are walls in a rectangle near the bottom right corner around the positions in row 1 columns 4, 5, and 6.', setBeforeAriaLabel);
 
     let canvasGoal = document.getElementById('ba3CanvasAfter');
-    let goalIde = KarelIde('python',null, canvasGoal, 'stepUpGoal',0.0, 'en',  1000, 0.7 * 1000)
+    let goalIde = KarelIde('python',null, canvasGoal, 'stepUpGoal',0.0, 'en',  1000, 0.7 * 1000, console.log, console.log, 'There are walls in a rectangle near the bottom right corner around the positions in row 1 columns 4, 5, and 6.', setAfterAriaLabel);
  }
 
- 
+ function setBeforeAriaLabel(altText) {
+   $('#ba3CanvasBefore').attr('aria-label', altText); // set alt text for canvas element
+ }
+
+ function setAfterAriaLabel(altText) {
+   $('#ba3CanvasAfter').attr('aria-label', altText); // set alt text for canvas element
+ }
+
+
  main()
- 
+
 }
 exampleba3();
     </script>
-</div><p>
+</div>
+<p>
   The first three commands in the new program—the ones that move forward, pick up the beeper, and then move up to the ledge—are the same as before:
-</p>
 </p>
 <p class="demoCode" style="margin-left:10px">
 <code>&nbsp;&nbsp;&nbsp;move()</code><br/>
@@ -357,7 +411,7 @@ exampleba3();
 <code>&nbsp;&nbsp;&nbsp;move()</code><br/>
 </p>
 <p>
-  From here, the next step is to turn left to begin climbing the ledge. That operation is easy, because Karel has a <code>turn_left()</code> command in its standard repertoire. Executing a <code>turn_left()</code> command at the end of the preceding sequence of commands leaves Karel facing north on the corner of 1st row and 3rd column. If Karel then executes a <code>move()</code> command, it will move north to reach the following position:
+From here, the next step is to turn left to begin climbing the ledge. That operation is easy, because Karel has a <code>turn_left()</code> command in its standard repertoire. Executing a <code>turn_left()</code> command at the end of the preceding sequence of commands leaves Karel facing north on the corner of 1st row and 3rd column. If Karel then executes a <code>move()</code> command, it will move north to reach the following position:
 </p>
 
 <div class="section" id="ba3">
@@ -365,15 +419,15 @@ exampleba3();
          <div id = 'ba3CanvasDiv' class = 'commandCanvasDiv'>
           <div>
             <div class="commandCanvasOuter">
-              <canvas id='ba3Canvas' style="width:300px;"></canvas>
+              <canvas id='ba3Canvas' style="width:300px;" aria-label=" " role="img"></canvas>
             </div>
           </div>
-         </div> 
+         </div>
     </div>
-    
+
 <script>
 
-        
+
 
 function exampleba3() {
  var karelIde = null;
@@ -382,20 +436,25 @@ function exampleba3() {
 
  function main() {
     canvas = document.getElementById('ba3Canvas');
-    karelIde = KarelIde('python',null, canvas, 'stepUpM2', 0, 'en',1000, 0.7 * 1000);
+    karelIde = KarelIde('python',null, canvas, 'stepUpM2', 0, 'en',1000, 0.7 * 1000, console.log, console.log, 'There are walls in a rectangle near the bottom right corner around the positions in row 1 columns 4, 5, and 6.', setAriaLabel);
  }
 
- 
+ function setAriaLabel(altText) {
+   $('#ba3Canvas').attr('aria-label', altText); // set alt text for canvas element
+ }
+
+
  main()
- 
+
 }
 exampleba3();
     </script>
-</div><p>
-  From here, the next thing you need to do is get Karel to turn right so that it is again facing east. While this operation is conceptually just as easy as getting Karel to turn left, there is a slight problem: Karel’s language includes a <code>turn_left()</code> command, but no <code>turn_right()</code> command. It’s as if you bought the economy model and have now discovered that it is missing some important features.
+</div>
+<p>
+From here, the next thing you need to do is get Karel to turn right so that it is again facing east. While this operation is conceptually just as easy as getting Karel to turn left, there is a slight problem: Karel’s language includes a <code>turn_left()</code> command, but no <code>turn_right()</code> command. It’s as if you bought the economy model and have now discovered that it is missing some important features.
 </p>
 <p>
-  At this point, you have your first opportunity to begin thinking like a programmer. You have one set of commands, but not exactly the set you need. What can you do? Can you accomplish the effect of a <code>turn_right()</code> command using only the capabilities you have? The answer, of course, is yes. You can accomplish the effect of turning right by turning left three times. After three left turns, Karel will be facing in the desired direction. From here, all you need to do is program Karel to move over to the center of the ledge, drop the beeper and then move forward to the final position. Here is a complete implementation of a program that accomplishes the entire task:
+At this point, you have your first opportunity to begin thinking like a programmer. You have one set of commands, but not exactly the set you need. What can you do? Can you accomplish the effect of a <code>turn_right()</code> command using only the capabilities you have? The answer, of course, is yes. You can accomplish the effect of turning right by turning left three times. After three left turns, Karel will be facing in the desired direction. From here, all you need to do is program Karel to move over to the center of the ledge, drop the beeper and then move forward to the final position. Here is a complete implementation of a program that accomplishes the entire task:
 </p>
 
 
@@ -405,20 +464,25 @@ exampleba3();
          <div id = 'stepUpEditorDiv' class = 'ideEditorDiv' style="width:200px"></div>
          <div id = 'stepUpCanvasDiv' class = 'ideCanvasDiv'>
             <canvas id='stepUpCanvas' class = 'ideCanvas'></canvas>
+            <div id='stepUpTextDescriptionBox' class='ideTextDescriptionBox' style="display: none;">
+              <p id='stepUpInitialWorldDescription'></p>
+              <ul id='stepUpMovesList'></ul>
+            </div>
          </div>
       </div>
     </div>
     <div style="width:100%;">
         <div class="buttonBar">
            <button class="btn btn-default" id="stepUpRunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
-        </div> 
+           <button class="btn btn-default" id="stepUpTextDescriptionButton">Show Text Descriptions</button>
+        </div>
     </div>
 <script>
 
-        
 
-function examplestepUp() {
-STARTER_CODE = `
+
+  function examplestepUp() {
+    STARTER_CODE = `
 # File: FirstKarel.py
 # -----------------------------
 # The FirstKarel program defines a "main" 
@@ -439,45 +503,76 @@ def main():
    move()
    put_beeper()
    move()
-   `
-// because of that extra endline at the start of the string
-STARTER_CODE = STARTER_CODE.trim();
+       `
+    // because of that extra endline at the start of the string
+    STARTER_CODE = STARTER_CODE.trim();
 
- var karelIde = null;
- var karelEditor = null;
- var buttonState = 'play';
+    var karelIde = null;
+    var karelEditor = null;
+    var buttonState = 'play';
+    var showTextDescription = false;
 
- function main() {
-   karelEditor = importPythonEditor('stepUpEditor','stepUpEditorDiv', STARTER_CODE, false);
-     //importRunButtonBar('example1ButtonBar');
-    
-    $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
-    
-    initTabs();
-    var canvas = document.getElementById('stepUpCanvas');
-    karelIde = KarelIde('python',karelEditor, canvas, 'stepUp', 0.5, 'en');
-    $('#stepUpRunButton').click(function(){playClicked()});
-    onresize();
-    
- }
+    function main() {
+      karelEditor = importPythonEditor('stepUpEditor','stepUpEditorDiv', STARTER_CODE, false);
+      //importRunButtonBar('example1ButtonBar');
 
- function playClicked() {
-  if(buttonState == 'play') {
-    karelIde.playButton();
-      
+      $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
+
+      initTabs();
+      var canvas = document.getElementById('stepUpCanvas');
+      karelIde = KarelIde('python',karelEditor, canvas, 'stepUp', 0.5, 'en', 1000, 1000, initializeWorldTextDescription, appendMoveDescription, "There are walls in a rectangle near the bottom right corner around the positions in row 1 columns 4, 5, and 6.");
+
+      $('#stepUpRunButton').click(function(){playClicked()});
+      $('#stepUpTextDescriptionButton').click(function(){toggleTextDescription()});
+      onresize();
+
+    }
+
+  function playClicked() {
+    if(buttonState == 'play') {
+      karelIde.playButton();
+
       var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
       $('#stepUpRunButton').html(resetText);
       buttonState = 'reset';
-     } else if (buttonState == 'reset') {
+    } else if (buttonState == 'reset') {
       karelIde.stopButton();
+      clearMovesList(); // resets text description to description of initial state only
       var playText = '<span class="glyphicon glyphicon-play"></span> Run Program';
       $('#stepUpRunButton').html(playText);
       buttonState = 'play';
-     }
-  
+    }
+
   }
 
- function onresize() { 
+  function toggleTextDescription() {
+    $('#stepUpCanvas').toggle();
+    $('#stepUpTextDescriptionBox').toggle();
+
+    if(!showTextDescription) {
+      // text description is currently hidden; toggle button should hide canvas and show text description div
+      $('#stepUpTextDescriptionButton').text('Show Canvas');
+      showTextDescription = true;
+    } else {
+      // text description is currently showing; toggle button should hide text and show canvas
+      $('#stepUpTextDescriptionButton').text('Show Text Descriptions');
+      showTextDescription = false;
+    }
+  }
+
+  function initializeWorldTextDescription(worldText) {
+    $('#stepUpInitialWorldDescription').html(worldText);
+  }
+
+  function appendMoveDescription(moveText) {
+    $('#stepUpMovesList').append(`<li>${moveText}</li>`);
+  }
+
+  function clearMovesList() {
+    $('#stepUpMovesList').empty();
+  }
+
+  function onresize() {
     var parentHeight = 373.8;
     var canvasWidth = 300
     var parentWidth = $("#stepUp").width();
@@ -486,14 +581,14 @@ STARTER_CODE = STARTER_CODE.trim();
     var ide = document.getElementById('stepUpIde');
     var editorDiv = document.getElementById('stepUpEditorDiv');
     var canvas = document.getElementById('stepUpCanvasDiv');
-    
+
     var ideHeight = parentHeight
     var centerHeight = ideHeight;
 
     var availibleWidth = parentWidth;
     var elementSpacing = 12;
 
-    var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
+    var editorWidth = availibleWidth - canvasWidth - elementSpacing;
 
     canvas.style.width = canvasWidth + 'px';
     canvas.style.height = canvasWidth + 'px';
@@ -507,15 +602,16 @@ STARTER_CODE = STARTER_CODE.trim();
     console.log('editor width: ' + editorWidth)
 
     if (karelEditor) {
-       karelEditor.renderer.onResize();
+      karelEditor.renderer.onResize();
     }
- }
- main()
- 
-}
-examplestepUp();
-    </script>
-</div><hr/>
+  }
+  main()
+
+  }
+  examplestepUp();
+</script>
+</div>
+<hr/>
 <center>
   <a class="btn btn-primary btn-lg" href="chapter3.html" role="button">Next Chapter</a>
 </center>

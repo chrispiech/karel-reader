@@ -30,7 +30,7 @@ Karel’s world is defined by rows running horizontally (east-west) and columns 
 </p>
 
 <center>
-<img style ="width:350px; padding:10px" src="{{pathToRoot}}images/ch1/world.png"  alt="The world has 4 rows and 6 columns. Karel is at the bottom left corner, position (1,1), facing east. There are walls in a rectangle near the bottom right corner between positions (3,1) and (4,1) and between rows 1 and 2 for columns 4 through 6. There is a beeper in position (2,1)."/>
+<img style ="width:350px; padding:10px" src="{{pathToRoot}}images/ch1/world.png"  alt="The world has 4 rows and 6 columns. Karel is at the bottom left corner, row 1 column 1, facing east. There are walls in a rectangle near the bottom right corner around the positions in row 1 columns 4, 5, and 6. There is a beeper in row 1 column 2."/>
 </center>
 
 <p>
@@ -42,7 +42,7 @@ Several other components of Karel’s world can be seen in this example. The obj
 </p>
 
 <%
-  include('templates/python/'+lang+'/programs/commands.html', name="cmd", world="commands", goalWorld="commandsGoal")
+  include('templates/python/'+lang+'/programs/commands.html', name="cmd", world="commands", goalWorld="commandsGoal", customDescriptionWorld="There is a wall between row 1 column 1 and row 2 column 1.", customDescriptionGoal="There is a wall between row 1 column 1 and row 2 column 1.")
 %>
 <p>
   Here is what each command does:
