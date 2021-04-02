@@ -5,7 +5,7 @@
 </p>
 
 <center>
-<img style ="width:200px;margin-bottom:10px" src="{{pathToRoot}}images/ch1/karelLarge.png"/>
+<img style ="width:200px;margin-bottom:10px" src="{{pathToRoot}}images/ch1/karelLarge.png"  alt="Karel, a friendly rectangular white robot with two black feet."/>
 </center>
 <p>
   Karel the Robot was quite a success. Karel has been used in introductory computer science courses all across the world and has been taught to millions of students. Many generations of Stanford students learned how programming works with Karel, and it is still the gentle introduction to coding used at Stanford.
@@ -16,12 +16,12 @@
   Karel is a very simple robot living in a very simple world. By giving Karel a set of commands, you can direct it to perform certain tasks within its world. The process of specifying those commands is called <b>programming</b>. Initially, Karel understands only a very small number of predefined commands, but an important part of the programming process is teaching Karel new commands that extend its capabilities.
 </p>
 
-<p>Karel programs have much the same structure and involve the same fundamental elements as <a href="https://en.wikipedia.org/wiki/Python_(programming_language)">Python</a>, a major <a href="https://en.wikipedia.org/wiki/Programming_language">programming language</a>. The critical difference is that Karel’s programming language is extremely small and as such the details are easy to master. Even so, you will discover that solving a problem can be challenging. 
+<p>Karel programs have much the same structure and involve the same fundamental elements as <a href="https://en.wikipedia.org/wiki/Python_(programming_language)">Python</a>, a major <a href="https://en.wikipedia.org/wiki/Programming_language">programming language</a>. The critical difference is that Karel’s programming language is extremely small and as such the details are easy to master. Even so, you will discover that solving a problem can be challenging.
 </p>
 
 
 <p>
-  By starting with Karel, you can concentrate on solving problems from the very beginning. Problem solving is the essence of programming. And because Karel encourages imagination and creativity, you can have quite a lot of fun along the way. 
+  By starting with Karel, you can concentrate on solving problems from the very beginning. Problem solving is the essence of programming. And because Karel encourages imagination and creativity, you can have quite a lot of fun along the way.
 </p>
 
 <h3>Karel’s world</h3>
@@ -30,7 +30,7 @@ Karel’s world is defined by rows running horizontally (east-west) and columns 
 </p>
 
 <center>
-<img style ="width:350px; padding:10px" src="{{pathToRoot}}images/ch1/world.png"/>
+<img style ="width:350px; padding:10px" src="{{pathToRoot}}images/ch1/world.png"  alt="The world has 4 rows and 6 columns. Karel is at the bottom left corner, row 1 column 1, facing east. There are walls in a rectangle near the bottom right corner around the positions in row 1 columns 4, 5, and 6. There is a beeper in row 1 column 2."/>
 </center>
 
 <p>
@@ -42,7 +42,7 @@ Several other components of Karel’s world can be seen in this example. The obj
 </p>
 
 <%
-  include('templates/python/'+lang+'/programs/commands.html', name="cmd", world="commands", goalWorld="commandsGoal")
+  include('templates/python/'+lang+'/programs/commands.html', name="cmd", world="commands", goalWorld="commandsGoal", customDescriptionWorld="There is a wall between row 1 column 1 and row 2 column 1.", customDescriptionGoal="There is a wall between row 1 column 1 and row 2 column 1.")
 %>
 <p>
   Here is what each command does:
@@ -57,11 +57,11 @@ Several other components of Karel’s world can be seen in this example. The obj
 
 
 <p>
-  The empty pair of parentheses that appears in each of these commands is part of the common syntax shared by Karel and Python and is used to specify the invocation of the command. Eventually, the programs you write will include additional information in the space between the parentheses, but such information is not part of the Karel’s primitive world. These parentheses will therefore be empty in standard Karel programs, but you must remember to include them nonetheless. 
+  The empty pair of parentheses that appears in each of these commands is part of the common syntax shared by Karel and Python and is used to specify the invocation of the command. Eventually, the programs you write will include additional information in the space between the parentheses, but such information is not part of the Karel’s primitive world. These parentheses will therefore be empty in standard Karel programs, but you must remember to include them nonetheless.
 </p>
 
 <p>
-  If Karel tries to do something illegal, such as moving through a wall or picking up a nonexistent beeper, an error condition occurs. 
+  If Karel tries to do something illegal, such as moving through a wall or picking up a nonexistent beeper, an error condition occurs.
 </p>
 <p>
   Karel’s commands, are not executed on their own. Instead, you need to incorporate them into a Karel program.

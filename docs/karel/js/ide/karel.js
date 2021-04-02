@@ -1,4 +1,4 @@
-/** 
+/**
  * Class: Karel
  * ------------
  * The Karel class is the controller (as in MVC) of Karel and
@@ -16,46 +16,47 @@ function Karel(canvasModel, codeLanguage, language) {
   };
 
   var karelModel = KarelModel();
-   
+
+  that.addMoveText = console.log; // will be overwritten with function that modifies DOM to add move text
+
   that.draw = function(c) {
      KarelView.draw(canvasModel, karelModel, c);
   }
 
   that.move = function() {
-      karelModel.move();
+    karelModel.move();
+    that.addMoveText(karelModel.moveText('moved one step forward'));
   }
 
   that.turnLeft = function() {
-      karelModel.turnLeft();
+    karelModel.turnLeft();
+    that.addMoveText(karelModel.moveText('turned left'));
   }
 
   that.turnRight = function() {
-      karelModel.turnRight();
+    karelModel.turnRight();
+    that.addMoveText(karelModel.moveText('turned right'));
   }
 
   that.turnAround = function() {
-      karelModel.turnAround();
+    karelModel.turnAround();
+    that.addMoveText(karelModel.moveText('turned around'));
   }
 
   that.paintCorner = function(color) {
-      karelModel.paintCorner(color);
+    karelModel.paintCorner(color);
+    that.addMoveText(karelModel.moveText(`painted the corner ${color}`));
   }
 
   that.putBeeper = function() {
-      karelModel.putBeeper();
+    karelModel.putBeeper();
+    that.addMoveText(karelModel.moveText('put a beeper down'));
   }
 
   that.pickBeeper = function() {
-      karelModel.pickBeeper();
+    karelModel.pickBeeper();
+    that.addMoveText(karelModel.moveText('picked a beeper up'));
   }
-  
-   that.turnAround = function() {
-      karelModel.turnAround();
-   }
-
-   that.paintCorner = function(color) {
-      karelModel.paintCorner(color);
-   }
 
    that.beepersInBag = function () {
       return karelModel.getNBeepersInBag() > 0
@@ -104,37 +105,37 @@ function Karel(canvasModel, codeLanguage, language) {
    that.leftIsBlocked = function() {
     return !karelModel.leftIsClear();
   }
-  
+
   that.facingNorth = function() {
-    return karelModel.facingNorth();  
+    return karelModel.facingNorth();
   }
 
   that.notFacingNorth = function() {
-    return !karelModel.facingNorth(); 
+    return !karelModel.facingNorth();
   }
 
   that.facingSouth = function() {
-    return karelModel.facingSouth();  
+    return karelModel.facingSouth();
   }
 
   that.notFacingSouth = function() {
-    return !karelModel.facingSouth(); 
+    return !karelModel.facingSouth();
   }
 
   that.facingEast = function() {
-    return karelModel.facingEast(); 
+    return karelModel.facingEast();
   }
 
   that.notFacingEast = function() {
-    return !karelModel.facingEast();  
+    return !karelModel.facingEast();
   }
 
   that.facingWest = function() {
-    return karelModel.facingWest(); 
+    return karelModel.facingWest();
   }
 
   that.notFacingWest = function() {
-    return !karelModel.facingWest();  
+    return !karelModel.facingWest();
   }
 
   that.loadWorld = function(text, canvasModel) {
@@ -145,13 +146,21 @@ function Karel(canvasModel, codeLanguage, language) {
     return karelModel;
   }
 
+  that.getInitialWorldText = function(customDescription) {
+    return karelModel.initialWorldText(customDescription);
+  }
+
+  that.getMoveText = function(action) {
+    return karelModel.moveText(action);
+  }
+
   // load language API
   let path = PATH_TO_ROOT + "/karel/js/api/" + codeLanguage + '/' + language + ".json"
   loadDoc(path, function(jsonTxt) {
     var json = JSON.parse(jsonTxt)
     initLanguageAPI(json)
   })
-  
+
   function initLanguageAPI(transDict) {
     console.log(transDict)
     // add translation to instructions set
@@ -250,8 +259,3 @@ Karel.predicates = {
 //   'cornerColorIs':'colorEsquinaEs'
 
 // }
-
-
-
-
-

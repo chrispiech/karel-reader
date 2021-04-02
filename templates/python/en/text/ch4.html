@@ -5,7 +5,7 @@
 </p>
 
 <%
-  include('templates/java/'+lang+'/programs/beforeAfter.html', name="ba", before="pothole", after="potholeGoal", ratio="0.82", canvasWidth="300")
+  include('templates/python/'+lang+'/programs/beforeAfter.html', name="ba", before="pothole", after="potholeGoal", ratio="0.82", canvasWidth="300", customDescriptionBefore="There are walls around row 1 column 1 and in a rectangle near the bottom right corner around the positions in row 1 columns 3, 4, and 5.", customDescriptionAfter="There are walls around row 1 column 1 and in a rectangle near the bottom right corner around the positions in row 1 columns 3, 4, and 5.")
 %>
 
 <p>
@@ -73,5 +73,5 @@ Here is the complete program. Notice how you can understand the programmer's int
 </p>
 
 <%
-  include('templates/python/'+lang+'/programs/runnable.html', name="pothole", world="pothole", canvasWidth=200)
+  include('templates/python/'+lang+'/programs/runnable.html', name="pothole", world="pothole", canvasWidth=200, customDescription="There are walls around row 1 column 1 and in a rectangle near the bottom right corner around the positions in row 1 columns 3, 4, and 5.")
 %>

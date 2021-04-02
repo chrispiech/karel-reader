@@ -1,7 +1,7 @@
 
 
-<html>
-<head>
+<html> 
+<head> 
 <title>Karel Reader</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -15,7 +15,7 @@
 <script src="../..//karel/js/html/websiteImports.js"></script>
 <script>importCss();</script>
 <script>importJs();</script>
-</head>
+</head> 
 <body>
   <!-- container -->
   <div class="bookContainer">
@@ -28,7 +28,7 @@
     </a>
   </div>
   <hr/>
-
+  
   <div class="chapterTab" onclick="location.href='../../python/en/chapter1.html'">
     <a class="bookLink btn btn-link" href="../../python/en/chapter1.html">
       1 - Meet Karel
@@ -88,11 +88,11 @@
 <h1>Chapter 6: While Loops</h1>
 <hr/>
 <p>
-	The technique of defining new functions, and defining for loops—as useful as they are—does not actually enable Karel to solve any new problems. Every time you run a program it always does exactly the same thing. Programs become a lot more useful when they can respond differently to different inputs.
+The technique of defining new functions, and defining <code>for</code> loops—as useful as they are—does not actually enable Karel to solve any new problems. Every time you run a program it always does exactly the same thing. Programs become a lot more useful when they can respond differently to different inputs.
 </p>
 
 <p>
-	As an example. Let's say you wanted to write a program to have Karel move to a wall. But you don't simply want this program to work on one world with a fixed size. You would like to write a single program that could work on any world.
+	As an example, let's say you wanted to write a program to have Karel move to a wall. But you don't simply want this program to work on one world with a fixed size. You would like to write a single program that could work on any world.
 </p>
 
 
@@ -118,12 +118,17 @@
               </div>
             </div>
             <canvas id='moveToWallCanvas' class = 'ideCanvas'></canvas>
+            <div id='moveToWallTextDescriptionBox' class='ideTextDescriptionBox' style="display: none;">
+              <p id='moveToWallInitialWorldDescription'></p>
+              <ul id='moveToWallMovesList'></ul>
+            </div>
          </div>
       </div>
     </div>
     <div style="width:100%;">
         <div class="buttonBar">
            <button class="btn btn-default" id="moveToWallRunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
+           <button class="btn btn-default" id="moveToWallTextDescriptionButton">Show Text Descriptions</button>
         </div>
     </div>
 <script>
@@ -143,7 +148,7 @@ def main():
    # call the move to wall function
    move_to_wall()
 
-# this is a very useful function
+# this is a very useful function 
 def move_to_wall():
    # repeat the body while the condition holds
    while front_is_clear():
@@ -157,6 +162,7 @@ STARTER_CODE = STARTER_CODE.trim();
  var karelIde = null;
  var karelEditor = null;
  var buttonState = 'play';
+ var showTextDescription = false;
 
  function main() {
    karelEditor = importPythonEditor('moveToWallEditor','moveToWallEditorDiv', STARTER_CODE, false);
@@ -164,8 +170,9 @@ STARTER_CODE = STARTER_CODE.trim();
 
 
     var canvas = document.getElementById('moveToWallCanvas');
-    karelIde = KarelIde('python',karelEditor, canvas, '7x7', 0.0, 'en');
+    karelIde = KarelIde('python',karelEditor, canvas, '7x7', 0.0, 'en', 1000, 1000, initializeWorldTextDescription, appendMoveDescription);
     $('#moveToWallRunButton').click(function(){playClicked()});
+    $('#moveToWallTextDescriptionButton').click(function(){toggleTextDescription()});
     onresize();
 
  }
@@ -193,6 +200,7 @@ STARTER_CODE = STARTER_CODE.trim();
     console.log('here we go', worldName)
     karelIde.changeWorld(worldName)
     changeToPlayButton()
+    clearMovesList();
  }
 
  function playClicked() {
@@ -201,6 +209,7 @@ STARTER_CODE = STARTER_CODE.trim();
     changeToResetButton();
    } else if (buttonState == 'reset') {
     karelIde.stopButton();
+    clearMovesList(); // resets text description to description of initial state only
     changeToPlayButton();
    }
   }
@@ -215,6 +224,33 @@ STARTER_CODE = STARTER_CODE.trim();
     var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
     $('#moveToWallRunButton').html(resetText);
     buttonState = 'reset';
+  }
+
+  function toggleTextDescription() {
+    $('#moveToWallCanvas').toggle();
+    $('#moveToWallTextDescriptionBox').toggle();
+
+    if(!showTextDescription) {
+      // text description is currently hidden; toggle button should hide canvas and show text description div
+      $('#moveToWallTextDescriptionButton').text('Show Canvas');
+      showTextDescription = true;
+    } else {
+      // text description is currently showing; toggle button should hide text and show canvas
+      $('#moveToWallTextDescriptionButton').text('Show Text Descriptions');
+      showTextDescription = false;
+    }
+  }
+
+  function initializeWorldTextDescription(worldText) {
+    $('#moveToWallInitialWorldDescription').html(worldText);
+  }
+
+  function appendMoveDescription(moveText) {
+    $('#moveToWallMovesList').append(`<li>${moveText}</li>`);
+  }
+
+  function clearMovesList() {
+    $('#moveToWallMovesList').empty();
   }
 
  function onresize() {
@@ -256,13 +292,14 @@ STARTER_CODE = STARTER_CODE.trim();
 examplemoveToWall();
     </script>
 </div>
+
 <p>
 	Try changing the world by clicking the "Change World" dropdown above the world. For any sized world, Karel will move until it hits a wall. Notice that this feat can not be acomplished using a <code class="keyword">for</code> loop. That would require us to know the size of the world at the time of programming.
 	</p>
 
 	<h3>Basic While Loop</h3>
 
-<p>In Karel, a <code class="keyword">while</code> loop is used to repeat a body of code <i>as-long-as</i> a given condition holds. The <code>while</code> loop has the following general form:</p>
+<p>In Karel, a <code class="keyword">while</code> loop is used to repeat a body of code <i>as long as</i> a given condition holds. The <code>while</code> loop has the following general form:</p>
 <p class="demoCode">
 <code><span class="keyword">while</span> </code><i class="demoText">test</i><code>:</code><br/>
    <i class="demoText" style="margin-left:2em">statements to be repeated</i><br/>
@@ -271,21 +308,16 @@ examplemoveToWall();
 
 
 <p>
-
-	The control-flow of a <code>while</code> loop is as follows. When the program hits a <code>while</code> loop it starts repeating a process where it first <i>checks</i> if the test passes, and if so <i>runs</i> the code in the body. 
-
+The control-flow of a <code>while</code> loop is as follows. When the program hits a <code>while</code> loop it starts repeating a process where it first <i>checks</i> if the test passes, and if so <i>runs</i> the code in the body.
 </p>
 	When the program <i>checks</i> if the test passes, it decides if the <i class="demoText">test</i> is true for the current state of the world. If so, the loop will run the code in the body. If the test fails, the loop is over and the program moves on.
 </p>
 <p>
-
-	When the program <i>runs</i> the body of the loop, the program executes the lines in the body one at a time. When the program arrives at the end of the <code>while</code> loop, it jumps back to the top of the loop. It then rechecks the test, continuing to loop if it passes. The program does not exit the loop until it gets to a check, and the test fails. 
-
-	</p>
-
-	<p>
-		Karel has many <i class="demoText">test</i> statements, and we will go over all of them in the next chapter. For now we are going to use a single test statement: <code>front_is_clear()</code> which is true if there is no wall directly in front of Karel.
-	</p>
+When the program <i>runs</i> the body of the loop, the program executes the lines in the body one at a time. When the program arrives at the end of the <code>while</code> loop, it jumps back to the top of the loop. It then rechecks the test, continuing to loop if it passes. The program does not exit the loop until it gets to a check, and the test fails.
+</p>
+<p>
+Karel has many <i class="demoText">test</i> statements, and we will go over all of them in the next chapter. For now we are going to use a single test statement: <code>front_is_clear()</code> which is true if there is no wall directly in front of Karel.
+</p>
 
 <h3>Fencepost Bug</h3>
 
@@ -315,12 +347,17 @@ examplemoveToWall();
               </div>
             </div>
             <canvas id='beeperLineBug1Canvas' class = 'ideCanvas'></canvas>
+            <div id='beeperLineBug1TextDescriptionBox' class='ideTextDescriptionBox' style="display: none;">
+              <p id='beeperLineBug1InitialWorldDescription'></p>
+              <ul id='beeperLineBug1MovesList'></ul>
+            </div>
          </div>
       </div>
     </div>
     <div style="width:100%;">
         <div class="buttonBar">
            <button class="btn btn-default" id="beeperLineBug1RunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
+           <button class="btn btn-default" id="beeperLineBug1TextDescriptionButton">Show Text Descriptions</button>
         </div>
     </div>
 <script>
@@ -353,6 +390,7 @@ STARTER_CODE = STARTER_CODE.trim();
  var karelIde = null;
  var karelEditor = null;
  var buttonState = 'play';
+ var showTextDescription = false;
 
  function main() {
    karelEditor = importPythonEditor('beeperLineBug1Editor','beeperLineBug1EditorDiv', STARTER_CODE, true);
@@ -360,8 +398,9 @@ STARTER_CODE = STARTER_CODE.trim();
 
 
     var canvas = document.getElementById('beeperLineBug1Canvas');
-    karelIde = KarelIde('python',karelEditor, canvas, '7x7', 0.0, 'en');
+    karelIde = KarelIde('python',karelEditor, canvas, '7x7', 0.0, 'en', 1000, 1000, initializeWorldTextDescription, appendMoveDescription);
     $('#beeperLineBug1RunButton').click(function(){playClicked()});
+    $('#beeperLineBug1TextDescriptionButton').click(function(){toggleTextDescription()});
     onresize();
 
  }
@@ -389,6 +428,7 @@ STARTER_CODE = STARTER_CODE.trim();
     console.log('here we go', worldName)
     karelIde.changeWorld(worldName)
     changeToPlayButton()
+    clearMovesList();
  }
 
  function playClicked() {
@@ -397,6 +437,7 @@ STARTER_CODE = STARTER_CODE.trim();
     changeToResetButton();
    } else if (buttonState == 'reset') {
     karelIde.stopButton();
+    clearMovesList(); // resets text description to description of initial state only
     changeToPlayButton();
    }
   }
@@ -411,6 +452,33 @@ STARTER_CODE = STARTER_CODE.trim();
     var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
     $('#beeperLineBug1RunButton').html(resetText);
     buttonState = 'reset';
+  }
+
+  function toggleTextDescription() {
+    $('#beeperLineBug1Canvas').toggle();
+    $('#beeperLineBug1TextDescriptionBox').toggle();
+
+    if(!showTextDescription) {
+      // text description is currently hidden; toggle button should hide canvas and show text description div
+      $('#beeperLineBug1TextDescriptionButton').text('Show Canvas');
+      showTextDescription = true;
+    } else {
+      // text description is currently showing; toggle button should hide text and show canvas
+      $('#beeperLineBug1TextDescriptionButton').text('Show Text Descriptions');
+      showTextDescription = false;
+    }
+  }
+
+  function initializeWorldTextDescription(worldText) {
+    $('#beeperLineBug1InitialWorldDescription').html(worldText);
+  }
+
+  function appendMoveDescription(moveText) {
+    $('#beeperLineBug1MovesList').append(`<li>${moveText}</li>`);
+  }
+
+  function clearMovesList() {
+    $('#beeperLineBug1MovesList').empty();
   }
 
  function onresize() {
@@ -453,22 +521,19 @@ examplebeeperLineBug1();
     </script>
 </div>
 
-<p>That looks great. Except for one problem. On every world Karel doesn't place a beeper on the last square of the line (look closely). When Karel is on the last square, the program does not execute the body of the loop because the test no longer passes -- Karel is facing a wall. You might be tempted to try switching the order of the body so that Karel moves before placing a beeper. The code is editable so go try it! 
-
-	</p>
-
-<p>
-	There is a deeper problem that no rearrangement of the body can solve. For the world with 7 columns, Karel needs to put 7 beepers, but should only move 6 times. Since the <code>while</code> loop executes both lines when a test passes, how can you get the program to execute one command one more time than the other?
+<p>That looks great. Except for one problem. On every world Karel doesn't place a beeper on the last square of the line (look closely). When Karel is on the last square, the program does not execute the body of the loop because the test no longer passes -- Karel is facing a wall. You might be tempted to try switching the order of the body so that Karel moves before placing a beeper. The code is editable so go try it!
 </p>
 
 <p>
+There is a deeper problem that no rearrangement of the body can solve. For the world with 7 columns, Karel needs to put 7 beepers, but should only <code>move()</code> 6 times. Since the <code>while</code> loop executes both lines when a test passes, how can you get the program to execute one command one more time than the other?
+</p>
 
-	The bug in this program is an example of a programming problem called a <b>fencepost error</b>. The name comes from the fact that if you want to build a fence made of panels which have one fence post on either size, the number of fence posts is always one greater than the number of panels. How many fence posts, for example, do you need to build a fence with 10 panels? The answer is 11, as illustrated by the following diagram:
-
-	</p>
+<p>
+The bug in this program is an example of a programming problem called a <b>fencepost error</b>. The name comes from the fact that if you want to build a fence made of panels which have one fence post on either size, the number of fence posts is always one greater than the number of panels. How many fence posts, for example, do you need to build a fence with 10 panels? The answer is 11, as illustrated by the following diagram:
+</p>
 
 <center>
-<img style ="width:500px;margin-bottom:10px" src="../../images/ch6/fencepost.png"/>
+<img style ="width:500px;margin-bottom:10px" src="../../images/ch6/fencepost.png" alt="A chainlink fence that is 10 panels long. There are fenceposts on either end of the fence and between all adjacent panels, for a total of 11 fenceposts."/>
 </center>
 
 <p>
@@ -498,12 +563,17 @@ examplebeeperLineBug1();
               </div>
             </div>
             <canvas id='beeperLineCanvas' class = 'ideCanvas'></canvas>
+            <div id='beeperLineTextDescriptionBox' class='ideTextDescriptionBox' style="display: none;">
+              <p id='beeperLineInitialWorldDescription'></p>
+              <ul id='beeperLineMovesList'></ul>
+            </div>
          </div>
       </div>
     </div>
     <div style="width:100%;">
         <div class="buttonBar">
            <button class="btn btn-default" id="beeperLineRunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
+           <button class="btn btn-default" id="beeperLineTextDescriptionButton">Show Text Descriptions</button>
         </div>
     </div>
 <script>
@@ -538,6 +608,7 @@ STARTER_CODE = STARTER_CODE.trim();
  var karelIde = null;
  var karelEditor = null;
  var buttonState = 'play';
+ var showTextDescription = false;
 
  function main() {
    karelEditor = importPythonEditor('beeperLineEditor','beeperLineEditorDiv', STARTER_CODE, true);
@@ -545,8 +616,9 @@ STARTER_CODE = STARTER_CODE.trim();
 
 
     var canvas = document.getElementById('beeperLineCanvas');
-    karelIde = KarelIde('python',karelEditor, canvas, '7x7', 0.8, 'en');
+    karelIde = KarelIde('python',karelEditor, canvas, '7x7', 0.8, 'en', 1000, 1000, initializeWorldTextDescription, appendMoveDescription);
     $('#beeperLineRunButton').click(function(){playClicked()});
+    $('#beeperLineTextDescriptionButton').click(function(){toggleTextDescription()});
     onresize();
 
  }
@@ -574,6 +646,7 @@ STARTER_CODE = STARTER_CODE.trim();
     console.log('here we go', worldName)
     karelIde.changeWorld(worldName)
     changeToPlayButton()
+    clearMovesList();
  }
 
  function playClicked() {
@@ -582,6 +655,7 @@ STARTER_CODE = STARTER_CODE.trim();
     changeToResetButton();
    } else if (buttonState == 'reset') {
     karelIde.stopButton();
+    clearMovesList(); // resets text description to description of initial state only
     changeToPlayButton();
    }
   }
@@ -596,6 +670,33 @@ STARTER_CODE = STARTER_CODE.trim();
     var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
     $('#beeperLineRunButton').html(resetText);
     buttonState = 'reset';
+  }
+
+  function toggleTextDescription() {
+    $('#beeperLineCanvas').toggle();
+    $('#beeperLineTextDescriptionBox').toggle();
+
+    if(!showTextDescription) {
+      // text description is currently hidden; toggle button should hide canvas and show text description div
+      $('#beeperLineTextDescriptionButton').text('Show Canvas');
+      showTextDescription = true;
+    } else {
+      // text description is currently showing; toggle button should hide text and show canvas
+      $('#beeperLineTextDescriptionButton').text('Show Text Descriptions');
+      showTextDescription = false;
+    }
+  }
+
+  function initializeWorldTextDescription(worldText) {
+    $('#beeperLineInitialWorldDescription').html(worldText);
+  }
+
+  function appendMoveDescription(moveText) {
+    $('#beeperLineMovesList').append(`<li>${moveText}</li>`);
+  }
+
+  function clearMovesList() {
+    $('#beeperLineMovesList').empty();
   }
 
  function onresize() {
@@ -636,7 +737,8 @@ STARTER_CODE = STARTER_CODE.trim();
 }
 examplebeeperLine();
     </script>
-</div><hr/>
+</div>
+<hr/>
 <center>
   <a class="btn btn-primary btn-lg" href="chapter7.html" role="button">Next Chapter</a>
 </center>
@@ -650,5 +752,5 @@ examplebeeperLine();
       <div style="flex-grow:4"></div>
     </div>
   </div>
-</body>
+</body> 
 </html>
