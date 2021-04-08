@@ -99,20 +99,25 @@
          <div id = 'beeperPickingReduxEditorDiv' class = 'ideEditorDiv' style="width:200px"></div>
          <div id = 'beeperPickingReduxCanvasDiv' class = 'ideCanvasDiv'>
             <canvas id='beeperPickingReduxCanvas' class = 'ideCanvas'></canvas>
+            <div id='beeperPickingReduxTextDescriptionBox' class='ideTextDescriptionBox' style="display: none;">
+              <p id='beeperPickingReduxInitialWorldDescription'></p>
+              <ul id='beeperPickingReduxMovesList'></ul>
+            </div>
          </div>
       </div>
     </div>
     <div style="width:100%;">
         <div class="buttonBar">
            <button class="btn btn-default" id="beeperPickingReduxRunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
-        </div> 
+           <button class="btn btn-default" id="beeperPickingReduxTextDescriptionButton">Show Text Descriptions</button>
+        </div>
     </div>
 <script>
 
-        
 
-function examplebeeperPickingRedux() {
-STARTER_CODE = `
+
+  function examplebeeperPickingRedux() {
+    STARTER_CODE = `
 # File: FirstKarel.py
 # -----------------------------
 # Karel picks up a beeper and places it on a ledge.
@@ -129,45 +134,76 @@ def main() :
    move()
    move()
    put_beeper()
-   move()`
-// because of that extra endline at the start of the string
-STARTER_CODE = STARTER_CODE.trim();
+   move()    `
+    // because of that extra endline at the start of the string
+    STARTER_CODE = STARTER_CODE.trim();
 
- var karelIde = null;
- var karelEditor = null;
- var buttonState = 'play';
+    var karelIde = null;
+    var karelEditor = null;
+    var buttonState = 'play';
+    var showTextDescription = false;
 
- function main() {
-   karelEditor = importPythonEditor('beeperPickingReduxEditor','beeperPickingReduxEditorDiv', STARTER_CODE, false);
-     //importRunButtonBar('example1ButtonBar');
-    
-    $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
-    
-    initTabs();
-    var canvas = document.getElementById('beeperPickingReduxCanvas');
-    karelIde = KarelIde('python',karelEditor, canvas, 'stepUp', 0.8, 'en');
-    $('#beeperPickingReduxRunButton').click(function(){playClicked()});
-    onresize();
-    
- }
+    function main() {
+      karelEditor = importPythonEditor('beeperPickingReduxEditor','beeperPickingReduxEditorDiv', STARTER_CODE, false);
+      //importRunButtonBar('example1ButtonBar');
 
- function playClicked() {
-  if(buttonState == 'play') {
-    karelIde.playButton();
-      
+      $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
+
+      initTabs();
+      var canvas = document.getElementById('beeperPickingReduxCanvas');
+      karelIde = KarelIde('python',karelEditor, canvas, 'stepUp', 0.8, 'en', 1000, 1000, initializeWorldTextDescription, appendMoveDescription, "There are walls in a rectangle near the bottom right corner around the positions in row 1 columns 4, 5, and 6.");
+
+      $('#beeperPickingReduxRunButton').click(function(){playClicked()});
+      $('#beeperPickingReduxTextDescriptionButton').click(function(){toggleTextDescription()});
+      onresize();
+
+    }
+
+  function playClicked() {
+    if(buttonState == 'play') {
+      karelIde.playButton();
+
       var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
       $('#beeperPickingReduxRunButton').html(resetText);
       buttonState = 'reset';
-     } else if (buttonState == 'reset') {
+    } else if (buttonState == 'reset') {
       karelIde.stopButton();
+      clearMovesList(); // resets text description to description of initial state only
       var playText = '<span class="glyphicon glyphicon-play"></span> Run Program';
       $('#beeperPickingReduxRunButton').html(playText);
       buttonState = 'play';
-     }
-  
+    }
+
   }
 
- function onresize() { 
+  function toggleTextDescription() {
+    $('#beeperPickingReduxCanvas').toggle();
+    $('#beeperPickingReduxTextDescriptionBox').toggle();
+
+    if(!showTextDescription) {
+      // text description is currently hidden; toggle button should hide canvas and show text description div
+      $('#beeperPickingReduxTextDescriptionButton').text('Show Canvas');
+      showTextDescription = true;
+    } else {
+      // text description is currently showing; toggle button should hide text and show canvas
+      $('#beeperPickingReduxTextDescriptionButton').text('Show Text Descriptions');
+      showTextDescription = false;
+    }
+  }
+
+  function initializeWorldTextDescription(worldText) {
+    $('#beeperPickingReduxInitialWorldDescription').html(worldText);
+  }
+
+  function appendMoveDescription(moveText) {
+    $('#beeperPickingReduxMovesList').append(`<li>${moveText}</li>`);
+  }
+
+  function clearMovesList() {
+    $('#beeperPickingReduxMovesList').empty();
+  }
+
+  function onresize() {
     var parentHeight = 302.6;
     var canvasWidth = 300
     var parentWidth = $("#beeperPickingRedux").width();
@@ -176,14 +212,14 @@ STARTER_CODE = STARTER_CODE.trim();
     var ide = document.getElementById('beeperPickingReduxIde');
     var editorDiv = document.getElementById('beeperPickingReduxEditorDiv');
     var canvas = document.getElementById('beeperPickingReduxCanvasDiv');
-    
+
     var ideHeight = parentHeight
     var centerHeight = ideHeight;
 
     var availibleWidth = parentWidth;
     var elementSpacing = 12;
 
-    var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
+    var editorWidth = availibleWidth - canvasWidth - elementSpacing;
 
     canvas.style.width = canvasWidth + 'px';
     canvas.style.height = canvasWidth + 'px';
@@ -197,15 +233,16 @@ STARTER_CODE = STARTER_CODE.trim();
     console.log('editor width: ' + editorWidth)
 
     if (karelEditor) {
-       karelEditor.renderer.onResize();
+      karelEditor.renderer.onResize();
     }
- }
- main()
- 
-}
-examplebeeperPickingRedux();
-    </script>
+  }
+  main()
+
+  }
+  examplebeeperPickingRedux();
+</script>
 </div>
+
 <p>
 Even though the <code>FirstKarel</code> program above demonstrates that it is possible to perform the <code>turn_right()</code> operation using only Karel’s built-in commands, the resulting program is not particularly clear conceptually. In your mental design of the program, Karel turns right when it reaches the top of the ledge. The fact that you have to use three <code>turn_left()</code> commands to do so is annoying. It would be much simpler if you could simply say <code>turn_right()</code> and have Karel understand this command. The resulting program would not only be shorter and easier to write, but also significantly easier to read.
 </p>
@@ -252,20 +289,25 @@ You can use the name of a new function just like any of Karel’s built-in comma
          <div id = 'stepUp2EditorDiv' class = 'ideEditorDiv' style="width:200px"></div>
          <div id = 'stepUp2CanvasDiv' class = 'ideCanvasDiv'>
             <canvas id='stepUp2Canvas' class = 'ideCanvas'></canvas>
+            <div id='stepUp2TextDescriptionBox' class='ideTextDescriptionBox' style="display: none;">
+              <p id='stepUp2InitialWorldDescription'></p>
+              <ul id='stepUp2MovesList'></ul>
+            </div>
          </div>
       </div>
     </div>
     <div style="width:100%;">
         <div class="buttonBar">
            <button class="btn btn-default" id="stepUp2RunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
-        </div> 
+           <button class="btn btn-default" id="stepUp2TextDescriptionButton">Show Text Descriptions</button>
+        </div>
     </div>
 <script>
 
-        
 
-function examplestepUp2() {
-STARTER_CODE = `
+
+  function examplestepUp2() {
+    STARTER_CODE = `
 # File: BeeperPickingKarel.py
 # -----------------------------
 # The BeeperPickingKarel program defines a "main" 
@@ -288,45 +330,76 @@ def main():
 def turn_right():
    turn_left()
    turn_left()
-   turn_left()`
-// because of that extra endline at the start of the string
-STARTER_CODE = STARTER_CODE.trim();
+   turn_left()    `
+    // because of that extra endline at the start of the string
+    STARTER_CODE = STARTER_CODE.trim();
 
- var karelIde = null;
- var karelEditor = null;
- var buttonState = 'play';
+    var karelIde = null;
+    var karelEditor = null;
+    var buttonState = 'play';
+    var showTextDescription = false;
 
- function main() {
-   karelEditor = importPythonEditor('stepUp2Editor','stepUp2EditorDiv', STARTER_CODE, false);
-     //importRunButtonBar('example1ButtonBar');
-    
-    $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
-    
-    initTabs();
-    var canvas = document.getElementById('stepUp2Canvas');
-    karelIde = KarelIde('python',karelEditor, canvas, 'stepUp', 0.0, 'en');
-    $('#stepUp2RunButton').click(function(){playClicked()});
-    onresize();
-    
- }
+    function main() {
+      karelEditor = importPythonEditor('stepUp2Editor','stepUp2EditorDiv', STARTER_CODE, false);
+      //importRunButtonBar('example1ButtonBar');
 
- function playClicked() {
-  if(buttonState == 'play') {
-    karelIde.playButton();
-      
+      $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
+
+      initTabs();
+      var canvas = document.getElementById('stepUp2Canvas');
+      karelIde = KarelIde('python',karelEditor, canvas, 'stepUp', 0.0, 'en', 1000, 1000, initializeWorldTextDescription, appendMoveDescription, "There are walls in a rectangle near the bottom right corner around the positions in row 1 columns 4, 5, and 6.");
+
+      $('#stepUp2RunButton').click(function(){playClicked()});
+      $('#stepUp2TextDescriptionButton').click(function(){toggleTextDescription()});
+      onresize();
+
+    }
+
+  function playClicked() {
+    if(buttonState == 'play') {
+      karelIde.playButton();
+
       var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
       $('#stepUp2RunButton').html(resetText);
       buttonState = 'reset';
-     } else if (buttonState == 'reset') {
+    } else if (buttonState == 'reset') {
       karelIde.stopButton();
+      clearMovesList(); // resets text description to description of initial state only
       var playText = '<span class="glyphicon glyphicon-play"></span> Run Program';
       $('#stepUp2RunButton').html(playText);
       buttonState = 'play';
-     }
-  
+    }
+
   }
 
- function onresize() { 
+  function toggleTextDescription() {
+    $('#stepUp2Canvas').toggle();
+    $('#stepUp2TextDescriptionBox').toggle();
+
+    if(!showTextDescription) {
+      // text description is currently hidden; toggle button should hide canvas and show text description div
+      $('#stepUp2TextDescriptionButton').text('Show Canvas');
+      showTextDescription = true;
+    } else {
+      // text description is currently showing; toggle button should hide text and show canvas
+      $('#stepUp2TextDescriptionButton').text('Show Text Descriptions');
+      showTextDescription = false;
+    }
+  }
+
+  function initializeWorldTextDescription(worldText) {
+    $('#stepUp2InitialWorldDescription').html(worldText);
+  }
+
+  function appendMoveDescription(moveText) {
+    $('#stepUp2MovesList').append(`<li>${moveText}</li>`);
+  }
+
+  function clearMovesList() {
+    $('#stepUp2MovesList').empty();
+  }
+
+  function onresize() {
     var parentHeight = 409.40000000000003;
     var canvasWidth = 300
     var parentWidth = $("#stepUp2").width();
@@ -335,14 +408,14 @@ STARTER_CODE = STARTER_CODE.trim();
     var ide = document.getElementById('stepUp2Ide');
     var editorDiv = document.getElementById('stepUp2EditorDiv');
     var canvas = document.getElementById('stepUp2CanvasDiv');
-    
+
     var ideHeight = parentHeight
     var centerHeight = ideHeight;
 
     var availibleWidth = parentWidth;
     var elementSpacing = 12;
 
-    var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
+    var editorWidth = availibleWidth - canvasWidth - elementSpacing;
 
     canvas.style.width = canvasWidth + 'px';
     canvas.style.height = canvasWidth + 'px';
@@ -356,22 +429,22 @@ STARTER_CODE = STARTER_CODE.trim();
     console.log('editor width: ' + editorWidth)
 
     if (karelEditor) {
-       karelEditor.renderer.onResize();
+      karelEditor.renderer.onResize();
     }
- }
- main()
- 
-}
-examplestepUp2();
-    </script>
+  }
+  main()
+
+  }
+  examplestepUp2();
+</script>
 </div>
+
 <h3>Function Code Blocks</h3>
 <p>
   A group of commands follow the colon <code translate="no">:</code> which are indented, is called a <b>code block</b>. The body of your function is a code block. Notice how the contents of a code block are all indented one tab in. This is important functionally since it allows Python to know what lines of code are in a given block.
 </p>
 
 <p>You can define as many functions as you want. They should all be written one after another. You can't define a function inside another function. </p>
-
 <hr/>
 <center>
   <a class="btn btn-primary btn-lg" href="chapter4.html" role="button">Next Chapter</a>

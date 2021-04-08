@@ -112,15 +112,15 @@
          <div id = 'world1CanvasDiv' class = 'commandCanvasDiv'>
           <div>
             <div class="commandCanvasOuter">
-              <canvas id='world1Canvas' style="width:400px;"></canvas>
+              <canvas id='world1Canvas' style="width:400px;" aria-label=" " role="img"></canvas>
             </div>
           </div>
-         </div> 
+         </div>
     </div>
-    
+
 <script>
 
-        
+
 
 function exampleworld1() {
  var karelIde = null;
@@ -129,16 +129,21 @@ function exampleworld1() {
 
  function main() {
     canvas = document.getElementById('world1Canvas');
-    karelIde = KarelIde('python',null, canvas, 'beeperTowers', 0, 'en',1000, 0.8 * 1000);
+    karelIde = KarelIde('python',null, canvas, 'beeperTowers', 0, 'en',1000, 0.8 * 1000, console.log, console.log, 'There are towers of beepers of varying heights in columns 1 through 6 and 8.', setAriaLabel);
  }
 
- 
+ function setAriaLabel(altText) {
+   $('#world1Canvas').attr('aria-label', altText); // set alt text for canvas element
+ }
+
+
  main()
- 
+
 }
 exampleworld1();
     </script>
 </div>
+
 <p>
 	On each of the columns, there is a tower of beepers of an unknown height, although some columns (such as the 7th, and 9th in the sample world) may be empty. Karel’s job is to collect all the beepers in each of these towers, put them back down on the easternmost corner of 1st row, and then return to its starting position. Thus, when Karel finishes its work in the example above, all 25 beepers currently in the towers should be stacked on the corner of 9th column and 1st row, as follows:
 	</p>
@@ -149,15 +154,15 @@ exampleworld1();
          <div id = 'world2CanvasDiv' class = 'commandCanvasDiv'>
           <div>
             <div class="commandCanvasOuter">
-              <canvas id='world2Canvas' style="width:400px;"></canvas>
+              <canvas id='world2Canvas' style="width:400px;" aria-label=" " role="img"></canvas>
             </div>
           </div>
-         </div> 
+         </div>
     </div>
-    
+
 <script>
 
-        
+
 
 function exampleworld2() {
  var karelIde = null;
@@ -166,16 +171,21 @@ function exampleworld2() {
 
  function main() {
     canvas = document.getElementById('world2Canvas');
-    karelIde = KarelIde('python',null, canvas, 'beeperTowersGoal', 0, 'en',1000, 0.8 * 1000);
+    karelIde = KarelIde('python',null, canvas, 'beeperTowersGoal', 0, 'en',1000, 0.8 * 1000, console.log, console.log, '', setAriaLabel);
  }
 
- 
+ function setAriaLabel(altText) {
+   $('#world2Canvas').attr('aria-label', altText); // set alt text for canvas element
+ }
+
+
  main()
- 
+
 }
 exampleworld2();
     </script>
 </div>
+
 <p>
 	Importantly, you may assume that Karel initially <i>starts</i> with zero beepers in its bag. Each beeper picked up is added to its bag. When putting beepers in the corner, Karel can use the <code>beepers_in_bag()</code> test. We can also assume that the columns do not reach all the way up to the northmost wall.
 	</p>
@@ -328,20 +338,25 @@ Note that this function has precisely the same structure as the main program fro
     <div id ='beeperTowersIde' class = "ide getStarted" style="height:1123.2px">
       <div id = 'beeperTowersIdeCenter' class = "ideCenter" style="height:inherit;">
          <div id = 'beeperTowersEditorDiv' style="width:600px;height:inherit;"></div>
-         
+
       </div>
     </div>
     <div id='beeperTowersCanvasDiv' style="width:500px;height:360px">
         <canvas id='beeperTowersCanvas' class = 'ideCanvas'></canvas>
+        <div id='beeperTowersTextDescriptionBox' class='ideTextDescriptionBox' style="display: none;">
+          <p id='beeperTowersInitialWorldDescription'></p>
+          <ul id='beeperTowersMovesList'></ul>
+        </div>
     </div>
     <div style="width:100%;">
         <div class="buttonBar">
            <button class="btn btn-default" id="beeperTowersRunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
-        </div> 
+           <button class="btn btn-default" id="beeperTowersTextDescriptionButton">Show Text Descriptions</button>
+        </div>
     </div>
 <script>
 
-        
+
 
 function examplebeeperTowers() {
 STARTER_CODE = `
@@ -415,38 +430,69 @@ STARTER_CODE = STARTER_CODE.trim();
  var karelIde = null;
  var karelEditor = null;
  var buttonState = 'play';
+ var showTextDescription = false;
 
  function main() {
    karelEditor = importPythonEditor('beeperTowersEditor','beeperTowersEditorDiv', STARTER_CODE, false);
      //importRunButtonBar('example1ButtonBar');
-    
+
     $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
-    
+
     initTabs();
     var canvas = document.getElementById('beeperTowersCanvas');
-    karelIde = KarelIde('python',karelEditor, canvas, 'beeperTowers', 0.9, 'en', 1000, 
-      0.8 * 1000);
+    karelIde = KarelIde('python',karelEditor, canvas, 'beeperTowers', 0.9, 'en', 1000,
+      0.8 * 1000, initializeWorldTextDescription, appendMoveDescription, "There are towers of beepers of varying heights in columns 1 through 6 and 8.");
+
     $('#beeperTowersRunButton').click(function(){playClicked()});
+    $('#beeperTowersTextDescriptionButton').click(function(){toggleTextDescription()});
     onresize();
  }
 
  function playClicked() {
-  if(buttonState == 'play') {
-    karelIde.playButton();
-      
-      var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
-      $('#beeperTowersRunButton').html(resetText);
-      buttonState = 'reset';
-     } else if (buttonState == 'reset') {
-      karelIde.stopButton();
-      var playText = '<span class="glyphicon glyphicon-play"></span> Run Program';
-      $('#beeperTowersRunButton').html(playText);
-      buttonState = 'play';
-     }
-    
-  }
+   if(buttonState == 'play') {
+     karelIde.playButton();
 
-  function onresize() { 
+     var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
+     $('#beeperTowersRunButton').html(resetText);
+     buttonState = 'reset';
+   } else if (buttonState == 'reset') {
+     karelIde.stopButton();
+     clearMovesList(); // resets text description to description of initial state only
+     var playText = '<span class="glyphicon glyphicon-play"></span> Run Program';
+     $('#beeperTowersRunButton').html(playText);
+     buttonState = 'play';
+   }
+
+ }
+
+ function toggleTextDescription() {
+   $('#beeperTowersCanvas').toggle();
+   $('#beeperTowersTextDescriptionBox').toggle();
+
+   if(!showTextDescription) {
+     // text description is currently hidden; toggle button should hide canvas and show text description div
+     $('#beeperTowersTextDescriptionButton').text('Show Canvas');
+     showTextDescription = true;
+   } else {
+     // text description is currently showing; toggle button should hide text and show canvas
+     $('#beeperTowersTextDescriptionButton').text('Show Text Descriptions');
+     showTextDescription = false;
+   }
+ }
+
+ function initializeWorldTextDescription(worldText) {
+   $('#beeperTowersInitialWorldDescription').html(worldText);
+ }
+
+ function appendMoveDescription(moveText) {
+   $('#beeperTowersMovesList').append(`<li>${moveText}</li>`);
+ }
+
+ function clearMovesList() {
+   $('#beeperTowersMovesList').empty();
+ }
+
+  function onresize() {
 
     // var parentHeight = 1123.2;
     // var canvasWidth = 300
@@ -455,22 +501,22 @@ STARTER_CODE = STARTER_CODE.trim();
 
     // var editorDiv = document.getElementById('beeperTowersCanvasDiv');
     // var canvas = document.getElementById('beeperTowersCanvas');
-    
+
 
 
     // var availibleWidth = parentWidth;
     // var elementSpacing = 12;
 
-    // var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
+    // var editorWidth = availibleWidth - canvasWidth - elementSpacing;
 
     // canvas.style.width = canvasWidth + 'px';
     // canvas.style.height = canvasWidth + 'px';
     // canvas.style.left = (editorWidth + elementSpacing) + 'px';
  }
 
- 
+
  main()
- 
+
 }
 examplebeeperTowers();
     </script>

@@ -99,22 +99,22 @@ One of the things that computers are especially good at is repetition. How can w
           <div>
             <div class="commandCanvasTitle">Before:</div>
             <div class="commandCanvasOuter">
-              <canvas id='baCanvasBefore' style="width:200px;"></canvas>
+              <canvas id='baCanvasBefore' style="width:200px;" aria-label=" " role="img"></canvas>
             </div>
           </div>
           <div style="width:50px"></div>
           <div>
             <div class="commandCanvasTitle">After:</div>
             <div class="commandCanvasOuter">
-              <canvas id='baCanvasAfter' style="width:200px;"></canvas>
+              <canvas id='baCanvasAfter' style="width:200px;" aria-label=" " role="img"></canvas>
             </div>
           </div>
-         </div> 
+         </div>
     </div>
-    
+
 <script>
 
-        
+
 
 function exampleba() {
  var karelIde = null;
@@ -123,19 +123,28 @@ function exampleba() {
 
  function main() {
     canvas = document.getElementById('baCanvasBefore');
-    karelIde = KarelIde('python',null, canvas, '99beepersStart', 0.0, 'en',1000, 1.0 * 1000);
+    karelIde = KarelIde('python',null, canvas, '99beepersStart', 0.0, 'en',1000, 1.0 * 1000, console.log, console.log, '', setBeforeAriaLabel);
 
     let canvasGoal = document.getElementById('baCanvasAfter');
-    let goalIde = KarelIde('python',null, canvasGoal, '99beepersGoal',0.0, 'en',  1000, 1.0 * 1000)
+    let goalIde = KarelIde('python',null, canvasGoal, '99beepersGoal',0.0, 'en',  1000, 1.0 * 1000, console.log, console.log, '', setAfterAriaLabel);
  }
 
- 
+ function setBeforeAriaLabel(altText) {
+   $('#baCanvasBefore').attr('aria-label', altText); // set alt text for canvas element
+ }
+
+ function setAfterAriaLabel(altText) {
+   $('#baCanvasAfter').attr('aria-label', altText); // set alt text for canvas element
+ }
+
+
  main()
- 
+
 }
 exampleba();
     </script>
 </div>
+
 <h3>Basic For Loop</h3>
 
 <p>
@@ -160,20 +169,25 @@ We can use this new <b>for loop</b> to place 42 beepers by replacing <i class="d
          <div id = '99beepersEditorDiv' class = 'ideEditorDiv' style="width:200px"></div>
          <div id = '99beepersCanvasDiv' class = 'ideCanvasDiv'>
             <canvas id='99beepersCanvas' class = 'ideCanvas'></canvas>
+            <div id='99beepersTextDescriptionBox' class='ideTextDescriptionBox' style="display: none;">
+              <p id='99beepersInitialWorldDescription'></p>
+              <ul id='99beepersMovesList'></ul>
+            </div>
          </div>
       </div>
     </div>
     <div style="width:100%;">
         <div class="buttonBar">
            <button class="btn btn-default" id="99beepersRunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
-        </div> 
+           <button class="btn btn-default" id="99beepersTextDescriptionButton">Show Text Descriptions</button>
+        </div>
     </div>
 <script>
 
-        
 
-function example99beepers() {
-STARTER_CODE = `
+
+  function example99beepers() {
+    STARTER_CODE = `
 # File: PlaceManyBeepers.py
 # -----------------------------
 # Places 42 beepers using a for loop
@@ -185,45 +199,76 @@ def main():
    for i in range(42):
   	  put_beeper()
    move()
-   `
-// because of that extra endline at the start of the string
-STARTER_CODE = STARTER_CODE.trim();
+       `
+    // because of that extra endline at the start of the string
+    STARTER_CODE = STARTER_CODE.trim();
 
- var karelIde = null;
- var karelEditor = null;
- var buttonState = 'play';
+    var karelIde = null;
+    var karelEditor = null;
+    var buttonState = 'play';
+    var showTextDescription = false;
 
- function main() {
-   karelEditor = importPythonEditor('99beepersEditor','99beepersEditorDiv', STARTER_CODE, true);
-     //importRunButtonBar('example1ButtonBar');
-    
-    $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
-    
-    initTabs();
-    var canvas = document.getElementById('99beepersCanvas');
-    karelIde = KarelIde('python',karelEditor, canvas, '99beepersStart', 0.8, 'en');
-    $('#99beepersRunButton').click(function(){playClicked()});
-    onresize();
-    
- }
+    function main() {
+      karelEditor = importPythonEditor('99beepersEditor','99beepersEditorDiv', STARTER_CODE, true);
+      //importRunButtonBar('example1ButtonBar');
 
- function playClicked() {
-  if(buttonState == 'play') {
-    karelIde.playButton();
-      
+      $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
+
+      initTabs();
+      var canvas = document.getElementById('99beepersCanvas');
+      karelIde = KarelIde('python',karelEditor, canvas, '99beepersStart', 0.8, 'en', 1000, 1000, initializeWorldTextDescription, appendMoveDescription, "");
+
+      $('#99beepersRunButton').click(function(){playClicked()});
+      $('#99beepersTextDescriptionButton').click(function(){toggleTextDescription()});
+      onresize();
+
+    }
+
+  function playClicked() {
+    if(buttonState == 'play') {
+      karelIde.playButton();
+
       var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
       $('#99beepersRunButton').html(resetText);
       buttonState = 'reset';
-     } else if (buttonState == 'reset') {
+    } else if (buttonState == 'reset') {
       karelIde.stopButton();
+      clearMovesList(); // resets text description to description of initial state only
       var playText = '<span class="glyphicon glyphicon-play"></span> Run Program';
       $('#99beepersRunButton').html(playText);
       buttonState = 'play';
-     }
-  
+    }
+
   }
 
- function onresize() { 
+  function toggleTextDescription() {
+    $('#99beepersCanvas').toggle();
+    $('#99beepersTextDescriptionBox').toggle();
+
+    if(!showTextDescription) {
+      // text description is currently hidden; toggle button should hide canvas and show text description div
+      $('#99beepersTextDescriptionButton').text('Show Canvas');
+      showTextDescription = true;
+    } else {
+      // text description is currently showing; toggle button should hide text and show canvas
+      $('#99beepersTextDescriptionButton').text('Show Text Descriptions');
+      showTextDescription = false;
+    }
+  }
+
+  function initializeWorldTextDescription(worldText) {
+    $('#99beepersInitialWorldDescription').html(worldText);
+  }
+
+  function appendMoveDescription(moveText) {
+    $('#99beepersMovesList').append(`<li>${moveText}</li>`);
+  }
+
+  function clearMovesList() {
+    $('#99beepersMovesList').empty();
+  }
+
+  function onresize() {
     var parentHeight = 213.60000000000002;
     var canvasWidth = 200
     var parentWidth = $("#99beepers").width();
@@ -232,14 +277,14 @@ STARTER_CODE = STARTER_CODE.trim();
     var ide = document.getElementById('99beepersIde');
     var editorDiv = document.getElementById('99beepersEditorDiv');
     var canvas = document.getElementById('99beepersCanvasDiv');
-    
+
     var ideHeight = parentHeight
     var centerHeight = ideHeight;
 
     var availibleWidth = parentWidth;
     var elementSpacing = 12;
 
-    var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
+    var editorWidth = availibleWidth - canvasWidth - elementSpacing;
 
     canvas.style.width = canvasWidth + 'px';
     canvas.style.height = canvasWidth + 'px';
@@ -253,15 +298,16 @@ STARTER_CODE = STARTER_CODE.trim();
     console.log('editor width: ' + editorWidth)
 
     if (karelEditor) {
-       karelEditor.renderer.onResize();
+      karelEditor.renderer.onResize();
     }
- }
- main()
- 
-}
-example99beepers();
-    </script>
-</div><p>
+  }
+  main()
+
+  }
+  example99beepers();
+</script>
+</div>
+<p>
 	<b>The code above is editable</b>. Try to change it so that it places only 15 beepers.
 	</p>
 
@@ -278,20 +324,25 @@ The previous example gives the impression that a <code>for</code> loop repeats a
          <div id = 'cornerBeepersEditorDiv' class = 'ideEditorDiv' style="width:200px"></div>
          <div id = 'cornerBeepersCanvasDiv' class = 'ideCanvasDiv'>
             <canvas id='cornerBeepersCanvas' class = 'ideCanvas'></canvas>
+            <div id='cornerBeepersTextDescriptionBox' class='ideTextDescriptionBox' style="display: none;">
+              <p id='cornerBeepersInitialWorldDescription'></p>
+              <ul id='cornerBeepersMovesList'></ul>
+            </div>
          </div>
       </div>
     </div>
     <div style="width:100%;">
         <div class="buttonBar">
            <button class="btn btn-default" id="cornerBeepersRunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
-        </div> 
+           <button class="btn btn-default" id="cornerBeepersTextDescriptionButton">Show Text Descriptions</button>
+        </div>
     </div>
 <script>
 
-        
 
-function examplecornerBeepers() {
-STARTER_CODE = `
+
+  function examplecornerBeepers() {
+    STARTER_CODE = `
 # File: CornerBeepers.py
 # -----------------------------
 # Places one beeper in each corner
@@ -304,45 +355,76 @@ def main():
 	   move()
 	   move()
 	   turn_left()
-`
-// because of that extra endline at the start of the string
-STARTER_CODE = STARTER_CODE.trim();
+    `
+    // because of that extra endline at the start of the string
+    STARTER_CODE = STARTER_CODE.trim();
 
- var karelIde = null;
- var karelEditor = null;
- var buttonState = 'play';
+    var karelIde = null;
+    var karelEditor = null;
+    var buttonState = 'play';
+    var showTextDescription = false;
 
- function main() {
-   karelEditor = importPythonEditor('cornerBeepersEditor','cornerBeepersEditorDiv', STARTER_CODE, true);
-     //importRunButtonBar('example1ButtonBar');
-    
-    $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
-    
-    initTabs();
-    var canvas = document.getElementById('cornerBeepersCanvas');
-    karelIde = KarelIde('python',karelEditor, canvas, 'cornerBeepersStart', 0.0, 'en');
-    $('#cornerBeepersRunButton').click(function(){playClicked()});
-    onresize();
-    
- }
+    function main() {
+      karelEditor = importPythonEditor('cornerBeepersEditor','cornerBeepersEditorDiv', STARTER_CODE, true);
+      //importRunButtonBar('example1ButtonBar');
 
- function playClicked() {
-  if(buttonState == 'play') {
-    karelIde.playButton();
-      
+      $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
+
+      initTabs();
+      var canvas = document.getElementById('cornerBeepersCanvas');
+      karelIde = KarelIde('python',karelEditor, canvas, 'cornerBeepersStart', 0.0, 'en', 1000, 1000, initializeWorldTextDescription, appendMoveDescription, "");
+
+      $('#cornerBeepersRunButton').click(function(){playClicked()});
+      $('#cornerBeepersTextDescriptionButton').click(function(){toggleTextDescription()});
+      onresize();
+
+    }
+
+  function playClicked() {
+    if(buttonState == 'play') {
+      karelIde.playButton();
+
       var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
       $('#cornerBeepersRunButton').html(resetText);
       buttonState = 'reset';
-     } else if (buttonState == 'reset') {
+    } else if (buttonState == 'reset') {
       karelIde.stopButton();
+      clearMovesList(); // resets text description to description of initial state only
       var playText = '<span class="glyphicon glyphicon-play"></span> Run Program';
       $('#cornerBeepersRunButton').html(playText);
       buttonState = 'play';
-     }
-  
+    }
+
   }
 
- function onresize() { 
+  function toggleTextDescription() {
+    $('#cornerBeepersCanvas').toggle();
+    $('#cornerBeepersTextDescriptionBox').toggle();
+
+    if(!showTextDescription) {
+      // text description is currently hidden; toggle button should hide canvas and show text description div
+      $('#cornerBeepersTextDescriptionButton').text('Show Canvas');
+      showTextDescription = true;
+    } else {
+      // text description is currently showing; toggle button should hide text and show canvas
+      $('#cornerBeepersTextDescriptionButton').text('Show Text Descriptions');
+      showTextDescription = false;
+    }
+  }
+
+  function initializeWorldTextDescription(worldText) {
+    $('#cornerBeepersInitialWorldDescription').html(worldText);
+  }
+
+  function appendMoveDescription(moveText) {
+    $('#cornerBeepersMovesList').append(`<li>${moveText}</li>`);
+  }
+
+  function clearMovesList() {
+    $('#cornerBeepersMovesList').empty();
+  }
+
+  function onresize() {
     var parentHeight = 213.60000000000002;
     var canvasWidth = 200
     var parentWidth = $("#cornerBeepers").width();
@@ -351,14 +433,14 @@ STARTER_CODE = STARTER_CODE.trim();
     var ide = document.getElementById('cornerBeepersIde');
     var editorDiv = document.getElementById('cornerBeepersEditorDiv');
     var canvas = document.getElementById('cornerBeepersCanvasDiv');
-    
+
     var ideHeight = parentHeight
     var centerHeight = ideHeight;
 
     var availibleWidth = parentWidth;
     var elementSpacing = 12;
 
-    var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
+    var editorWidth = availibleWidth - canvasWidth - elementSpacing;
 
     canvas.style.width = canvasWidth + 'px';
     canvas.style.height = canvasWidth + 'px';
@@ -372,15 +454,16 @@ STARTER_CODE = STARTER_CODE.trim();
     console.log('editor width: ' + editorWidth)
 
     if (karelEditor) {
-       karelEditor.renderer.onResize();
+      karelEditor.renderer.onResize();
     }
- }
- main()
- 
-}
-examplecornerBeepers();
-    </script>
+  }
+  main()
+
+  }
+  examplecornerBeepers();
+</script>
 </div>
+
 <p>
 Pay very close attention to the way that the program flows through these control statements. The program runs through the set of commands in the <code>for</code> loop body one at a time. It repeats the body four times.
 </p>
@@ -401,20 +484,25 @@ Technically the body of a <code>for</code> loop can contain any control flow cod
          <div id = 'cornerBeepers10EditorDiv' class = 'ideEditorDiv' style="width:200px"></div>
          <div id = 'cornerBeepers10CanvasDiv' class = 'ideCanvasDiv'>
             <canvas id='cornerBeepers10Canvas' class = 'ideCanvas'></canvas>
+            <div id='cornerBeepers10TextDescriptionBox' class='ideTextDescriptionBox' style="display: none;">
+              <p id='cornerBeepers10InitialWorldDescription'></p>
+              <ul id='cornerBeepers10MovesList'></ul>
+            </div>
          </div>
       </div>
     </div>
     <div style="width:100%;">
         <div class="buttonBar">
            <button class="btn btn-default" id="cornerBeepers10RunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
-        </div> 
+           <button class="btn btn-default" id="cornerBeepers10TextDescriptionButton">Show Text Descriptions</button>
+        </div>
     </div>
 <script>
 
-        
 
-function examplecornerBeepers10() {
-STARTER_CODE = `
+
+  function examplecornerBeepers10() {
+    STARTER_CODE = `
 # File: CornerFiveBeepers.py
 # -----------------------------
 # Places five beepers in each corner
@@ -436,45 +524,76 @@ def move_to_next_corner() :
 def put_five_beepers() :
    for i in range(5):
    	put_beeper()
-`
-// because of that extra endline at the start of the string
-STARTER_CODE = STARTER_CODE.trim();
+    `
+    // because of that extra endline at the start of the string
+    STARTER_CODE = STARTER_CODE.trim();
 
- var karelIde = null;
- var karelEditor = null;
- var buttonState = 'play';
+    var karelIde = null;
+    var karelEditor = null;
+    var buttonState = 'play';
+    var showTextDescription = false;
 
- function main() {
-   karelEditor = importPythonEditor('cornerBeepers10Editor','cornerBeepers10EditorDiv', STARTER_CODE, false);
-     //importRunButtonBar('example1ButtonBar');
-    
-    $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
-    
-    initTabs();
-    var canvas = document.getElementById('cornerBeepers10Canvas');
-    karelIde = KarelIde('python',karelEditor, canvas, 'cornerBeepersStart', 0.7, 'en');
-    $('#cornerBeepers10RunButton').click(function(){playClicked()});
-    onresize();
-    
- }
+    function main() {
+      karelEditor = importPythonEditor('cornerBeepers10Editor','cornerBeepers10EditorDiv', STARTER_CODE, false);
+      //importRunButtonBar('example1ButtonBar');
 
- function playClicked() {
-  if(buttonState == 'play') {
-    karelIde.playButton();
-      
+      $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
+
+      initTabs();
+      var canvas = document.getElementById('cornerBeepers10Canvas');
+      karelIde = KarelIde('python',karelEditor, canvas, 'cornerBeepersStart', 0.7, 'en', 1000, 1000, initializeWorldTextDescription, appendMoveDescription, "");
+
+      $('#cornerBeepers10RunButton').click(function(){playClicked()});
+      $('#cornerBeepers10TextDescriptionButton').click(function(){toggleTextDescription()});
+      onresize();
+
+    }
+
+  function playClicked() {
+    if(buttonState == 'play') {
+      karelIde.playButton();
+
       var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
       $('#cornerBeepers10RunButton').html(resetText);
       buttonState = 'reset';
-     } else if (buttonState == 'reset') {
+    } else if (buttonState == 'reset') {
       karelIde.stopButton();
+      clearMovesList(); // resets text description to description of initial state only
       var playText = '<span class="glyphicon glyphicon-play"></span> Run Program';
       $('#cornerBeepers10RunButton').html(playText);
       buttonState = 'play';
-     }
-  
+    }
+
   }
 
- function onresize() { 
+  function toggleTextDescription() {
+    $('#cornerBeepers10Canvas').toggle();
+    $('#cornerBeepers10TextDescriptionBox').toggle();
+
+    if(!showTextDescription) {
+      // text description is currently hidden; toggle button should hide canvas and show text description div
+      $('#cornerBeepers10TextDescriptionButton').text('Show Canvas');
+      showTextDescription = true;
+    } else {
+      // text description is currently showing; toggle button should hide text and show canvas
+      $('#cornerBeepers10TextDescriptionButton').text('Show Text Descriptions');
+      showTextDescription = false;
+    }
+  }
+
+  function initializeWorldTextDescription(worldText) {
+    $('#cornerBeepers10InitialWorldDescription').html(worldText);
+  }
+
+  function appendMoveDescription(moveText) {
+    $('#cornerBeepers10MovesList').append(`<li>${moveText}</li>`);
+  }
+
+  function clearMovesList() {
+    $('#cornerBeepers10MovesList').empty();
+  }
+
+  function onresize() {
     var parentHeight = 373.8;
     var canvasWidth = 200
     var parentWidth = $("#cornerBeepers10").width();
@@ -483,14 +602,14 @@ STARTER_CODE = STARTER_CODE.trim();
     var ide = document.getElementById('cornerBeepers10Ide');
     var editorDiv = document.getElementById('cornerBeepers10EditorDiv');
     var canvas = document.getElementById('cornerBeepers10CanvasDiv');
-    
+
     var ideHeight = parentHeight
     var centerHeight = ideHeight;
 
     var availibleWidth = parentWidth;
     var elementSpacing = 12;
 
-    var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
+    var editorWidth = availibleWidth - canvasWidth - elementSpacing;
 
     canvas.style.width = canvasWidth + 'px';
     canvas.style.height = canvasWidth + 'px';
@@ -504,15 +623,16 @@ STARTER_CODE = STARTER_CODE.trim();
     console.log('editor width: ' + editorWidth)
 
     if (karelEditor) {
-       karelEditor.renderer.onResize();
+      karelEditor.renderer.onResize();
     }
- }
- main()
- 
-}
-examplecornerBeepers10();
-    </script>
-</div></p>
+  }
+  main()
+
+  }
+  examplecornerBeepers10();
+</script>
+</div>
+</p>
 <hr/>
 <center>
   <a class="btn btn-primary btn-lg" href="chapter6.html" role="button">Next Chapter</a>

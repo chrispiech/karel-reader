@@ -118,17 +118,22 @@ The technique of defining new functions, and defining <code>for</code> loops—a
               </div>
             </div>
             <canvas id='moveToWallCanvas' class = 'ideCanvas'></canvas>
+            <div id='moveToWallTextDescriptionBox' class='ideTextDescriptionBox' style="display: none;">
+              <p id='moveToWallInitialWorldDescription'></p>
+              <ul id='moveToWallMovesList'></ul>
+            </div>
          </div>
       </div>
     </div>
     <div style="width:100%;">
         <div class="buttonBar">
            <button class="btn btn-default" id="moveToWallRunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
-        </div> 
+           <button class="btn btn-default" id="moveToWallTextDescriptionButton">Show Text Descriptions</button>
+        </div>
     </div>
 <script>
 
-        
+
 
 function examplemoveToWall() {
 STARTER_CODE = `
@@ -157,23 +162,25 @@ STARTER_CODE = STARTER_CODE.trim();
  var karelIde = null;
  var karelEditor = null;
  var buttonState = 'play';
+ var showTextDescription = false;
 
  function main() {
    karelEditor = importPythonEditor('moveToWallEditor','moveToWallEditorDiv', STARTER_CODE, false);
     setupWorldDropdown();
-    
-    
+
+
     var canvas = document.getElementById('moveToWallCanvas');
-    karelIde = KarelIde('python',karelEditor, canvas, '7x7', 0.0, 'en');
+    karelIde = KarelIde('python',karelEditor, canvas, '7x7', 0.0, 'en', 1000, 1000, initializeWorldTextDescription, appendMoveDescription);
     $('#moveToWallRunButton').click(function(){playClicked()});
+    $('#moveToWallTextDescriptionButton').click(function(){toggleTextDescription()});
     onresize();
-    
+
  }
 
  function setupWorldDropdown() {
     console.log('setup world dropdown')
     let ul = document.getElementById('moveToWallWorlds')
-    
+
     if (!ul.childNodes || ul.childNodes.length == 0) return;
 
     // Iterate LIs
@@ -193,6 +200,7 @@ STARTER_CODE = STARTER_CODE.trim();
     console.log('here we go', worldName)
     karelIde.changeWorld(worldName)
     changeToPlayButton()
+    clearMovesList();
  }
 
  function playClicked() {
@@ -201,6 +209,7 @@ STARTER_CODE = STARTER_CODE.trim();
     changeToResetButton();
    } else if (buttonState == 'reset') {
     karelIde.stopButton();
+    clearMovesList(); // resets text description to description of initial state only
     changeToPlayButton();
    }
   }
@@ -214,10 +223,37 @@ STARTER_CODE = STARTER_CODE.trim();
   function changeToResetButton() {
     var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
     $('#moveToWallRunButton').html(resetText);
-    buttonState = 'reset';  
+    buttonState = 'reset';
   }
 
- function onresize() { 
+  function toggleTextDescription() {
+    $('#moveToWallCanvas').toggle();
+    $('#moveToWallTextDescriptionBox').toggle();
+
+    if(!showTextDescription) {
+      // text description is currently hidden; toggle button should hide canvas and show text description div
+      $('#moveToWallTextDescriptionButton').text('Show Canvas');
+      showTextDescription = true;
+    } else {
+      // text description is currently showing; toggle button should hide text and show canvas
+      $('#moveToWallTextDescriptionButton').text('Show Text Descriptions');
+      showTextDescription = false;
+    }
+  }
+
+  function initializeWorldTextDescription(worldText) {
+    $('#moveToWallInitialWorldDescription').html(worldText);
+  }
+
+  function appendMoveDescription(moveText) {
+    $('#moveToWallMovesList').append(`<li>${moveText}</li>`);
+  }
+
+  function clearMovesList() {
+    $('#moveToWallMovesList').empty();
+  }
+
+ function onresize() {
     var parentHeight = 316.8;
     var canvasWidth = 300
     var parentWidth = $("#moveToWall").width();
@@ -226,14 +262,14 @@ STARTER_CODE = STARTER_CODE.trim();
     var ide = document.getElementById('moveToWallIde');
     var editorDiv = document.getElementById('moveToWallEditorDiv');
     var canvas = document.getElementById('moveToWallCanvasDiv');
-    
+
     var ideHeight = parentHeight
     var centerHeight = ideHeight;
 
     var availibleWidth = parentWidth;
     var elementSpacing = 12;
 
-    var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
+    var editorWidth = availibleWidth - canvasWidth - elementSpacing;
 
     canvas.style.width = canvasWidth + 'px';
     canvas.style.height = canvasWidth + 'px';
@@ -251,11 +287,12 @@ STARTER_CODE = STARTER_CODE.trim();
     }
  }
  main()
- 
+
 }
 examplemoveToWall();
     </script>
 </div>
+
 <p>
 	Try changing the world by clicking the "Change World" dropdown above the world. For any sized world, Karel will move until it hits a wall. Notice that this feat can not be acomplished using a <code class="keyword">for</code> loop. That would require us to know the size of the world at the time of programming.
 	</p>
@@ -310,17 +347,22 @@ Karel has many <i class="demoText">test</i> statements, and we will go over all 
               </div>
             </div>
             <canvas id='beeperLineBug1Canvas' class = 'ideCanvas'></canvas>
+            <div id='beeperLineBug1TextDescriptionBox' class='ideTextDescriptionBox' style="display: none;">
+              <p id='beeperLineBug1InitialWorldDescription'></p>
+              <ul id='beeperLineBug1MovesList'></ul>
+            </div>
          </div>
       </div>
     </div>
     <div style="width:100%;">
         <div class="buttonBar">
            <button class="btn btn-default" id="beeperLineBug1RunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
-        </div> 
+           <button class="btn btn-default" id="beeperLineBug1TextDescriptionButton">Show Text Descriptions</button>
+        </div>
     </div>
 <script>
 
-        
+
 
 function examplebeeperLineBug1() {
 STARTER_CODE = `
@@ -348,23 +390,25 @@ STARTER_CODE = STARTER_CODE.trim();
  var karelIde = null;
  var karelEditor = null;
  var buttonState = 'play';
+ var showTextDescription = false;
 
  function main() {
    karelEditor = importPythonEditor('beeperLineBug1Editor','beeperLineBug1EditorDiv', STARTER_CODE, true);
     setupWorldDropdown();
-    
-    
+
+
     var canvas = document.getElementById('beeperLineBug1Canvas');
-    karelIde = KarelIde('python',karelEditor, canvas, '7x7', 0.0, 'en');
+    karelIde = KarelIde('python',karelEditor, canvas, '7x7', 0.0, 'en', 1000, 1000, initializeWorldTextDescription, appendMoveDescription);
     $('#beeperLineBug1RunButton').click(function(){playClicked()});
+    $('#beeperLineBug1TextDescriptionButton').click(function(){toggleTextDescription()});
     onresize();
-    
+
  }
 
  function setupWorldDropdown() {
     console.log('setup world dropdown')
     let ul = document.getElementById('beeperLineBug1Worlds')
-    
+
     if (!ul.childNodes || ul.childNodes.length == 0) return;
 
     // Iterate LIs
@@ -384,6 +428,7 @@ STARTER_CODE = STARTER_CODE.trim();
     console.log('here we go', worldName)
     karelIde.changeWorld(worldName)
     changeToPlayButton()
+    clearMovesList();
  }
 
  function playClicked() {
@@ -392,6 +437,7 @@ STARTER_CODE = STARTER_CODE.trim();
     changeToResetButton();
    } else if (buttonState == 'reset') {
     karelIde.stopButton();
+    clearMovesList(); // resets text description to description of initial state only
     changeToPlayButton();
    }
   }
@@ -405,10 +451,37 @@ STARTER_CODE = STARTER_CODE.trim();
   function changeToResetButton() {
     var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
     $('#beeperLineBug1RunButton').html(resetText);
-    buttonState = 'reset';  
+    buttonState = 'reset';
   }
 
- function onresize() { 
+  function toggleTextDescription() {
+    $('#beeperLineBug1Canvas').toggle();
+    $('#beeperLineBug1TextDescriptionBox').toggle();
+
+    if(!showTextDescription) {
+      // text description is currently hidden; toggle button should hide canvas and show text description div
+      $('#beeperLineBug1TextDescriptionButton').text('Show Canvas');
+      showTextDescription = true;
+    } else {
+      // text description is currently showing; toggle button should hide text and show canvas
+      $('#beeperLineBug1TextDescriptionButton').text('Show Text Descriptions');
+      showTextDescription = false;
+    }
+  }
+
+  function initializeWorldTextDescription(worldText) {
+    $('#beeperLineBug1InitialWorldDescription').html(worldText);
+  }
+
+  function appendMoveDescription(moveText) {
+    $('#beeperLineBug1MovesList').append(`<li>${moveText}</li>`);
+  }
+
+  function clearMovesList() {
+    $('#beeperLineBug1MovesList').empty();
+  }
+
+ function onresize() {
     var parentHeight = 299.20000000000005;
     var canvasWidth = 300
     var parentWidth = $("#beeperLineBug1").width();
@@ -417,14 +490,14 @@ STARTER_CODE = STARTER_CODE.trim();
     var ide = document.getElementById('beeperLineBug1Ide');
     var editorDiv = document.getElementById('beeperLineBug1EditorDiv');
     var canvas = document.getElementById('beeperLineBug1CanvasDiv');
-    
+
     var ideHeight = parentHeight
     var centerHeight = ideHeight;
 
     var availibleWidth = parentWidth;
     var elementSpacing = 12;
 
-    var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
+    var editorWidth = availibleWidth - canvasWidth - elementSpacing;
 
     canvas.style.width = canvasWidth + 'px';
     canvas.style.height = canvasWidth + 'px';
@@ -442,11 +515,12 @@ STARTER_CODE = STARTER_CODE.trim();
     }
  }
  main()
- 
+
 }
 examplebeeperLineBug1();
     </script>
 </div>
+
 <p>That looks great. Except for one problem. On every world Karel doesn't place a beeper on the last square of the line (look closely). When Karel is on the last square, the program does not execute the body of the loop because the test no longer passes -- Karel is facing a wall. You might be tempted to try switching the order of the body so that Karel moves before placing a beeper. The code is editable so go try it!
 </p>
 
@@ -459,7 +533,7 @@ The bug in this program is an example of a programming problem called a <b>fence
 </p>
 
 <center>
-<img style ="width:500px;margin-bottom:10px" src="../../images/ch6/fencepost.png"/>
+<img style ="width:500px;margin-bottom:10px" src="../../images/ch6/fencepost.png" alt="A chainlink fence that is 10 panels long. There are fenceposts on either end of the fence and between all adjacent panels, for a total of 11 fenceposts."/>
 </center>
 
 <p>
@@ -489,17 +563,22 @@ The bug in this program is an example of a programming problem called a <b>fence
               </div>
             </div>
             <canvas id='beeperLineCanvas' class = 'ideCanvas'></canvas>
+            <div id='beeperLineTextDescriptionBox' class='ideTextDescriptionBox' style="display: none;">
+              <p id='beeperLineInitialWorldDescription'></p>
+              <ul id='beeperLineMovesList'></ul>
+            </div>
          </div>
       </div>
     </div>
     <div style="width:100%;">
         <div class="buttonBar">
            <button class="btn btn-default" id="beeperLineRunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
-        </div> 
+           <button class="btn btn-default" id="beeperLineTextDescriptionButton">Show Text Descriptions</button>
+        </div>
     </div>
 <script>
 
-        
+
 
 function examplebeeperLine() {
 STARTER_CODE = `
@@ -529,23 +608,25 @@ STARTER_CODE = STARTER_CODE.trim();
  var karelIde = null;
  var karelEditor = null;
  var buttonState = 'play';
+ var showTextDescription = false;
 
  function main() {
    karelEditor = importPythonEditor('beeperLineEditor','beeperLineEditorDiv', STARTER_CODE, true);
     setupWorldDropdown();
-    
-    
+
+
     var canvas = document.getElementById('beeperLineCanvas');
-    karelIde = KarelIde('python',karelEditor, canvas, '7x7', 0.8, 'en');
+    karelIde = KarelIde('python',karelEditor, canvas, '7x7', 0.8, 'en', 1000, 1000, initializeWorldTextDescription, appendMoveDescription);
     $('#beeperLineRunButton').click(function(){playClicked()});
+    $('#beeperLineTextDescriptionButton').click(function(){toggleTextDescription()});
     onresize();
-    
+
  }
 
  function setupWorldDropdown() {
     console.log('setup world dropdown')
     let ul = document.getElementById('beeperLineWorlds')
-    
+
     if (!ul.childNodes || ul.childNodes.length == 0) return;
 
     // Iterate LIs
@@ -565,6 +646,7 @@ STARTER_CODE = STARTER_CODE.trim();
     console.log('here we go', worldName)
     karelIde.changeWorld(worldName)
     changeToPlayButton()
+    clearMovesList();
  }
 
  function playClicked() {
@@ -573,6 +655,7 @@ STARTER_CODE = STARTER_CODE.trim();
     changeToResetButton();
    } else if (buttonState == 'reset') {
     karelIde.stopButton();
+    clearMovesList(); // resets text description to description of initial state only
     changeToPlayButton();
    }
   }
@@ -586,10 +669,37 @@ STARTER_CODE = STARTER_CODE.trim();
   function changeToResetButton() {
     var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
     $('#beeperLineRunButton').html(resetText);
-    buttonState = 'reset';  
+    buttonState = 'reset';
   }
 
- function onresize() { 
+  function toggleTextDescription() {
+    $('#beeperLineCanvas').toggle();
+    $('#beeperLineTextDescriptionBox').toggle();
+
+    if(!showTextDescription) {
+      // text description is currently hidden; toggle button should hide canvas and show text description div
+      $('#beeperLineTextDescriptionButton').text('Show Canvas');
+      showTextDescription = true;
+    } else {
+      // text description is currently showing; toggle button should hide text and show canvas
+      $('#beeperLineTextDescriptionButton').text('Show Text Descriptions');
+      showTextDescription = false;
+    }
+  }
+
+  function initializeWorldTextDescription(worldText) {
+    $('#beeperLineInitialWorldDescription').html(worldText);
+  }
+
+  function appendMoveDescription(moveText) {
+    $('#beeperLineMovesList').append(`<li>${moveText}</li>`);
+  }
+
+  function clearMovesList() {
+    $('#beeperLineMovesList').empty();
+  }
+
+ function onresize() {
     var parentHeight = 334.40000000000003;
     var canvasWidth = 300
     var parentWidth = $("#beeperLine").width();
@@ -598,14 +708,14 @@ STARTER_CODE = STARTER_CODE.trim();
     var ide = document.getElementById('beeperLineIde');
     var editorDiv = document.getElementById('beeperLineEditorDiv');
     var canvas = document.getElementById('beeperLineCanvasDiv');
-    
+
     var ideHeight = parentHeight
     var centerHeight = ideHeight;
 
     var availibleWidth = parentWidth;
     var elementSpacing = 12;
 
-    var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
+    var editorWidth = availibleWidth - canvasWidth - elementSpacing;
 
     canvas.style.width = canvasWidth + 'px';
     canvas.style.height = canvasWidth + 'px';
@@ -623,11 +733,12 @@ STARTER_CODE = STARTER_CODE.trim();
     }
  }
  main()
- 
+
 }
 examplebeeperLine();
     </script>
-</div><hr/>
+</div>
+<hr/>
 <center>
   <a class="btn btn-primary btn-lg" href="chapter7.html" role="button">Next Chapter</a>
 </center>

@@ -3,14 +3,13 @@
 /**
  * Class: Karel IDE
  * ---------
- * This is the main class for the Karel Ide. It provides the 
+ * This is the main class for the Karel Ide. It provides the
  * API availible to manipulate Karel. This class is in charge
  * of maintaining the karelImages singleton and making sure
  * that Karel doesn't try to render before images have been
  * loaded.
  */
-function KarelIde(programLang="java", editor, canvas, initialWorld, speed = 0.5, lang="es", canvasWidth = 1000, canvasHeight=1000) {
-
+function KarelIde(programLang="java", editor, canvas, initialWorld, speed = 0.5, lang="es", canvasWidth = 1000, canvasHeight=1000, setInitialWorldText=console.log, addMoveText=console.log, customInitialWorldDescription='', setAriaLabel=console.log) {
   let PATH_TO_ROOT = '../../'
 
    function calcHeartbeatsForSpeed(speed) {
@@ -27,7 +26,7 @@ function KarelIde(programLang="java", editor, canvas, initialWorld, speed = 0.5,
    // constants
    var ACTION_HEARTBEATS = calcHeartbeatsForSpeed(speed);
    var DRAW_HEARTBEAT = ACTION_HEARTBEATS;
-   var HEART_BEAT = 10;	
+   var HEART_BEAT = 10;
    var REFRESH_HEARTBEATS = 100;
    var COOKIE_NAME = 'karelCode';
 
@@ -49,13 +48,15 @@ function KarelIde(programLang="java", editor, canvas, initialWorld, speed = 0.5,
    var numActions = 0;
    var silent = false;
 
+   that.ariaLabel = '';
+
 
    /**
     * Function: Init
     * --------------
     * Setup the variables, create a animation callback loop
     * and load images.
-    */ 
+    */
    function init() {
       if (canvas) {
          canvas.width = canvasModel.getWidth();
@@ -68,8 +69,8 @@ function KarelIde(programLang="java", editor, canvas, initialWorld, speed = 0.5,
       } else {
          imagesLoaded();
       }
-      setInterval(heartbeat, HEART_BEAT);	
-   }
+      setInterval(heartbeat, HEART_BEAT);
+     }
 
    //--------------- PUBLIC METHODS ---------------------//
 
@@ -89,7 +90,7 @@ function KarelIde(programLang="java", editor, canvas, initialWorld, speed = 0.5,
       // beware! Do not try to change the canvas width
       // that is simply the size that is rendered to, not the
       // size that is displayed. The display size comes from
-      // the 
+      // the
    }
 
    /**
@@ -228,10 +229,10 @@ function KarelIde(programLang="java", editor, canvas, initialWorld, speed = 0.5,
       if (!worldLoaded) throw new Error('TRIED TO RUN BEFORE WORLD LOADED');
       var code = getCode();
       that.runSpecificCode(code, finishedCallback)
-      
+
    }
 
-   
+
 
 
    //----------------------------- PRIVATE METHODS --------------------------//
@@ -244,7 +245,7 @@ function KarelIde(programLang="java", editor, canvas, initialWorld, speed = 0.5,
                if(finishedCallback) finishedCallback(false);
                break;
             }
-         }      
+         }
       } catch (karelError) {
          if(finishedCallback) finishedCallback(true);
       }
@@ -254,7 +255,7 @@ function KarelIde(programLang="java", editor, canvas, initialWorld, speed = 0.5,
        if (Const.USE_COMPILER) {
         if(programLang == 'python') {
           return KarelPythonCompiler(karel)
-        } 
+        }
         // default to Java
         return KarelJavaCompiler(karel);
       }
@@ -280,7 +281,7 @@ function KarelIde(programLang="java", editor, canvas, initialWorld, speed = 0.5,
    /**
     * Function: ImagesLoaded
     * ------------
-    * This method is the callback for when images have finished loading. 
+    * This method is the callback for when images have finished loading.
     * Updates the imagesReady flag and loads the current world.
     * Usage: karelImages.loadImages(imagesLoaded);
     */
@@ -292,14 +293,20 @@ function KarelIde(programLang="java", editor, canvas, initialWorld, speed = 0.5,
    /**
     * Function: WorldFileLoaded
     * ------------
-    * This method is the callback for when a world has finished loading. 
+    * This method is the callback for when a world has finished loading.
     * Updates the karelWorld instance and redraws the canvas.
     * Usage: loadDoc(worldUrl, worldFileLoaded);
     */
-   function worldFileLoaded(text) {	
+   function worldFileLoaded(text) {
       karel.loadWorld(text, canvasModel);
       draw();
       worldLoaded = true;
+      var worldDescription = karel.getInitialWorldText(customInitialWorldDescription);
+      // that.ariaLabel = worldDescription; // aria label text for, e.g., `world.html`
+      setAriaLabel(worldDescription); // aria label text for, e.g., `world.html`
+      setInitialWorldText(worldDescription); // set initial text of text description box in interactive IDEs for e.g. `bigCode.html` and `runnable.html`
+      karel.addMoveText = addMoveText; // give karel obj access to function to modify DOM upon move
+
    }
 
    /**
@@ -419,4 +426,3 @@ function KarelIde(programLang="java", editor, canvas, initialWorld, speed = 0.5,
    init();
    return that;
 }
-

@@ -131,17 +131,22 @@ An <code>if/else</code> statement executes an "if" code-block if and only if the
               </div>
             </div>
             <canvas id='invertLineCanvas' class = 'ideCanvas'></canvas>
+            <div id='invertLineTextDescriptionBox' class='ideTextDescriptionBox' style="display: none;">
+              <p id='invertLineInitialWorldDescription'></p>
+              <ul id='invertLineMovesList'></ul>
+            </div>
          </div>
       </div>
     </div>
     <div style="width:100%;">
         <div class="buttonBar">
            <button class="btn btn-default" id="invertLineRunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
-        </div> 
+           <button class="btn btn-default" id="invertLineTextDescriptionButton">Show Text Descriptions</button>
+        </div>
     </div>
 <script>
 
-        
+
 
 function exampleinvertLine() {
 STARTER_CODE = `
@@ -169,23 +174,25 @@ STARTER_CODE = STARTER_CODE.trim();
  var karelIde = null;
  var karelEditor = null;
  var buttonState = 'play';
+ var showTextDescription = false;
 
  function main() {
    karelEditor = importPythonEditor('invertLineEditor','invertLineEditorDiv', STARTER_CODE, true);
     setupWorldDropdown();
-    
-    
+
+
     var canvas = document.getElementById('invertLineCanvas');
-    karelIde = KarelIde('python',karelEditor, canvas, 'invert', 0.0, 'en');
+    karelIde = KarelIde('python',karelEditor, canvas, 'invert', 0.0, 'en', 1000, 1000, initializeWorldTextDescription, appendMoveDescription);
     $('#invertLineRunButton').click(function(){playClicked()});
+    $('#invertLineTextDescriptionButton').click(function(){toggleTextDescription()});
     onresize();
-    
+
  }
 
  function setupWorldDropdown() {
     console.log('setup world dropdown')
     let ul = document.getElementById('invertLineWorlds')
-    
+
     if (!ul.childNodes || ul.childNodes.length == 0) return;
 
     // Iterate LIs
@@ -205,6 +212,7 @@ STARTER_CODE = STARTER_CODE.trim();
     console.log('here we go', worldName)
     karelIde.changeWorld(worldName)
     changeToPlayButton()
+    clearMovesList();
  }
 
  function playClicked() {
@@ -213,6 +221,7 @@ STARTER_CODE = STARTER_CODE.trim();
     changeToResetButton();
    } else if (buttonState == 'reset') {
     karelIde.stopButton();
+    clearMovesList(); // resets text description to description of initial state only
     changeToPlayButton();
    }
   }
@@ -226,10 +235,37 @@ STARTER_CODE = STARTER_CODE.trim();
   function changeToResetButton() {
     var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
     $('#invertLineRunButton').html(resetText);
-    buttonState = 'reset';  
+    buttonState = 'reset';
   }
 
- function onresize() { 
+  function toggleTextDescription() {
+    $('#invertLineCanvas').toggle();
+    $('#invertLineTextDescriptionBox').toggle();
+
+    if(!showTextDescription) {
+      // text description is currently hidden; toggle button should hide canvas and show text description div
+      $('#invertLineTextDescriptionButton').text('Show Canvas');
+      showTextDescription = true;
+    } else {
+      // text description is currently showing; toggle button should hide text and show canvas
+      $('#invertLineTextDescriptionButton').text('Show Text Descriptions');
+      showTextDescription = false;
+    }
+  }
+
+  function initializeWorldTextDescription(worldText) {
+    $('#invertLineInitialWorldDescription').html(worldText);
+  }
+
+  function appendMoveDescription(moveText) {
+    $('#invertLineMovesList').append(`<li>${moveText}</li>`);
+  }
+
+  function clearMovesList() {
+    $('#invertLineMovesList').empty();
+  }
+
+ function onresize() {
     var parentHeight = 316.8;
     var canvasWidth = 300
     var parentWidth = $("#invertLine").width();
@@ -238,14 +274,14 @@ STARTER_CODE = STARTER_CODE.trim();
     var ide = document.getElementById('invertLineIde');
     var editorDiv = document.getElementById('invertLineEditorDiv');
     var canvas = document.getElementById('invertLineCanvasDiv');
-    
+
     var ideHeight = parentHeight
     var centerHeight = ideHeight;
 
     var availibleWidth = parentWidth;
     var elementSpacing = 12;
 
-    var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
+    var editorWidth = availibleWidth - canvasWidth - elementSpacing;
 
     canvas.style.width = canvasWidth + 'px';
     canvas.style.height = canvasWidth + 'px';
@@ -263,11 +299,12 @@ STARTER_CODE = STARTER_CODE.trim();
     }
  }
  main()
- 
+
 }
 exampleinvertLine();
     </script>
 </div>
+
 
 
 <p> Note that an <code>if</code> statement does not need to have an <code>else</code> block -- in which case the statement operates like a <code>while</code> loop that only executes one time:

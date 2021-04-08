@@ -20,7 +20,7 @@
 </p>
 
 <%
-  include('templates/java/'+lang+'/programs/world.html', name="world1", world="beeperTowers", canvasWidth="400", canvasRatio=0.8)
+  include('templates/python/'+lang+'/programs/world.html', name="world1", world="beeperTowers", canvasWidth="400", canvasRatio=0.8, customDescription="There are towers of beepers of varying heights in columns 1 through 6 and 8.")
 %>
 
 <p>
@@ -179,6 +179,5 @@ Note that this function has precisely the same structure as the main program fro
 <p>Although the hard work has been done, there are still several loose ends that need to be resolved. The main program calls two functions—<code>drop_all_beepers()</code> and <code>return_home()</code>— that are as yet unwritten. Similarly, <code>collect_one_tower()</code> calls <code>collect_line_of_beepers()</code> and <code>move_to_wall()</code>. Fortunately, all four of these functionss are simple enough to code without any further decomposition, particularly if you use <code>move_to_wall()</code> in the definition of <code>return_home()</code>. Here is the complete implementation:</p>
 
 <%
-  include('templates/python/'+lang+'/programs/bigCode.html', name="beeperTowers",  world="beeperTowers", ideSpeed=0.9, canvasRatio=0.8)
+  include('templates/python/'+lang+'/programs/bigCode.html', name="beeperTowers",  world="beeperTowers", ideSpeed=0.9, canvasRatio=0.8, customDescription="There are towers of beepers of varying heights in columns 1 through 6 and 8.")
 %>
-

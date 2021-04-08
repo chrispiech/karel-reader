@@ -98,22 +98,22 @@
           <div>
             <div class="commandCanvasTitle">Before:</div>
             <div class="commandCanvasOuter">
-              <canvas id='baCanvasBefore' style="width:300px;"></canvas>
+              <canvas id='baCanvasBefore' style="width:300px;" aria-label=" " role="img"></canvas>
             </div>
           </div>
           <div style="width:50px"></div>
           <div>
             <div class="commandCanvasTitle">After:</div>
             <div class="commandCanvasOuter">
-              <canvas id='baCanvasAfter' style="width:300px;"></canvas>
+              <canvas id='baCanvasAfter' style="width:300px;" aria-label=" " role="img"></canvas>
             </div>
           </div>
-         </div> 
+         </div>
     </div>
-    
+
 <script>
 
-        
+
 
 function exampleba() {
  var karelIde = null;
@@ -122,19 +122,28 @@ function exampleba() {
 
  function main() {
     canvas = document.getElementById('baCanvasBefore');
-    karelIde = KarelIde('python',null, canvas, 'pothole', 0.0, 'en',1000, 0.82 * 1000);
+    karelIde = KarelIde('python',null, canvas, 'pothole', 0.0, 'en',1000, 0.82 * 1000, console.log, console.log, 'There are walls around row 1 column 1 and in a rectangle near the bottom right corner around the positions in row 1 columns 3, 4, and 5.', setBeforeAriaLabel);
 
     let canvasGoal = document.getElementById('baCanvasAfter');
-    let goalIde = KarelIde('python',null, canvasGoal, 'potholeGoal',0.0, 'en',  1000, 0.82 * 1000)
+    let goalIde = KarelIde('python',null, canvasGoal, 'potholeGoal',0.0, 'en',  1000, 0.82 * 1000, console.log, console.log, 'There are walls around row 1 column 1 and in a rectangle near the bottom right corner around the positions in row 1 columns 3, 4, and 5.', setAfterAriaLabel);
  }
 
- 
+ function setBeforeAriaLabel(altText) {
+   $('#baCanvasBefore').attr('aria-label', altText); // set alt text for canvas element
+ }
+
+ function setAfterAriaLabel(altText) {
+   $('#baCanvasAfter').attr('aria-label', altText); // set alt text for canvas element
+ }
+
+
  main()
- 
+
 }
 exampleba();
     </script>
 </div>
+
 <p>
 If you are limited to the four predefined commands, the <code>main()</code> function to solve this problem would look like this:
 </p>
@@ -206,20 +215,25 @@ Here is the complete program. Notice how you can understand the programmer's int
          <div id = 'potholeEditorDiv' class = 'ideEditorDiv' style="width:200px"></div>
          <div id = 'potholeCanvasDiv' class = 'ideCanvasDiv'>
             <canvas id='potholeCanvas' class = 'ideCanvas'></canvas>
+            <div id='potholeTextDescriptionBox' class='ideTextDescriptionBox' style="display: none;">
+              <p id='potholeInitialWorldDescription'></p>
+              <ul id='potholeMovesList'></ul>
+            </div>
          </div>
       </div>
     </div>
     <div style="width:100%;">
         <div class="buttonBar">
            <button class="btn btn-default" id="potholeRunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
-        </div> 
+           <button class="btn btn-default" id="potholeTextDescriptionButton">Show Text Descriptions</button>
+        </div>
     </div>
 <script>
 
-        
 
-function examplepothole() {
-STARTER_CODE = `
+
+  function examplepothole() {
+    STARTER_CODE = `
 from karel.stanfordkarel import *
 def main():
    move()
@@ -248,45 +262,76 @@ def turn_right():
 # Turns Karel around 180 degrees. 
 def turn_around():
    turn_left()
-   turn_left()`
-// because of that extra endline at the start of the string
-STARTER_CODE = STARTER_CODE.trim();
+   turn_left()    `
+    // because of that extra endline at the start of the string
+    STARTER_CODE = STARTER_CODE.trim();
 
- var karelIde = null;
- var karelEditor = null;
- var buttonState = 'play';
+    var karelIde = null;
+    var karelEditor = null;
+    var buttonState = 'play';
+    var showTextDescription = false;
 
- function main() {
-   karelEditor = importPythonEditor('potholeEditor','potholeEditorDiv', STARTER_CODE, false);
-     //importRunButtonBar('example1ButtonBar');
-    
-    $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
-    
-    initTabs();
-    var canvas = document.getElementById('potholeCanvas');
-    karelIde = KarelIde('python',karelEditor, canvas, 'pothole', 0.0, 'en');
-    $('#potholeRunButton').click(function(){playClicked()});
-    onresize();
-    
- }
+    function main() {
+      karelEditor = importPythonEditor('potholeEditor','potholeEditorDiv', STARTER_CODE, false);
+      //importRunButtonBar('example1ButtonBar');
 
- function playClicked() {
-  if(buttonState == 'play') {
-    karelIde.playButton();
-      
+      $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
+
+      initTabs();
+      var canvas = document.getElementById('potholeCanvas');
+      karelIde = KarelIde('python',karelEditor, canvas, 'pothole', 0.0, 'en', 1000, 1000, initializeWorldTextDescription, appendMoveDescription, "There are walls around row 1 column 1 and in a rectangle near the bottom right corner around the positions in row 1 columns 3, 4, and 5.");
+
+      $('#potholeRunButton').click(function(){playClicked()});
+      $('#potholeTextDescriptionButton').click(function(){toggleTextDescription()});
+      onresize();
+
+    }
+
+  function playClicked() {
+    if(buttonState == 'play') {
+      karelIde.playButton();
+
       var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
       $('#potholeRunButton').html(resetText);
       buttonState = 'reset';
-     } else if (buttonState == 'reset') {
+    } else if (buttonState == 'reset') {
       karelIde.stopButton();
+      clearMovesList(); // resets text description to description of initial state only
       var playText = '<span class="glyphicon glyphicon-play"></span> Run Program';
       $('#potholeRunButton').html(playText);
       buttonState = 'play';
-     }
-  
+    }
+
   }
 
- function onresize() { 
+  function toggleTextDescription() {
+    $('#potholeCanvas').toggle();
+    $('#potholeTextDescriptionBox').toggle();
+
+    if(!showTextDescription) {
+      // text description is currently hidden; toggle button should hide canvas and show text description div
+      $('#potholeTextDescriptionButton').text('Show Canvas');
+      showTextDescription = true;
+    } else {
+      // text description is currently showing; toggle button should hide text and show canvas
+      $('#potholeTextDescriptionButton').text('Show Text Descriptions');
+      showTextDescription = false;
+    }
+  }
+
+  function initializeWorldTextDescription(worldText) {
+    $('#potholeInitialWorldDescription').html(worldText);
+  }
+
+  function appendMoveDescription(moveText) {
+    $('#potholeMovesList').append(`<li>${moveText}</li>`);
+  }
+
+  function clearMovesList() {
+    $('#potholeMovesList').empty();
+  }
+
+  function onresize() {
     var parentHeight = 516.2;
     var canvasWidth = 200
     var parentWidth = $("#pothole").width();
@@ -295,14 +340,14 @@ STARTER_CODE = STARTER_CODE.trim();
     var ide = document.getElementById('potholeIde');
     var editorDiv = document.getElementById('potholeEditorDiv');
     var canvas = document.getElementById('potholeCanvasDiv');
-    
+
     var ideHeight = parentHeight
     var centerHeight = ideHeight;
 
     var availibleWidth = parentWidth;
     var elementSpacing = 12;
 
-    var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
+    var editorWidth = availibleWidth - canvasWidth - elementSpacing;
 
     canvas.style.width = canvasWidth + 'px';
     canvas.style.height = canvasWidth + 'px';
@@ -316,15 +361,16 @@ STARTER_CODE = STARTER_CODE.trim();
     console.log('editor width: ' + editorWidth)
 
     if (karelEditor) {
-       karelEditor.renderer.onResize();
+      karelEditor.renderer.onResize();
     }
- }
- main()
- 
-}
-examplepothole();
-    </script>
-</div><hr/>
+  }
+  main()
+
+  }
+  examplepothole();
+</script>
+</div>
+<hr/>
 <center>
   <a class="btn btn-primary btn-lg" href="chapter5.html" role="button">Next Chapter</a>
 </center>
