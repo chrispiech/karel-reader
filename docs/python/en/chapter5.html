@@ -139,8 +139,8 @@ exampleba();
 <h3>Basic For Loop</h3>
 
 <p>
-	Since you know that there are exactly 42 beepers to place, the control statement that you need is a <b>for loop</b>, which specifies that you want to repeat some operation a fixed number of times. The structure of the <code>for</code> statement appears complicated primarily because it is actually much more powerful than anything Karel needs. The only version of the <code>for</code> syntax that Karel uses is:
-	</p>
+Since you know that there are exactly 42 beepers to place, the control statement that you need is a <b>for loop</b>, which specifies that you want to repeat some operation a fixed number of times. The structure of the <code>for</code> statement appears complicated primarily because it is actually much more powerful than anything Karel needs. The only version of the <code>for</code> syntax that Karel uses is:
+</p>
 
 	<p class="demoCode">
 <code>for i in range(</code><i class="demoText">count</i><code>):</code><br/>
@@ -149,8 +149,8 @@ exampleba();
 
 <p class="mb-20">We will go over all the details of the <code>for</code> loop later in the class. For now you should read this line as a way to express, "repeat the statements in the function body <i class="demoText">count</i> times."
 
- We can use this new <b>for loop</b> to place 42 beepers by replacing  <i class="demoText">count</i> with 42 and putting the command <code>put_beeper()</code> inside of the <code>for</code> loop code block. We call commands in the code block the <b>body</b>:
-	</p>
+We can use this new <b>for loop</b> to place 42 beepers by replacing <i class="demoText">count</i> with 42 and putting the command <code>put_beeper()</code> inside of the <code>for</code> loop code block. We call commands in the code block the <b>body</b>:
+</p>
 
 <p >
 
@@ -382,11 +382,11 @@ examplecornerBeepers();
     </script>
 </div>
 <p>
-	Pay very close attention to the way that the program flows through these control statements. The program runs through the set of commands in the <code>for</code> loop body one at a time. It repeats the body four times.
-	</p>
+Pay very close attention to the way that the program flows through these control statements. The program runs through the set of commands in the <code>for</code> loop body one at a time. It repeats the body four times.
+</p>
 
 <p>
-	Perhaps the single most complicated part of writing a loop is that you need the state of the world at the end of the loop (the <b>postcondition</b>) to be a valid state of the world for the start of the loop (the <b>precondition</b>). In the above example the assumptions match. Good times. At the start of the loop, Karel is always on a square with no beepers facing the next empty corner. What if you deleted the <code>turn_left()</code> at the end of the loop? The postcondition at the end of the first iteration would no longer satisfy the assumptions made about Karel facing the next empty corner. The code is editable. Try deleting the <code>turn_left()</code> command to see what happens!
+Perhaps the single most complicated part of writing a loop is that you need the state of the world at the end of the loop (the <b>postcondition</b>) to be a valid state of the world for the start of the loop (the <b>precondition</b>). In the above example the assumptions match. Good times. At the start of the loop, Karel is always on a square with no beepers facing the next empty corner. What if you deleted the <code>turn_left()</code> at the end of the loop? The postcondition at the end of the first iteration would no longer satisfy the assumptions made about Karel facing the next empty corner. The code is editable. Try deleting the <code>turn_left()</code> command to see what happens!
 </p>
 
 <h3>Nested Loops</h3>

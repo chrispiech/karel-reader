@@ -1,7 +1,7 @@
 
 
-<html>
-<head>
+<html> 
+<head> 
 <title>Karel Reader</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -15,7 +15,7 @@
 <script src="../..//karel/js/html/websiteImports.js"></script>
 <script>importCss();</script>
 <script>importJs();</script>
-</head>
+</head> 
 <body>
   <!-- container -->
   <div class="bookContainer">
@@ -28,7 +28,7 @@
     </a>
   </div>
   <hr/>
-
+  
   <div class="chapterTab" onclick="location.href='../../python/en/chapter1.html'">
     <a class="bookLink btn btn-link" href="../../python/en/chapter1.html">
       1 - Meet Karel
@@ -97,7 +97,7 @@
 </p>
 
 <p>
-	To combat this problem, programmers began to develop a set of programming methodologies that are collectively called <b>software engineering</b>. Using good software engineering skills not only makes it easier for other programmers to read and understand your programs, but also makes it easier for you to write those programs in the first place. One of the most important methodological advances to come out of software engineering is the strategy of <b>top-down design</b> or <b>stepwise refinement</b>, which consists of solving problems by starting with the problem as a whole. You break the whole problem down into pieces, and then solve each piece, breaking those down further if necessary. This top down strategy is complemented with  <b>iterative testing</b> where you make sure that the smaller pieces of the solution are working before moving on.
+	To combat this problem, programmers began to develop a set of programming methodologies that are collectively called <b>software engineering</b>. Using good software engineering skills not only makes it easier for other programmers to read and understand your programs, but also makes it easier for you to write those programs in the first place. One of the most important methodological advances to come out of software engineering is the strategy of <b>top-down design</b> or <b>stepwise refinement</b>, which consists of solving problems by starting with the problem as a whole. You break the whole problem down into pieces, and then solve each piece, breaking those down further if necessary. This top down strategy is complemented with <b>iterative testing</b> where you make sure that the smaller pieces of the solution are working before moving on.
 </p>
 
 <h3>An exercise in stepwise refinement</h3>
@@ -115,12 +115,12 @@
               <canvas id='world1Canvas' style="width:400px;"></canvas>
             </div>
           </div>
-         </div>
+         </div> 
     </div>
-
+    
 <script>
 
-
+        
 
 function exampleworld1() {
  var karelIde = null;
@@ -132,9 +132,9 @@ function exampleworld1() {
     karelIde = KarelIde('python',null, canvas, 'beeperTowers', 0, 'en',1000, 0.8 * 1000);
  }
 
-
+ 
  main()
-
+ 
 }
 exampleworld1();
     </script>
@@ -152,12 +152,12 @@ exampleworld1();
               <canvas id='world2Canvas' style="width:400px;"></canvas>
             </div>
           </div>
-         </div>
+         </div> 
     </div>
-
+    
 <script>
 
-
+        
 
 function exampleworld2() {
  var karelIde = null;
@@ -169,9 +169,9 @@ function exampleworld2() {
     karelIde = KarelIde('python',null, canvas, 'beeperTowersGoal', 0, 'en',1000, 0.8 * 1000);
  }
 
-
+ 
  main()
-
+ 
 }
 exampleworld2();
     </script>
@@ -182,13 +182,13 @@ exampleworld2();
 
 <p>
 	The key to solving this problem is to decompose the program in the right way, while still being able to test as you go. This task is more complex than the others you have seen, which makes choosing appropriate subproblems more important to obtaining a successful solution.
-	</p>
+</p>
 
-	<h3>The principle of top-down design</h3>
+<h3>The principle of top-down design</h3>
 
-	<p>
-		The key idea in stepwise refinement is that you should start the design of your program from the top, which refers to the level of the program that is conceptually highest and most abstract. At this level, the beeper tower problem is clearly divided into three independent phases. First, Karel has to collect all the beepers. Second, Karel has to deposit them on the last intersection. Third, Karel has to return to its home position. This conceptual decomposition of the problem suggests that the <code>main()</code> function for this program will have the following structure:
-	</p>
+<p>
+The key idea in stepwise refinement is that you should start the design of your program from the top, which refers to the level of the program that is conceptually highest and most abstract. At this level, the beeper tower problem is clearly divided into three independent phases. First, Karel has to collect all the beepers. Second, Karel has to deposit them on the last intersection. Third, Karel has to return to its home position. This conceptual decomposition of the problem suggests that the <code>main()</code> function for this program will have the following structure:
+</p>
 
 	<p class="demoCode" style="margin-left:10px">
 <code>&nbsp;&nbsp;&nbsp;<span class="keyword">def</span> main():</code><br/>
@@ -204,15 +204,11 @@ exampleworld2();
 <h3>Iterative testing as you go</h3>
 
 <p>
-
-
 Now that you have defined the structure for the program as a whole, it is time to move on to the first subproblem, which consists of collecting all the beepers. This task is itself more complicated than the simple problems from the preceding chapters. Collecting all the beepers means that you have to pick up the beepers in every tower until you get to the final corner. The fact that you need to repeat an operation for each tower suggests that you need a <code>while</code> loop here. The <code>while</code> loop will repeat the process of <code>collect_one_tower()</code> and then moving.
-
 </p>
-
 <p><b>Caution:</b> It is dangerous to try to write the entire program without <b>testing</b> it as you go. If you make a mistake it will be hard to find the mistake. We know that we are going to repeat the process of collecting one tower. Let us write and <b>test</b> collecting a single tower before we put the <code>collect_one_tower()</code> process in a for loop. Thus <i>temporarily</i> we can start with the following definition of <code>collect_all_beepers()</code>:
-
-	<p class="demoCode" style="margin-left:10px">
+</p>
+<p class="demoCode" style="margin-left:10px">
 <code>&nbsp;&nbsp;&nbsp;<span class="keyword">def</span> collect_all_beepers() : </code><br/>
 <code class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# temporary implementation for testing purposes</code><br/>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;collect_one_tower()</code><br/>
@@ -226,7 +222,7 @@ Now that you have defined the structure for the program as a whole, it is time t
 <h3>Refining collect tower</h3>
 
 <p>
-	When <code>collect_one_tower()</code> is called, Karel is either standing at the base of a tower of beepers or standing on an empty corner. In the former case, you need to collect the beepers in the tower. In the latter, you can simply move on. This situation sounds like an application for the <code>if</code> statement, in which you would write something like this:
+When <code>collect_one_tower()</code> is called, Karel is either standing at the base of a tower of beepers or standing on an empty corner. In the former case, you need to collect the beepers in the tower. In the latter, you can simply move on. This situation sounds like an application for the <code>if</code> statement, in which you would write something like this:
 </p>
 
 <p class="demoCode" style="margin-left:10px">
@@ -239,7 +235,8 @@ Now that you have defined the structure for the program as a whole, it is time t
 </p>
 
 <p>
-	The <code>collect_one_tower()</code> function is still complex enough that an additional level of decomposition is in order. To collect all the beepers in a tower, Karel needs to undertake the following steps:
+The <code>collect_one_tower()</code> function is still complex enough that an additional level of decomposition is in order. To collect all the beeper
+s in a tower, Karel needs to undertake the following steps:
 </p>
 
 <ol>
@@ -251,7 +248,7 @@ Now that you have defined the structure for the program as a whole, it is time t
 	</ol>
 
 <p>
-	Once again, this outline provides a model for the <code>collect_one_tower()</code> function, which looks like this:
+Once again, this outline provides a model for the <code>collect_one_tower()</code> function, which looks like this:
 </p>
 
 <p class="demoCode" style="margin-left:10px">
@@ -266,11 +263,11 @@ Now that you have defined the structure for the program as a whole, it is time t
 <h3>Function preconditions and postconditions</h3>
 
 <p>
-	The <code>turn_left()</code> commands at the beginning and end of the <code>collect_one_tower()</code> function are both critical to the correctness of this program. When <code>collect_one_tower()</code> is called, Karel is always somewhere on 1st row facing east. When it completes its operation, the program as a whole will work correctly only if Karel is again facing east at that same corner. Conditions that must be true before a function is called are referred to as <b>preconditions</b>; conditions that must apply after the function finishes are known as <b>postconditions</b>.
+The <code>turn_left()</code> commands at the beginning and end of the <code>collect_one_tower()</code> function are both critical to the correctness of this program. When <code>collect_one_tower()</code> is called, Karel is always somewhere on 1st row facing east. When it completes its operation, the program as a whole will work correctly only if Karel is again facing east at that same corner. Conditions that must be true before a function is called are referred to as <b>preconditions</b>; conditions that must apply after the function finishes are known as <b>postconditions</b>.
 </p>
 
 <p>
-	When you define a function, you will get into far less trouble if you write down exactly what the pre- and postconditions are. Once you have done so, you then need to make sure that the code you write always leaves the postconditions satisfied, assuming that the preconditions were satisfied to begin with. For example, think about what happens if you call <code>collect_one_tower()</code> when Karel is on 1st row facing east. The first <code>turn_left()</code> command leaves Karel facing north, which means that Karel is properly aligned with the column of beepers representing the tower. The <code>collect_line_of_beepers()</code> function-which has yet to be written but nonetheless performs a task that you understand conceptually— simply moves without turning. Thus, at the end of the call to <code>collect_line_of_beepers()</code>, Karel will still be facing north. The <code>turn_around()</code> call therefore leaves Karel facing south. Like <code>collect_line_of_beepers()</code>, the <code>move_to_wall()</code> function does not involve any turns but instead simply moves until it hits the boundary wall. Because Karel is facing south, this boundary wall will be the one at the bottom of the screen, just below 1st row. The final <code>turn_left()</code> command therefore leaves Karel on 1st row facing east, which satisfies the postcondition.
+When you define a function, you will get into far less trouble if you write down exactly what the pre- and postconditions are. Once you have done so, you then need to make sure that the code you write always leaves the postconditions satisfied, assuming that the preconditions were satisfied to begin with. For example, think about what happens if you call <code>collect_one_tower()</code> when Karel is on 1st row facing east. The first <code>turn_left()</code> function leaves Karel facing north, which means that Karel is properly aligned with the column of beepers representing the tower. The <code>collect_line_of_beepers()</code> function-which has yet to be written but nonetheless performs a task that you understand conceptually— simply moves without turning. Thus, at the end of the call to <code>collect_line_of_beepers()</code>, Karel will still be facing north. The <code>turn_around()</code> call therefore leaves Karel facing south. Like <code>collect_line_of_beepers()</code>, the <code>move_to_wall()</code> function does not involve any turns but instead simply moves until it hits the boundary wall. Because Karel is facing south, this boundary wall will be the one at the bottom of the screen, just below the 1st row. The final <code>turn_left()</code> command therefore leaves Karel on the 1st row facing east, which satisfies the postcondition.
 </p>
 
 <h3>Repeating the process</h3>
@@ -279,11 +276,11 @@ Now that you have defined the structure for the program as a whole, it is time t
 </p>
 
 <p>
-	But what does this <code>while</code> loop look like? First of all, you should think about the conditional test. You want Karel to stop when it hits the wall at the end of the row. Thus, you want Karel to keep going as long as the space in front is clear. Thus, you know that the <code>collect_all_beepers()</code> function will include a <code>while</code> loop that uses the <code>front_is_clear()</code> test. At each position, you want Karel to collect all the beepers in the tower beginning on that corner. If you give that operation a name, which might be something like <code>collect_one_tower()</code>, you can go ahead and write a definition for the <code>collect_all_beepers()</code> function even though you haven’t yet filled in the details.
+But what does this <code>while</code> loop look like? First of all, you should think about the conditional test. You want Karel to stop when it hits the wall at the end of the row. Thus, you want Karel to keep going as long as the space in front is clear. Thus, you know that the <code>collect_all_beepers()</code> function will include a <code>while</code> loop that uses the <code>front_is_clear()</code> test. At each position, you want Karel to collect all the beepers in the tower beginning on that corner. If you give that operation a name, which might be something like <code>collect_one_tower()</code>, you can go ahead and write a definition for the <code>collect_all_beepers()</code> function even though you haven’t yet filled in the details.
 </p>
 
 <p>
-	You do, however, have to be careful. The code for <code>collect_all_beepers()</code> does not look like this:
+You do, however, have to be careful. The code for <code>collect_all_beepers()</code> does not look like this:
 </p>
 
 <p class="demoCode" style="margin-left:10px">
@@ -295,19 +292,19 @@ Now that you have defined the structure for the program as a whole, it is time t
 </p>
 
 <p>
-	This implementation is buggy for exactly the same reason that the first version of the general <code>BeeperLine</code> program from chapter 6 failed to do its job. There is a fencepost error in this version of the code, because Karel needs to test for the presence of a beeper tower on the last avenue. The correct implementation is:
+This implementation is buggy for exactly the same reason that the first version of the general <code>BeeperLine</code> program from chapter 6 failed to do its job. There is a fencepost error in this version of the code, because Karel needs to test for the presence of a beeper tower on the last avenue. The correct implementation is:
 </p>
 
 <p class="demoCode" style="margin-left:10px">
 <code>&nbsp;&nbsp;&nbsp;<span class="keyword">def </span>collect_all_beepers():</code><br/>
-<code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">while</span> front_is_clear():</code><br/>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">while</span> frontIsClear():</code><br/>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;collect_one_tower()</code><br/>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;move()</code><br/>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;collect_one_tower()</code><br/>
 </p>
 
 <p>
-	Note that this function has precisely the same structure as the main program from the PlaceBeeperLine program presented in chapter 6. The only difference is that this program calls <code>collect_one_tower()</code> where the other called <code>put_beeper()</code>. These two programs are each examples of a general strategy that looks like this:
+Note that this function has precisely the same structure as the main program from the PlaceBeeperLine program presented in chapter 6. The only difference is that this program calls <code>collect_one_tower()</code> where the other called <code>put_beeper()</code>. These two programs are each examples of a general strategy that looks like this:
 </p>
 
 <p class="demoCode" style="margin-left:10px">
@@ -327,12 +324,11 @@ Now that you have defined the structure for the program as a whole, it is time t
 <p>Although the hard work has been done, there are still several loose ends that need to be resolved. The main program calls two functions—<code>drop_all_beepers()</code> and <code>return_home()</code>— that are as yet unwritten. Similarly, <code>collect_one_tower()</code> calls <code>collect_line_of_beepers()</code> and <code>move_to_wall()</code>. Fortunately, all four of these functionss are simple enough to code without any further decomposition, particularly if you use <code>move_to_wall()</code> in the definition of <code>return_home()</code>. Here is the complete implementation:</p>
 
 
-
 <div class="section embeddedIde" id="beeperTowers">
     <div id ='beeperTowersIde' class = "ide getStarted" style="height:1123.2px">
       <div id = 'beeperTowersIdeCenter' class = "ideCenter" style="height:inherit;">
          <div id = 'beeperTowersEditorDiv' style="width:600px;height:inherit;"></div>
-
+         
       </div>
     </div>
     <div id='beeperTowersCanvasDiv' style="width:500px;height:360px">
@@ -341,11 +337,11 @@ Now that you have defined the structure for the program as a whole, it is time t
     <div style="width:100%;">
         <div class="buttonBar">
            <button class="btn btn-default" id="beeperTowersRunButton"><span class="glyphicon glyphicon-play"></span> Run Program</button>
-        </div>
+        </div> 
     </div>
 <script>
 
-
+        
 
 function examplebeeperTowers() {
 STARTER_CODE = `
@@ -423,12 +419,12 @@ STARTER_CODE = STARTER_CODE.trim();
  function main() {
    karelEditor = importPythonEditor('beeperTowersEditor','beeperTowersEditorDiv', STARTER_CODE, false);
      //importRunButtonBar('example1ButtonBar');
-
+    
     $("[title]").tooltip({ position: "bottom center", opacity: 0.9});
-
+    
     initTabs();
     var canvas = document.getElementById('beeperTowersCanvas');
-    karelIde = KarelIde('python',karelEditor, canvas, 'beeperTowers', 0.9, 'en', 1000,
+    karelIde = KarelIde('python',karelEditor, canvas, 'beeperTowers', 0.9, 'en', 1000, 
       0.8 * 1000);
     $('#beeperTowersRunButton').click(function(){playClicked()});
     onresize();
@@ -437,7 +433,7 @@ STARTER_CODE = STARTER_CODE.trim();
  function playClicked() {
   if(buttonState == 'play') {
     karelIde.playButton();
-
+      
       var resetText = '<span class="glyphicon glyphicon-repeat"></span> Reset Program';
       $('#beeperTowersRunButton').html(resetText);
       buttonState = 'reset';
@@ -447,10 +443,10 @@ STARTER_CODE = STARTER_CODE.trim();
       $('#beeperTowersRunButton').html(playText);
       buttonState = 'play';
      }
-
+    
   }
 
-  function onresize() {
+  function onresize() { 
 
     // var parentHeight = 1123.2;
     // var canvasWidth = 300
@@ -459,22 +455,22 @@ STARTER_CODE = STARTER_CODE.trim();
 
     // var editorDiv = document.getElementById('beeperTowersCanvasDiv');
     // var canvas = document.getElementById('beeperTowersCanvas');
-
+    
 
 
     // var availibleWidth = parentWidth;
     // var elementSpacing = 12;
 
-    // var editorWidth = availibleWidth - canvasWidth - elementSpacing;
+    // var editorWidth = availibleWidth - canvasWidth - elementSpacing; 
 
     // canvas.style.width = canvasWidth + 'px';
     // canvas.style.height = canvasWidth + 'px';
     // canvas.style.left = (editorWidth + elementSpacing) + 'px';
  }
 
-
+ 
  main()
-
+ 
 }
 examplebeeperTowers();
     </script>
@@ -493,5 +489,5 @@ examplebeeperTowers();
       <div style="flex-grow:4"></div>
     </div>
   </div>
-</body>
+</body> 
 </html>
